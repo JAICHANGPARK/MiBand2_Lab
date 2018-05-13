@@ -43,6 +43,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
+import com.hlab.fabrevealmenu.view.FABRevealMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 //TODO: extend AbstractGBActivity, but it requires actionbar that is not available
 public class ControlCenterv2 extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GBActivity {
+        implements NavigationView.OnNavigationItemSelectedListener, GBActivity, OnFABMenuSelectedListener {
 
     //needed for KK compatibility
     static {
@@ -76,6 +80,7 @@ public class ControlCenterv2 extends AppCompatActivity
 
     private boolean isLanguageInvalid = false;
 
+    FABRevealMenu fabMenu;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -104,12 +109,27 @@ public class ControlCenterv2 extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchDiscoveryActivity();
+        fabMenu = findViewById(R.id.fabMenu);
+
+        try {
+            if (fab != null && fabMenu != null) {
+                //setFabMenu(fabMenu);
+                //attach menu to fab
+                fabMenu.bindAnchorView(fab);
+                //set menu selection listener
+                fabMenu.setOnFABMenuSelectedListener(this);
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchDiscoveryActivity();
+//            }
+//        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -250,9 +270,19 @@ public class ControlCenterv2 extends AppCompatActivity
                 Intent dbIntent = new Intent(this, DbManagementActivity.class);
                 startActivity(dbIntent);
                 return true;
+            case R.id.action_licenses:
+                Intent intent = new Intent(this, OpenSourceLicenseActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_about:
+                ChangeLog cl = createChangeLog();
+                cl.getFullLogDialog().show();
+                return true;
             case R.id.action_quit:
                 GBApplication.quit();
                 return true;
+
+
 //            case R.id.donation_link:
 //                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://liberapay.com/Gadgetbridge")); //TODO: centralize if ever used somewhere else
 //                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -333,4 +363,25 @@ public class ControlCenterv2 extends AppCompatActivity
         }
         AndroidUtils.setLanguage(this, language);
     }
+
+    @Override
+    public void onMenuItemSelected(View view, int id) {
+        if (id == R.id.menu_add_information) {
+            startActivity(new Intent(this, WriteHomesActivity.class));
+            //Toast.makeText(this, "Place Selected", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_write_meal) {
+            startActivity(new Intent(this, WriteMealActivity.class));
+            //Toast.makeText(this, " ", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_write_sleep) {
+            startActivity(new Intent(this, WriteSleepActivity.class));
+            //Toast.makeText(this, "장비 추가 ", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_add_watch) {
+            launchDiscoveryActivity();
+            Toast.makeText(this, "장비 추가 ", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
 }

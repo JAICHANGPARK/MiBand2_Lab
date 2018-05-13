@@ -144,7 +144,8 @@ public class DbManagementActivity extends AbstractGBActivity {
             DBHelper helper = new DBHelper(this);
             File dir = FileUtils.getExternalFilesDir();
             File destFile = helper.exportDB(dbHandler, dir);
-            GB.toast(this, getString(R.string.dbmanagementactivity_exported_to, destFile.getAbsolutePath()), Toast.LENGTH_LONG, GB.INFO);
+            Toast.makeText(this, "Export Completes", Toast.LENGTH_SHORT).show();
+            //GB.toast(this, getString(R.string.dbmanagementactivity_exported_to, destFile.getAbsolutePath()), Toast.LENGTH_LONG, GB.INFO);
         } catch (Exception ex) {
             GB.toast(this, getString(R.string.dbmanagementactivity_error_exporting_db, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
         }

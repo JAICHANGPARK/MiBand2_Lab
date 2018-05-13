@@ -19,6 +19,15 @@
         <item android:id="@+id/action_db_management"
             android:title="@string/action_db_management"
             android:icon="@drawable/ic_database_management" />
+
+        <item android:id="@+id/action_licenses"
+            android:title="라이센스 정보"
+            android:icon="@drawable/ic_free_breakfast_black_24dp" />
+
+        <item android:id="@+id/action_about"
+            android:title="앱 정보"
+            android:icon="@drawable/ic_info_outline_black_24dp" />
+
         <item android:id="@+id/action_quit"
             android:title="@string/action_quit"
             android:icon="@drawable/ic_quit" />

@@ -33,5 +33,21 @@
         app:srcCompat="@drawable/ic_add"
         android:layout_margin="16dp" />
 
+    <com.hlab.fabrevealmenu.view.FABRevealMenu
+        android:id="@+id/fabMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:animateItems="true"
+        app:menuBackgroundColor="@color/accent_custom"
+        app:menuDirection="up"
+        app:menuRes="@menu/menu_fab"
+        app:menuSize="normal"
+        app:menuTitleFontFamily="@font/quicksand"
+        app:menuTitleTextColor="@color/colorWhite"
+        app:showOverlay="true"
+        app:showTitle="true">
+
+    </com.hlab.fabrevealmenu.view.FABRevealMenu>
 
 </android.support.design.widget.CoordinatorLayout>

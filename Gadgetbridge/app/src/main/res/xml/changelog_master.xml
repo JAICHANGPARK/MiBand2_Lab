@@ -583,15 +583,41 @@
         <!--<change>Fix database creation and updates</change>-->
         <!--<change>Workaround to fix logfile rotation</change>-->
     <!--</release>-->
-    <release version="0.0.2" versioncode="43">
+    <release version="1.0.4" versioncode="44">
+        <change>Date : 2018-05-14</change>
+        <change>데이터베이스 기능 및 업데이트 정보 연동</change>
+        <change>라이센스 정보 추가</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.3" versioncode="44">
+        <change>Date : 2018-05-13</change>
+        <change>종합 기록 추가</change>
+        <change>수면,식사 기록이 가능해졌습니다. </change>
+        <change>혈당, 운동, 투약 기록 기능 추가 </change>
+        <change>폰트 변경(배달의민족 (주)우아한형제) </change>
+        <change>기타 버그 수정 및 성능 향상 </change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.2" versioncode="43">
+        <change>Date : 2018-05-06</change>
         <change>설정 수정</change>
         <change>권한 추가 </change>
         <change>버그 수정 </change>
         <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
     </release>
-    <release version="0.0.1" versioncode="42">
+    <release version="1.0.1" versioncode="42">
         <change>Mi Band 연결 추가</change>
         <change>Mi Band 데이터 추출 </change>
         <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.0" versioncode="41">
+        <change>초기 앱 제작</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
     </release>
 </changelog>
