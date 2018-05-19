@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+
+    <release version="1.0.5" versioncode="46">
+        <change>Date : 2018-05-18</change>
+        <change>식사 : 사진 촬영 기능 추가</change>
+        <change>이미지 압축 및 서버 업로드 기능 추가</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.4" versioncode="45">
+        <change>Date : 2018-05-14</change>
+        <change>데이터베이스 기능 및 업데이트 정보 연동</change>
+        <change>라이센스 정보 추가</change>
+        <change>투약 기록에서 인슐린 선택이 되지 못하는 현상 수정</change>
+        <change>데이터베이스 용량이 기하급수적으로 커지는 현상 수정</change>
+        <change>데이터베이스 추출 기능 추가</change>
+        <change>생활 데이터 확인 메뉴 추가</change>
+        <change>기타 버그 수정</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.3" versioncode="44">
+        <change>Date : 2018-05-13</change>
+        <change>종합 기록 추가</change>
+        <change>수면,식사 기록이 가능해졌습니다. </change>
+        <change>혈당, 운동, 투약 기록 기능 추가 </change>
+        <change>폰트 변경(배달의민족 (주)우아한형제) </change>
+        <change>기타 버그 수정 및 성능 향상 </change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.2" versioncode="43">
+        <change>Date : 2018-05-06</change>
+        <change>설정 수정</change>
+        <change>권한 추가 </change>
+        <change>버그 수정 </change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.1" versioncode="42">
+        <change>Mi Band 연결 추가</change>
+        <change>Mi Band 데이터 추출 </change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.0" versioncode="41">
+        <change>초기 앱 제작</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+</changelog>

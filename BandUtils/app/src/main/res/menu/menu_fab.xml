@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/menu_write_meal_detail"
+        android:icon="@drawable/ic_camera_white_24dp"
+        android:title="Photo" />
+
+    <item
+        android:id="@+id/menu_write_meal"
+        android:icon="@drawable/ic_restaurant_white_24dp"
+        android:title="Meal" />
+
+    <item
+        android:id="@+id/menu_write_sleep"
+        android:icon="@drawable/ic_hotel_white_24dp"
+        android:title="Sleep" />
+
+    <item
+        android:id="@+id/menu_add_information"
+        android:icon="@drawable/ic_edit_black_24dp"
+        android:title="Write" />
+
+
+    <item
+        android:id="@+id/menu_add_watch"
+        android:icon="@drawable/ic_watch_black_24dp"
+        android:title="Device" />
+
+
+</menu>

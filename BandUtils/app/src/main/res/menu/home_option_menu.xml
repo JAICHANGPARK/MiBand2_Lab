@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:id="@+id/contect"
+        android:title="문의하기"
+        app:showAsAction="always"/>
+    <item android:id="@+id/help"
+        android:title="개발자정보"
+        app:showAsAction="never"/>
+    <item android:id="@+id/lab"
+        android:title="앱기술연구소"
+        app:showAsAction="never"/>
+</menu>
