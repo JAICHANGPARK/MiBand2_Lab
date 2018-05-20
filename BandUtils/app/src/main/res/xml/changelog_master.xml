@@ -2,9 +2,10 @@
 <changelog>
 
     <release version="1.0.5" versioncode="46">
-        <change>Date : 2018-05-18</change>
+        <change>Date : 2018-05-20</change>
         <change>식사 : 사진 촬영 기능 추가</change>
         <change>이미지 압축 및 서버 업로드 기능 추가</change>
+        <change>Cache 및 저장소 확인 기능 추가</change>
         <change>Coder : 박제창 </change>
         <change>Contributors : None</change>
     </release>

@@ -37,7 +37,7 @@
         android:background="@android:color/black"
         android:visibility="gone" />
 
-    <nodomain.knu2018.gadgetbridge.util.CameraControls
+    <nodomain.knu2018.bandutils.util.CameraControls
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="130dp"

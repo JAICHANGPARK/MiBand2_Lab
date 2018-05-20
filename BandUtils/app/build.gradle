@@ -127,11 +127,18 @@ dependencies {
 
     implementation 'tyrantgit:explosionfield:1.0.1'
     implementation 'com.github.pavel163:BifacialView:1.4.0'
+    implementation project(':aFileChooser')
 
-    //implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'com.google.firebase:firebase-config:15.0.2'
+
+    implementation 'com.github.d-max:spots-dialog:0.7@aar' // Spot Dialog
+    implementation 'com.github.jd-alexander:android-flat-button:v1.1' //fbutton
+
+    implementation 'com.nightonke:wowoviewpager:2.0.0'
 
     //    implementation project(":DaoCore")
-    implementation project(':aFileChooser')
+
 }
 
 
@@ -204,3 +211,5 @@ task findbugs(type: FindBugs) {
         }
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

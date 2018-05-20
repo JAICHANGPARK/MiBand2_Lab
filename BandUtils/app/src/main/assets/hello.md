@@ -99,6 +99,8 @@
 - [Github](https://github.com/pfichtner/durationformatter)
 - https://github.com/pfichtner/durationformatter
 
+***
+
 #### Apache Commons Lang (Apache)
 - [mvnrepository](https://mvnrepository.com/artifact/org.apache.commons/commons-lang3)
 - https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
@@ -117,13 +119,17 @@
 
 ***
 
-
 #### aFileChooser (Paul Burke)
 - [Github](https://github.com/iPaulPro/aFileChooser)
 - https://github.com/iPaulPro/aFileChooser
 
 ***
 
+#### WoWoViewPager (Nightonke)
+- [Github](https://github.com/Nightonke/WoWoViewPager)
+- https://github.com/Nightonke/WoWoViewPager
+
+***
 
 
 ### MIT License

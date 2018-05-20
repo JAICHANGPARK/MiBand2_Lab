@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nodomain.knu2018.gadgetbridge.activities.WriteMealPhotoActivity">
+    tools:context="nodomain.knu2018.bandutils.activities.WriteMealPhotoActivity">
 
     <ImageView
         android:id="@+id/imageView"

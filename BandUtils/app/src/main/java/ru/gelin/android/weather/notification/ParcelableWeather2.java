@@ -26,8 +26,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.knu2018.gadgetbridge.model.Weather;
-import nodomain.knu2018.gadgetbridge.model.WeatherSpec;
+import nodomain.knu2018.bandutils.model.Weather;
+import nodomain.knu2018.bandutils.model.WeatherSpec;
 
 public class ParcelableWeather2 implements Parcelable {
     private static final Logger LOG = LoggerFactory.getLogger(ParcelableWeather2.class);

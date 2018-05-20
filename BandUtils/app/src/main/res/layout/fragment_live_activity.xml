@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     grid:columnCount="2">
 
-    <nodomain.knu2018.gadgetbridge.activities.charts.CustomBarChart
+    <nodomain.knu2018.bandutils.activities.charts.CustomBarChart
         android:id="@+id/livechart_steps_per_minute_current"
         grid:layout_columnWeight="1"
-        grid:layout_rowWeight="1"></nodomain.knu2018.gadgetbridge.activities.charts.CustomBarChart>
+        grid:layout_rowWeight="1"></nodomain.knu2018.bandutils.activities.charts.CustomBarChart>
 
-    <nodomain.knu2018.gadgetbridge.activities.charts.CustomBarChart
+    <nodomain.knu2018.bandutils.activities.charts.CustomBarChart
         android:id="@+id/livechart_steps_total"
         grid:layout_columnWeight="1"
-        grid:layout_rowWeight="1"></nodomain.knu2018.gadgetbridge.activities.charts.CustomBarChart>
+        grid:layout_rowWeight="1"></nodomain.knu2018.bandutils.activities.charts.CustomBarChart>
 
     <!--
         <com.github.mikephil.charting.charts.PieChart

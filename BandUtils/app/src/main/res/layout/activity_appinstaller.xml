@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="nodomain.knu2018.gadgetbridge.activities.FwAppInstallerActivity"
+        tools:context="nodomain.knu2018.bandutils.activities.FwAppInstallerActivity"
         tools:ignore="ScrollViewSize">
 
         <ListView
