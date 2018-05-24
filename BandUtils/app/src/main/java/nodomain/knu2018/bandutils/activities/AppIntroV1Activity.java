@@ -1,5 +1,10 @@
 package nodomain.knu2018.bandutils.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.nightonke.wowoviewpager.Animation.WoWoAlphaAnimation;
 import com.nightonke.wowoviewpager.Animation.WoWoElevationAnimation;
@@ -28,6 +32,7 @@ import java.util.UUID;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.activities.initfood.FoodFetchActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +52,11 @@ public class AppIntroV1Activity extends WoWoActivity {
     Retrofit retrofit;
     IUploadAPI service;
 
+    SharedPreferences pref;
+    String userName;
+    String userUUID;
 
+    AlertDialog dialog;
 
     @Override
     protected int contentViewRes() {
@@ -79,7 +88,7 @@ public class AppIntroV1Activity extends WoWoActivity {
         service = retrofit.create(IUploadAPI.class);
 
 
-        r = (int)Math.sqrt(screenW * screenW + screenH * screenH) + 10;
+        r = (int) Math.sqrt(screenW * screenW + screenH * screenH) + 10;
 
         ImageView earth = (ImageView) findViewById(R.id.earth);
         targetPlanet = (ImageView) findViewById(R.id.planet_target);
@@ -93,6 +102,18 @@ public class AppIntroV1Activity extends WoWoActivity {
         wowo.addTemporarilyInvisibleViews(0, earth, findViewById(R.id.cloud_blue), findViewById(R.id.cloud_red));
         wowo.addTemporarilyInvisibleViews(0, targetPlanet);
         wowo.addTemporarilyInvisibleViews(2, loginLayout, findViewById(R.id.button));
+
+
+        pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        if (pref.getBoolean("activity_executed", false)) {
+            Intent intent = new Intent(this, ControlCenterv2.class);
+            startActivity(intent);
+            finish();
+        } else {
+//            SharedPreferences.Editor ed = pref.edit();
+//            ed.putBoolean("activity_executed", true);
+//            ed.commit();
+        }
     }
 
     @Override
@@ -266,31 +287,87 @@ public class AppIntroV1Activity extends WoWoActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userEdt.getText().toString().length() == 0){
-                    Toast.makeText(AppIntroV1Activity.this, "등록할 이름을 입력해주세요", Toast.LENGTH_SHORT).show();
-                }else {
+                if (userEdt.getText().toString().length() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AppIntroV1Activity.this);
+                    builder.setTitle("Error");
+                    builder.setMessage("등록할 이름을 입력해주세요");
+                    builder.setPositiveButton("확인", (dialog, which) -> dialog.dismiss());
+                    dialog = builder.create();
+                    dialog.show();
+                    //Toast.makeText(AppIntroV1Activity.this, "등록할 이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                } else {
                     // TODO: 2018-05-20 등록 구현
                     UUID uuid = UUID.randomUUID();
-                    Toast.makeText(AppIntroV1Activity.this, uuid.toString(), Toast.LENGTH_SHORT).show();
+                    userName = userEdt.getText().toString();
+                    userUUID = uuid.toString();
+                    String uuidString = uuid.toString().replace("-", "");
 
-                    Call<ResponseBody> comment = service.registerUser(userEdt.getText().toString(), uuid.toString());
-                    comment.enqueue(new Callback<ResponseBody>() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AppIntroV1Activity.this);
+                    builder.setTitle("확인");
+                    builder.setMessage("이름은 추후 변경할 수 없습니다. 등록하시겠어요?");
+                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        public void onClick(DialogInterface dialogs, int which) {
 
-                            try {
-                                Log.e(TAG, "onResponse: " + response.toString() );
-                                Log.e(TAG, "onResponse: " + response.body().string() );
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                            Call<ResponseBody> comment = service.registerUser(userEdt.getText().toString(), uuidString);
+                            comment.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    try {
+                                        Log.e(TAG, "onResponse: " + response.toString());
+                                        Log.e(TAG, "onResponse: " + response.body().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    SharedPreferences.Editor ed = pref.edit();
+                                    ed.putBoolean("activity_executed", true);
+                                    //ed.commit();
+                                    ed.apply();
+
+                                    Paper.book().write("userUUID", userUUID);
+                                    Paper.book().write("userName", userName);
+
+                                    startActivity(new Intent(AppIntroV1Activity.this, FoodFetchActivity.class));
+                                    finish();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(AppIntroV1Activity.this);
+                                    builder.setTitle("Error");
+                                    builder.setMessage("에러가 발생 하였습니다.");
+                                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    dialog = builder.create();
+                                    dialog.show();
+
+                                }
+                            });
 
                         }
                     });
+                    builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog = builder.create();
+                    dialog.show();
+
+
+                    //Toast.makeText(AppIntroV1Activity.this, uuid.toString(), Toast.LENGTH_SHORT).show();
+
+
 
                 }
             }
@@ -298,7 +375,7 @@ public class AppIntroV1Activity extends WoWoActivity {
     }
 
     private void addEditTextAnimation() {
-        
+
         wowo.addAnimation(findViewById(R.id.username))
                 .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
 //        wowo.addAnimation(findViewById(R.id.password))

@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,11 +51,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
@@ -69,6 +72,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.cketti.library.changelog.ChangeLog;
+import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.BuildConfig;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
@@ -110,6 +114,8 @@ public class ControlCenterv2 extends AppCompatActivity
     LottieAnimationView lottieAnimationView;
 
     FABRevealMenu fabMenu;
+    String userName;
+    String userUUID;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -138,9 +144,13 @@ public class ControlCenterv2 extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Paper.init(this);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fabMenu = findViewById(R.id.fabMenu);
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e(TAG, "onCreate: " + token);
         try {
             if (fab != null && fabMenu != null) {
                 //setFabMenu(fabMenu);
@@ -152,6 +162,11 @@ public class ControlCenterv2 extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        userName  = Paper.book().read("userName");
+        userUUID = Paper.book().read("userUUID");
+
+        Log.e(TAG, "onCreate: " + userName + ", " + userUUID);
 
 
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +184,15 @@ public class ControlCenterv2 extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // TODO: 2018-05-22 네비게이션 뷰의 해더 부분 인플레이트
+        View headView = navigationView.getHeaderView(0);
+        TextView textUserName = (TextView)headView.findViewById(R.id.text_name);
+        TextView textUserUUID = (TextView)headView.findViewById(R.id.text_uuid);
+
+        // TODO: 2018-05-22 등록된 유저 정보 표기
+        textUserName.setText(userName);
+        textUserUUID.setText(userUUID);
 
         //end of material design boilerplate
         deviceManager = ((GBApplication) getApplication()).getDeviceManager();
@@ -298,6 +322,12 @@ public class ControlCenterv2 extends AppCompatActivity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
+                    final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                    }
                 }
             });
             builder.setNegativeButton("No, thanks", new DialogInterface.OnClickListener() {
@@ -468,7 +498,6 @@ public class ControlCenterv2 extends AppCompatActivity
     private void checkAndRequestPermissions() {
         List<String> wantedPermissions = new ArrayList<>();
 
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
             wantedPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
@@ -479,7 +508,6 @@ public class ControlCenterv2 extends AppCompatActivity
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
             wantedPermissions.add(Manifest.permission.CAMERA);
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_DENIED)
             wantedPermissions.add(Manifest.permission.BLUETOOTH);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) == PackageManager.PERMISSION_DENIED)

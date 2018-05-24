@@ -17,5 +17,10 @@
         <key>bandutil_version</key>
         <value>1.0.5</value>
     </entry>
+
+    <entry>
+        <key>food_db_version</key>
+        <value>1.0.0</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

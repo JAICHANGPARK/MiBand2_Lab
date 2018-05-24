@@ -38,6 +38,7 @@ import butterknife.OnClick;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
 import nodomain.knu2018.bandutils.database.WriteEntry;
+import nodomain.knu2018.bandutils.util.ObservableScrollView;
 
 
 public class WriteMealActivity extends AppCompatActivity {
@@ -87,6 +88,9 @@ public class WriteMealActivity extends AppCompatActivity {
     BubbleSeekBar seekBar06;   //과일군
     @BindView(R.id.seek_bar_7)
     BubbleSeekBar bubbleSeekBar; //포만감
+
+    @BindView(R.id.demo_4_obs_scroll_view)
+    ObservableScrollView observableScrollView;
 
 
     int intGokryu = 0;
@@ -245,6 +249,21 @@ public class WriteMealActivity extends AppCompatActivity {
     }
 
     private void initBubbleSeekBar() {
+
+        observableScrollView.setOnScrollChangedListener(new ObservableScrollView.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+
+                seekBar01.correctOffsetWhenContainerOnScrolling();
+                seekBar02.correctOffsetWhenContainerOnScrolling();
+                seekBar03.correctOffsetWhenContainerOnScrolling();
+                seekBar04.correctOffsetWhenContainerOnScrolling();
+                seekBar05.correctOffsetWhenContainerOnScrolling();
+                seekBar06.correctOffsetWhenContainerOnScrolling();
+                bubbleSeekBar.correctOffsetWhenContainerOnScrolling();
+
+            }
+        });
 
         satisfaction = "5";
 
