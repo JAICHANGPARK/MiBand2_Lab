@@ -3,6 +3,11 @@
 
 
     <item
+        android:id="@+id/menu_write_meal_detail"
+        android:icon="@drawable/ic_camera_white_24dp"
+        android:title="Photo" />
+
+    <item
         android:id="@+id/menu_write_meal"
         android:icon="@drawable/ic_restaurant_white_24dp"
         android:title="Meal" />

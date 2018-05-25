@@ -8,4 +8,9 @@
     <attr name="chart_light_sleep" format="color" />
     <attr name="chart_activity" format="color" />
     <attr name="chart_not_worn" format="color" />
+
+    <declare-styleable name="CameraControls">
+        <attr name="camera" format="reference" />
+        <attr name="cover" format="reference" />
+    </declare-styleable>
 </resources>

@@ -13,22 +13,22 @@ vendor's servers.
 
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Gadgetbridge/donate)
 
-[![Build](https://travis-ci.org/Freeyourgadget/Gadgetbridge.svg?branch=master)](https://travis-ci.org/Freeyourgadget/Gadgetbridge)
+[![Build](https://travis-ci.org/knu2018/Gadgetbridge.svg?branch=master)](https://travis-ci.org/knu2018/Gadgetbridge)
 
 ## Download
 
-[![Gadgetbridge on F-Droid](/Get_it_on_F-Droid.svg.png?raw=true "Download from F-Droid")](https://f-droid.org/repository/browse/?fdid=nodomain.freeyourgadget.gadgetbridge)
+[![Gadgetbridge on F-Droid](/Get_it_on_F-Droid.svg.png?raw=true "Download from F-Droid")](https://f-droid.org/repository/browse/?fdid=nodomain.knu2018.gadgetbridge)
 
-[List of changes](https://github.com/Freeyourgadget/Gadgetbridge/blob/master/CHANGELOG.md)
+[List of changes](https://github.com/knu2018/Gadgetbridge/blob/master/CHANGELOG.md)
 
 ## Supported Devices
-* Pebble, Pebble Steel, Pebble Time, Pebble Time Steel, Pebble Time Round [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Pebble)
-* Pebble 2 [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Pebble)
-* Mi Band, Mi Band 1A, Mi Band 1S [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Mi-Band)
-* Mi Band 2 [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Mi-Band-2)
-* Amazfit Bip [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Amazfit-Bip)
-* Amazfit Cor (no maintainer) [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Amazfit-Cor)
-* HPlus Devices (e.g. ZeBand) [Wiki](https://github.com/Freeyourgadget/Gadgetbridge/wiki/HPlus)
+* Pebble, Pebble Steel, Pebble Time, Pebble Time Steel, Pebble Time Round [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/Pebble)
+* Pebble 2 [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/Pebble)
+* Mi Band, Mi Band 1A, Mi Band 1S [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/Mi-Band)
+* Mi Band 2 [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/Mi-Band-2)
+* Amazfit Bip [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/Amazfit-Bip)
+* Amazfit Cor (no maintainer) [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/Amazfit-Cor)
+* HPlus Devices (e.g. ZeBand) [Wiki](https://github.com/knu2018/Gadgetbridge/wiki/HPlus)
 * Teclast H10, H30 (WIP)
 * NO.1 F1 (WIP)
 * Liveview
@@ -37,7 +37,7 @@ vendor's servers.
 
 ## Features
 
-Please see [FEATURES.md](https://github.com/Freeyourgadget/Gadgetbridge/blob/master/FEATURES.md)
+Please see [FEATURES.md](https://github.com/knu2018/Gadgetbridge/blob/master/FEATURES.md)
 
 ## Getting Started (Pebble)
 
@@ -45,7 +45,7 @@ Please see [FEATURES.md](https://github.com/Freeyourgadget/Gadgetbridge/blob/mas
 2. Start Gadgetbridge, tap on the device you want to connect to
 3. To test, choose "Debug" from the menu and play around
 
-For more information read [this wiki article](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Pebble-Getting-Started) 
+For more information read [this wiki article](https://github.com/knu2018/Gadgetbridge/wiki/Pebble-Getting-Started) 
 
 ## How to use (Mi Band 1+2)
 
@@ -71,9 +71,9 @@ For more information read [this wiki article](https://github.com/Freeyourgadget/
 * If you use other apps like Mi Fit, and "bonding" with Gadgetbridge does not work, please
   try to unpair the band in the other app and try again with Gadgetbridge.
 * While all Mi Band devices are supported, some firmware versions might work better than others.
-  You can consult the [projects wiki pages](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Mi-Band) 
+  You can consult the [projects wiki pages](https://github.com/knu2018/Gadgetbridge/wiki/Mi-Band) 
   to check if your firmware version is fully supported or if an upgrade/downgrade might be beneficial.
-* In order to display text notifications on the Mi Band 2, you have to [install a font on the band](https://github.com/Freeyourgadget/Gadgetbridge/wiki/Mi-Band-2).
+* In order to display text notifications on the Mi Band 2, you have to [install a font on the band](https://github.com/knu2018/Gadgetbridge/wiki/Mi-Band-2).
 
 ## Features (Liveview)
 
@@ -96,10 +96,10 @@ For more information read [this wiki article](https://github.com/Freeyourgadget/
 ## Contribute
 
 Contributions are welcome, be it feedback, bug reports, documentation, translation, research or code. Feel free to work
-on any of the open [issues](https://github.com/Freeyourgadget/Gadgetbridge/issues?q=is%3Aopen+is%3Aissue);
+on any of the open [issues](https://github.com/knu2018/Gadgetbridge/issues?q=is%3Aopen+is%3Aissue);
 just leave a comment that you're working on one to avoid duplicated work.
 
-Translations can be contributed via https://hosted.weblate.org/projects/freeyourgadget/gadgetbridge/
+Translations can be contributed via https://hosted.weblate.org/projects/knu2018/gadgetbridge/
 
 ## Do you have further questions or feedback?
 
@@ -113,8 +113,8 @@ Feel free to open an issue on our issue tracker, but please:
 0. Phone crashing during device discovery? Disable Privacy Guard (or similarly named functionality) during discovery.
 1. Open Gadgetbridge's settings and check the option to write log files
 2. Reproduce the problem you encountered
-3. Check the logfile at /sdcard/Android/data/nodomain.freeyourgadget.gadgetbridge/files/gadgetbridge.log
-4. File an issue at https://github.com/Freeyourgadget/Gadgetbridge/issues/new and possibly provide the logfile
+3. Check the logfile at /sdcard/Android/data/nodomain.knu2018.gadgetbridge/files/gadgetbridge.log
+4. File an issue at https://github.com/knu2018/Gadgetbridge/issues/new and possibly provide the logfile
 
 Alternatively you may use the standard logcat functionality to access the log.
 

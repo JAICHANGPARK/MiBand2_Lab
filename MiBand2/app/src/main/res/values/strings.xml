@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="app_name">BandUtil</string>
+    <string name="app_name">BandUtils</string>
 
-    <string name="title_activity_controlcenter">BandUtil</string>
+    <string name="title_activity_controlcenter">BandUtils</string>
     <string name="action_settings">Settings</string>
     <string name="action_debug">Debug</string>
     <string name="action_quit">Quit</string>
@@ -384,7 +384,7 @@
     <string name="mi2_prefs_button_press_count_summary">Number of button presses to trigger message broadcast</string>
     <string name="mi2_prefs_button_press_broadcast">Broadcast message to send</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Broadcast message on defined number of button presses reached</string>
-    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.mibandButtonPressed</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.knu2018.gadgetbridge.mibandButtonPressed</string>
     <string name="mi2_prefs_button_action">Enable button action</string>
     <string name="mi2_prefs_button_action_summary">Enable action on specified number of button presses</string>
     <string name="mi2_prefs_button_action_vibrate">Enable band vibration</string>
@@ -600,4 +600,12 @@
         * And there's more...
 
     </string>
+
+    <!--FireBase Cloud massege-->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <!--
+        This is the name that users will see when interacting with this channel.
+        It should describe the category of notifications that will be sent through this channel
+     -->
+    <string name="default_notification_channel_name" translatable="true">News</string>
 </resources>

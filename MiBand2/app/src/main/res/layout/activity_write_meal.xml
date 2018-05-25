@@ -168,7 +168,8 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ScrollView
+    <nodomain.knu2018.bandutils.util.ObservableScrollView
+        android:id="@+id/demo_4_obs_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -405,7 +406,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </nodomain.knu2018.bandutils.util.ObservableScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
