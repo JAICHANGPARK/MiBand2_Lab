@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/r1"
+    tools:context="nodomain.knu2018.bandutils.activities.WriteMealSelectActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/label01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bmhanna"
+                android:text="구분 선택"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/label02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label01"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bmhanna"
+                android:text="입력할 메뉴를 선택해주세요"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+
+            <android.support.v7.widget.CardView
+
+                android:id="@+id/card_breakfast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label02"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:id="@+id/my_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <Button
+                        android:id="@+id/button_before_breakfast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/sandwich_01"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="식사 전"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp" />
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+
+                    <Button
+                        android:id="@+id/button_after_breakfast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/smiling_face_with_halo"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="식사 후"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/label104"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_breakfast"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bmhanna"
+                android:text="점심"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_lunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label104"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:id="@+id/my_lunch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <Button
+                        android:id="@+id/button_before_lunch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/bento_box_1f371"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="식사 전"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+
+                    <Button
+                        android:id="@+id/button_after_lunch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/smiling_face_with_halo"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="식사 후"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/label105"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_lunch"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bmhanna"
+                android:text="저녁"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_dinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label105"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:id="@+id/my_dinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/button_before_dinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/hamburger_1f354"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="식사 전"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+
+                    <Button
+                        android:id="@+id/button_after_dinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/smiling_face_with_halo"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="식사 후"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/label106"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_dinner"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bmhanna"
+                android:text="간식"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_snack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label106"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:id="@+id/my_snack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/button_snack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/button_ripple"
+                        android:drawableLeft="@drawable/taco_1f32e"
+                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                        android:fontFamily="@font/bmhanna"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="간식간식"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <!--구분자-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/PrimaryDark3" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
+
+
+
+

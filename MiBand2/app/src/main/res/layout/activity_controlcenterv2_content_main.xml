@@ -6,16 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2"
+    tools:context="nodomain.knu2018.bandutils.activities.ControlCenterv2"
     tools:showIn="@layout/activity_controlcenterv2_app_bar_main">
 
-
-    <ImageView
-        android:id="@+id/no_items_bg"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
+    <com.airbnb.lottie.LottieAnimationView
         android:layout_centerInParent="true"
-        android:src="@drawable/empty_can" />
+        android:id="@+id/lottie_animation"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/anubis_2" />
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/no_items_bg"-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="250dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:src="@drawable/empty_can" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/deviceListView"

@@ -11,6 +11,14 @@
             android:title="@string/action_debug"
             android:icon="@drawable/ic_debug" />
 
+        <item android:id="@+id/action_check_db"
+            android:title="생활 데이터 확인"
+            android:icon="@drawable/ic_format_list_numbered_black_24dp" />
+
+        <item android:id="@+id/action_storage"
+            android:title="데이터 저장소 관리"
+            android:icon="@drawable/ic_sd_storage_black_24dp" />
+
     </group>
 
     <group
