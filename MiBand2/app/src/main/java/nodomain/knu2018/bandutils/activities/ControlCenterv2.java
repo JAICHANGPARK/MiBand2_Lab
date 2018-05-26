@@ -34,6 +34,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -62,9 +63,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.stepstone.apprating.AppRatingDialog;
+import com.stepstone.apprating.listener.RatingDialogListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -83,9 +87,25 @@ import nodomain.knu2018.bandutils.util.AndroidUtils;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.Prefs;
 
+
+/**
+ *
+ *       ____  ____  _________    __  ____       _____    __    __ __ __________
+ *      / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ *     / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ *    / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ *   /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ *
+ *   Created by Dreamwalker on 2018-05-21.
+ *
+ */
+
+
 //TODO: extend AbstractGBActivity, but it requires actionbar that is not available
 public class ControlCenterv2 extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GBActivity, OnFABMenuSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GBActivity,
+        OnFABMenuSelectedListener,
+        RatingDialogListener {
 
     private static final String TAG = "ControlCenterv2";
     private static final String APP_VERSION_KEY = "bandutil_version";
@@ -117,6 +137,8 @@ public class ControlCenterv2 extends AppCompatActivity
     String userName;
     String userUUID;
 
+    int appOpenCount = 0;
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -146,6 +168,25 @@ public class ControlCenterv2 extends AppCompatActivity
 
         Paper.init(this);
 
+
+        if (Paper.book().read("app_open_count") == null) {
+            Paper.book().write("app_open_count", appOpenCount);
+        } else {
+            appOpenCount = Paper.book().read("app_open_count");
+            appOpenCount += 1;
+
+            if (appOpenCount == 5) {
+                Log.e(TAG, "onCreate: appOpenCount call 5: " + appOpenCount );
+                popAppRating();
+                appOpenCount = 0;
+            }
+
+            Paper.book().write("app_open_count", appOpenCount);
+            Log.e(TAG, "onCreate: appOpenCount : " + appOpenCount );
+
+        }
+
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fabMenu = findViewById(R.id.fabMenu);
 
@@ -163,7 +204,7 @@ public class ControlCenterv2 extends AppCompatActivity
             e.printStackTrace();
         }
 
-        userName  = Paper.book().read("userName");
+        userName = Paper.book().read("userName");
         userUUID = Paper.book().read("userUUID");
 
         Log.e(TAG, "onCreate: " + userName + ", " + userUUID);
@@ -187,8 +228,8 @@ public class ControlCenterv2 extends AppCompatActivity
 
         // TODO: 2018-05-22 네비게이션 뷰의 해더 부분 인플레이트
         View headView = navigationView.getHeaderView(0);
-        TextView textUserName = (TextView)headView.findViewById(R.id.text_name);
-        TextView textUserUUID = (TextView)headView.findViewById(R.id.text_uuid);
+        TextView textUserName = (TextView) headView.findViewById(R.id.text_name);
+        TextView textUserUUID = (TextView) headView.findViewById(R.id.text_uuid);
 
         // TODO: 2018-05-22 등록된 유저 정보 표기
         textUserName.setText(userName);
@@ -289,10 +330,33 @@ public class ControlCenterv2 extends AppCompatActivity
 
     }
 
+    private void popAppRating() {
+
+        new AppRatingDialog.Builder()
+                .setPositiveButtonText("Submit")
+                .setNegativeButtonText("Cancel")
+                .setNeutralButtonText("Later")
+                .setNoteDescriptions(Arrays.asList("Very Bad", "Not good", "Quite ok", "Very Good", "Excellent !!!"))
+                .setDefaultRating(2)
+                .setTitle("Rate this application")
+                .setDescription("Please select some stars and give your feedback")
+                .setStarColor(R.color.starColor)
+                .setNoteDescriptionTextColor(R.color.noteDescriptionTextColor)
+                .setTitleTextColor(R.color.titleTextColor)
+                .setDescriptionTextColor(R.color.descriptionTextColor)
+                .setCommentTextColor(R.color.commentTextColor)
+                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setWindowAnimation(R.style.MyDialogSlideHorizontalAnimation)
+                .setHint("Please write your comment here ...")
+                .setHintTextColor(R.color.hintTextColor)
+                .create(ControlCenterv2.this)
+                .show();
+    }
+
     /**
      * Gradle상의 버전 정보를 가져온다.
      */
-    private void checkAppVersion(){
+    private void checkAppVersion() {
         try {
             i = getPackageManager().getPackageInfo(getPackageName(), 0);
             versionNumber = i.versionName;
@@ -309,12 +373,12 @@ public class ControlCenterv2 extends AppCompatActivity
     private void displayWelcomeMessage() {
         // [START get_config_values]
         String playstoreVersion = mFirebaseRemoteConfig.getString(APP_VERSION_KEY);
-        Log.e(TAG, "displayWelcomeMessage: " + playstoreVersion );
+        Log.e(TAG, "displayWelcomeMessage: " + playstoreVersion);
 
-        if (versionNumber.equals(playstoreVersion)){
-            Log.e(TAG, "displayWelcomeMessage: 최신버전 입니다." );
+        if (versionNumber.equals(playstoreVersion)) {
+            Log.e(TAG, "displayWelcomeMessage: 최신버전 입니다.");
 
-        }else {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault_Light));
             builder.setTitle("New version available");
             builder.setMessage("Please, update app to new version");
@@ -372,7 +436,7 @@ public class ControlCenterv2 extends AppCompatActivity
                     // values are returned.
                     mFirebaseRemoteConfig.activateFetched();
                 } else {
-                    Log.e(TAG, "onComplete: " + "Version info Fetch Failed" );
+                    Log.e(TAG, "onComplete: " + "Version info Fetch Failed");
                     //Toast.makeText(ControlCenterv2.this, "Fetch Failed", Toast.LENGTH_SHORT).show();
                 }
                 displayWelcomeMessage();
@@ -606,5 +670,28 @@ public class ControlCenterv2 extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+
+    /**
+     * App Raiting Dialog Listener
+     *
+     * @param i
+     * @param s
+     */
+
+    @Override
+    public void onPositiveButtonClicked(int i, String s) {
+
+
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+        Snackbar.make(getWindow().getDecorView().getRootView(), "다음에는 꼭 평가 부탁드려요", Snackbar.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onNeutralButtonClicked() {
+        Snackbar.make(getWindow().getDecorView().getRootView(), "다음에는 꼭 평가 부탁드려요", Snackbar.LENGTH_SHORT).show();
     }
 }

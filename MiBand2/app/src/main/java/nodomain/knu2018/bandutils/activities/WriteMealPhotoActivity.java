@@ -57,6 +57,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+/**
+ *
+ *       ____  ____  _________    __  ____       _____    __    __ __ __________
+ *      / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ *     / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ *    / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ *   /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ *
+ *   Created by Dreamwalker on 2018-05-25.
+ *
+ */
+
 public class WriteMealPhotoActivity extends AppCompatActivity implements UploadCallBacks {
 
     private static final String TAG = "WriteMealPhotoActivity";
@@ -160,6 +173,7 @@ public class WriteMealPhotoActivity extends AppCompatActivity implements UploadC
 
         if (uri != null){
             imageView.setVisibility(View.VISIBLE);
+            // TODO: 2018-05-26 Glide 를 사용하여 이미지 처리 (메모리에 안정적입니다.)
             Glide.with(this).load(uri).into(imageView);
             bitmap = BitmapFactory.decodeFile(getIntent().getStringExtra("path"));
 
@@ -204,14 +218,6 @@ public class WriteMealPhotoActivity extends AppCompatActivity implements UploadC
         } else {
             Toast.makeText(this, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
         }
-
-//        uri = Uri.fromFile(compressedImage);
-
-//        if (compressedImage != null) {
-//            uploadFile();
-//        } else {
-//            Snackbar.make(getWindow().getDecorView().getRootView(), "사진을 업로드하세요", Snackbar.LENGTH_SHORT).show();
-//        }
 
     }
 
@@ -467,21 +473,14 @@ public class WriteMealPhotoActivity extends AppCompatActivity implements UploadC
 
                         @Override
                         public void onSuccess(File file) {
-
                             Log.e(TAG, "onSuccess: " + file);
                             fileCopy(file);
                             file.delete();
-                            //finish();
-                            // TODO: 2018-05-25 주석을 이동해야 할듯.. -----
-//                            Intent intent = new Intent(PreviewActivity.this, ControlCenterv2.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
-//                            finish();
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
+                            Toast.makeText(WriteMealPhotoActivity.this, "파일 압축 실패", Toast.LENGTH_SHORT).show();
                         }
                     });
 

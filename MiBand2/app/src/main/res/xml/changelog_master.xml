@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.0.8" versioncode="49">
+        <change>Date : 2018-05-27</change>
+        <change>식사 사진 업로드 뷰 변경.</change>
+        <change>생활패턴 데이터 확인 UI를 개선했어요</change>
+        <change>생활패턴 데이터 날짜 검색 기능을 추가했어요. 달력을 길게눌러 범위를 설정하세요.</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.0.7" versioncode="48">
         <change>Date : 2018-05-24</change>
         <change>지원 기기 확대</change>

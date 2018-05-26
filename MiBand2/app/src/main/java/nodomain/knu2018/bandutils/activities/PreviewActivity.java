@@ -60,6 +60,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+
+
+/**
+ *
+ *       ____  ____  _________    __  ____       _____    __    __ __ __________
+ *      / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ *     / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ *    / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ *   /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ *
+ *   Created by Dreamwalker on 2018-05-25.
+ *
+ */
+
+
 public class PreviewActivity extends AppCompatActivity implements UploadCallBacks {
 
     private static final String TAG = "PreviewActivity";

@@ -10,6 +10,20 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+
+/**
+ *
+ *       ____  ____  _________    __  ____       _____    __    __ __ __________
+ *      / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ *     / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ *    / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ *   /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ *
+ *   Created by Dreamwalker on 2018-05-25.
+ *
+ */
+
+
 public interface IUploadAPI {
 
     //@POST("upload/upload.php")
@@ -21,4 +35,10 @@ public interface IUploadAPI {
     @POST("bandutils/code/userRegister.php")
     Call<ResponseBody> registerUser(@Field("userName") String name, @Field("userUUID") String uuid);
 
+    @FormUrlEncoded
+    @POST("bandutils/code/userAppRating.php")
+    Call<ResponseBody> userAppRating(@Field("userName") String name,
+                                     @Field("userUUID") String uuid,
+                                     @Field("rating") String rating,
+                                     @Field("comment") String comment);
 }
