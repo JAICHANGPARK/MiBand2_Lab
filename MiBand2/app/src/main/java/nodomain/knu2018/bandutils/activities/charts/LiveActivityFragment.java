@@ -65,6 +65,9 @@ import nodomain.knu2018.bandutils.model.Measurement;
 import nodomain.knu2018.bandutils.util.GB;
 
 
+/**
+ * The type Live activity fragment.
+ */
 public class LiveActivityFragment extends AbstractChartFragment {
     private static final Logger LOG = LoggerFactory.getLogger(LiveActivityFragment.class);
     private static final int MAX_STEPS_PER_MINUTE = 300;
@@ -95,6 +98,12 @@ public class LiveActivityFragment extends AbstractChartFragment {
         private int maxStepsPerMinute;
         private int lastStepsPerMinute;
 
+        /**
+         * Gets steps per minute.
+         *
+         * @param reset the reset
+         * @return the steps per minute
+         */
         public int getStepsPerMinute(boolean reset) {
             lastStepsPerMinute = currentStepsPerMinute;
             int result = currentStepsPerMinute;
@@ -104,14 +113,30 @@ public class LiveActivityFragment extends AbstractChartFragment {
             return result;
         }
 
+        /**
+         * Gets total steps.
+         *
+         * @return the total steps
+         */
         public int getTotalSteps() {
             return steps;
         }
 
+        /**
+         * Gets max steps per minute.
+         *
+         * @return the max steps per minute
+         */
         public int getMaxStepsPerMinute() {
             return maxStepsPerMinute;
         }
 
+        /**
+         * Update current steps.
+         *
+         * @param stepsDelta the steps delta
+         * @param timestamp  the timestamp
+         */
         public void updateCurrentSteps(int stepsDelta, int timestamp) {
             try {
                 if (steps == 0) {

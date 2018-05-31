@@ -69,6 +69,9 @@ import nodomain.knu2018.bandutils.util.DeviceHelper;
 import nodomain.knu2018.bandutils.util.GB;
 
 
+/**
+ * The type Discovery activity.
+ */
 public class DiscoveryActivity extends AbstractGBActivity implements AdapterView.OnItemClickListener {
     private static final Logger LOG = LoggerFactory.getLogger(DiscoveryActivity.class);
     private static final long SCAN_DURATION = 60000; // 60s
@@ -229,6 +232,11 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         return newLeScanCallback;
     }
 
+    /**
+     * Log message content.
+     *
+     * @param value the value
+     */
     public void logMessageContent(byte[] value) {
         if (value != null) {
             for (byte b : value) {
@@ -253,9 +261,21 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
     private GBDeviceCandidate bondingDevice;
 
     private enum Scanning {
+        /**
+         * Scanning bt scanning.
+         */
         SCANNING_BT,
+        /**
+         * Scanning btle scanning.
+         */
         SCANNING_BTLE,
+        /**
+         * Scanning new btle scanning.
+         */
         SCANNING_NEW_BTLE,
+        /**
+         * Scanning off scanning.
+         */
         SCANNING_OFF
     }
 
@@ -313,6 +333,11 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         }
     }
 
+    /**
+     * On start button click.
+     *
+     * @param button the button
+     */
     public void onStartButtonClick(View button) {
         LOG.debug("Start Button clicked");
         if (isScanning()) {

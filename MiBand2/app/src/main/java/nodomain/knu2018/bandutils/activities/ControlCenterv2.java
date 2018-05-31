@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,6 +57,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -67,6 +70,8 @@ import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,27 +85,33 @@ import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.BuildConfig;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
+import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.activities.writing.WriteHomesActivity;
+import nodomain.knu2018.bandutils.activities.writing.WriteMealActivity;
+import nodomain.knu2018.bandutils.activities.writing.WriteMealSelectActivity;
+import nodomain.knu2018.bandutils.activities.writing.WriteSleepActivity;
 import nodomain.knu2018.bandutils.adapter.GBDeviceAdapterv2;
 import nodomain.knu2018.bandutils.devices.DeviceManager;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.util.AndroidUtils;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.Prefs;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
- *
- *       ____  ____  _________    __  ____       _____    __    __ __ __________
- *      / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
- *     / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
- *    / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
- *   /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
- *
- *   Created by Dreamwalker on 2018-05-21.
- *
+ *      ____  ____  _________    __  ____       _____    __    __ __ __________
+ *     / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ *    / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ *   / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ *  /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ * <p>
+ * Created by Dreamwalker on 2018-05-21.
  */
-
-
 //TODO: extend AbstractGBActivity, but it requires actionbar that is not available
 public class ControlCenterv2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GBActivity,
@@ -109,11 +120,25 @@ public class ControlCenterv2 extends AppCompatActivity
 
     private static final String TAG = "ControlCenterv2";
     private static final String APP_VERSION_KEY = "bandutil_version";
+    private static final String BASE_URL = "http://kangwonelec.com/";
 
+
+    /**
+     * The .
+     */
     PackageInfo i = null;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    /**
+     * The Version number.
+     */
     String versionNumber;
+    /**
+     * The Device version.
+     */
     String deviceVersion;
+    /**
+     * The Store version.
+     */
     String storeVersion;
 
 
@@ -130,13 +155,28 @@ public class ControlCenterv2 extends AppCompatActivity
 
     private boolean isLanguageInvalid = false;
 
+    /**
+     * The Lottie animation view.
+     */
     @BindView(R.id.lottie_animation)
     LottieAnimationView lottieAnimationView;
 
+    /**
+     * The Fab menu.
+     */
     FABRevealMenu fabMenu;
+    /**
+     * The UserInfo name.
+     */
     String userName;
+    /**
+     * The UserInfo uuid.
+     */
     String userUUID;
 
+    /**
+     * The App open count.
+     */
     int appOpenCount = 0;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -157,6 +197,16 @@ public class ControlCenterv2 extends AppCompatActivity
         }
     };
 
+    /**
+     * The Retrofit.
+     */
+    Retrofit retrofit;
+    /**
+     * The Service.
+     */
+    IUploadAPI service;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AbstractGBActivity.init(this, AbstractGBActivity.NO_ACTIONBAR);
@@ -165,9 +215,12 @@ public class ControlCenterv2 extends AppCompatActivity
         ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_navigation_bar));
 
         Paper.init(this);
 
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
+        service = retrofit.create(IUploadAPI.class);
 
         if (Paper.book().read("app_open_count") == null) {
             Paper.book().write("app_open_count", appOpenCount);
@@ -175,8 +228,8 @@ public class ControlCenterv2 extends AppCompatActivity
             appOpenCount = Paper.book().read("app_open_count");
             appOpenCount += 1;
 
-            if (appOpenCount == 5) {
-                Log.e(TAG, "onCreate: appOpenCount call 5: " + appOpenCount );
+            if (appOpenCount == 15) {
+                Log.e(TAG, "onCreate: appOpenCount call 10: " + appOpenCount );
                 popAppRating();
                 appOpenCount = 0;
             }
@@ -207,7 +260,7 @@ public class ControlCenterv2 extends AppCompatActivity
         userName = Paper.book().read("userName");
         userUUID = Paper.book().read("userUUID");
 
-        Log.e(TAG, "onCreate: " + userName + ", " + userUUID);
+        //Log.e(TAG, "onCreate: " + userName + ", " + userUUID);
 
 
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +287,8 @@ public class ControlCenterv2 extends AppCompatActivity
         // TODO: 2018-05-22 등록된 유저 정보 표기
         textUserName.setText(userName);
         textUserUUID.setText(userUUID);
+
+        headView.setOnClickListener(v -> startActivity(new Intent(ControlCenterv2.this, UserInformationActivity.class)));
 
         //end of material design boilerplate
         deviceManager = ((GBApplication) getApplication()).getDeviceManager();
@@ -309,6 +364,7 @@ public class ControlCenterv2 extends AppCompatActivity
         ChangeLog cl = createChangeLog();
         if (cl.isFirstRun()) {
             cl.getLogDialog().show();
+            onGuideTapTarget();
         }
 
         GBApplication.deviceService().start();
@@ -328,6 +384,67 @@ public class ControlCenterv2 extends AppCompatActivity
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
         fetchWelcome();
 
+        printKeyHash();
+
+    }
+
+    /**
+     * これなら、簡単にSHA取得でしる。
+     * @author : Dreamwalker.
+     */
+
+    private void printKeyHash(){
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("nodomain.knu2018.bandutils", PackageManager.GET_SIGNATURES);
+
+            for (android.content.pm.Signature s : info.signatures){
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(s.toByteArray());
+                Log.e(TAG, "printKeyHash: " + android.util.Base64.encodeToString(md.digest(), android.util.Base64.DEFAULT));
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 가이던스 뷰
+     * 시작시 한번 만 실행되도록 해야합니다.
+     * @author : 박제창 (Dreamwalker)
+     *
+     */
+    private void onGuideTapTarget(){
+
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(findViewById(R.id.fab),
+                        "터치하여 기록하기", "장비등록, 생활패턴 기록을 빠르게 기록하세요.")
+                        // All options below are optional
+                        .outerCircleColor(R.color.primary_custom_light)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.primary_custom_light)  // Specify the color of the description text
+                        .textColor(R.color.accent_custom)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .icon(getResources().getDrawable(R.drawable.ic_add))
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+
+                    }
+                });
     }
 
     private void popAppRating() {
@@ -380,9 +497,9 @@ public class ControlCenterv2 extends AppCompatActivity
 
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault_Light));
-            builder.setTitle("New version available");
-            builder.setMessage("Please, update app to new version");
-            builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.app_update_title);
+            builder.setMessage(R.string.app_update_message);
+            builder.setPositiveButton(R.string.app_update_positive, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -394,7 +511,7 @@ public class ControlCenterv2 extends AppCompatActivity
                     }
                 }
             });
-            builder.setNegativeButton("No, thanks", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(R.string.app_update_negative, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -683,7 +800,23 @@ public class ControlCenterv2 extends AppCompatActivity
     @Override
     public void onPositiveButtonClicked(int i, String s) {
 
+        String rate = String.valueOf(i);
 
+        Call<ResponseBody> comment = service.userAppRating(userName, userUUID, rate, s);
+        comment.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    Log.e(TAG, "onResponse: " + response.body() );
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(ControlCenterv2.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,8 @@
 package nodomain.knu2018.bandutils.Const;
 
+/**
+ *
+ */
 public class IntentConst {
 
     public static final String WRITE_DRUG_TYPE = "WRITE_DRUG_TYPE";

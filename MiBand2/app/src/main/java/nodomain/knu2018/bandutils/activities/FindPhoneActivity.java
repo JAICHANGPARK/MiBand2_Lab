@@ -38,9 +38,15 @@ import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.model.DeviceService;
 
 
+/**
+ * The type Find phone activity.
+ */
 public class FindPhoneActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(FindPhoneActivity.class);
 
+    /**
+     * The constant ACTION_FOUND.
+     */
     public static final String ACTION_FOUND
             = "nodomain.knu2018.gadgetbridge.findphone.action.reply";
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -58,8 +64,17 @@ public class FindPhoneActivity extends AbstractGBActivity {
         }
     };
 
+    /**
+     * The M audio manager.
+     */
     AudioManager mAudioManager;
+    /**
+     * The UserInfo volume.
+     */
     int userVolume;
+    /**
+     * The Mp.
+     */
     MediaPlayer mp;
 
     @Override
@@ -83,6 +98,9 @@ public class FindPhoneActivity extends AbstractGBActivity {
         playRingtone();
     }
 
+    /**
+     * Play ringtone.
+     */
     public void playRingtone(){
         mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         if (mAudioManager != null) {
@@ -104,6 +122,9 @@ public class FindPhoneActivity extends AbstractGBActivity {
 
     }
 
+    /**
+     * Stop sound.
+     */
     public void stopSound() {
         mAudioManager.setStreamVolume(AudioManager.STREAM_ALARM, userVolume, AudioManager.FLAG_PLAY_SOUND);
         mp.stop();

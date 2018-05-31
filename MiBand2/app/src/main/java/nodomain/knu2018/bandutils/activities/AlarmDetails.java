@@ -32,6 +32,9 @@ import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.util.DeviceHelper;
 
 
+/**
+ * The type Alarm details.
+ */
 public class AlarmDetails extends AbstractGBActivity {
 
     private GBAlarm alarm;

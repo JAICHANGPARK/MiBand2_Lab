@@ -23,7 +23,11 @@
         <item name="windowNoTitle">true</item>
         <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
         <item name="alertDialogStyle">@style/MyAlertDialogStyle</item>
+    </style>
 
+    <style name="GadgetbridgeTheme.NoActionBar2">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- dark theme -->
@@ -109,5 +113,20 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">#212121</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
 
 </resources>

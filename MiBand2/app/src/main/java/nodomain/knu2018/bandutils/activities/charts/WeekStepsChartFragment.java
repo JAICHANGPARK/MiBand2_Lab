@@ -28,6 +28,9 @@ import nodomain.knu2018.bandutils.model.ActivityAmounts;
 import nodomain.knu2018.bandutils.model.ActivityUser;
 
 
+/**
+ * The type Week steps chart fragment.
+ */
 public class WeekStepsChartFragment extends AbstractWeekChartFragment {
     @Override
     public String getTitle() {

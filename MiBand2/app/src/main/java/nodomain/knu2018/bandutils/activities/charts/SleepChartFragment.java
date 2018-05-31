@@ -57,7 +57,13 @@ import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 
 
+/**
+ * The type Sleep chart fragment.
+ */
 public class SleepChartFragment extends AbstractChartFragment {
+    /**
+     * The constant LOG.
+     */
     protected static final Logger LOG = LoggerFactory.getLogger(ActivitySleepChartFragment.class);
 
     private LineChart mActivityChart;
@@ -247,15 +253,31 @@ public class SleepChartFragment extends AbstractChartFragment {
         private String totalSleep;
         private final PieData pieData;
 
+        /**
+         * Instantiates a new My sleep charts data.
+         *
+         * @param totalSleep the total sleep
+         * @param pieData    the pie data
+         */
         public MySleepChartsData(String totalSleep, PieData pieData) {
             this.totalSleep = totalSleep;
             this.pieData = pieData;
         }
 
+        /**
+         * Gets pie data.
+         *
+         * @return the pie data
+         */
         public PieData getPieData() {
             return pieData;
         }
 
+        /**
+         * Gets total sleep.
+         *
+         * @return the total sleep
+         */
         public CharSequence getTotalSleep() {
             return totalSleep;
         }
@@ -265,15 +287,31 @@ public class SleepChartFragment extends AbstractChartFragment {
         private final DefaultChartsData<LineData> chartsData;
         private final MySleepChartsData pieData;
 
+        /**
+         * Instantiates a new My charts data.
+         *
+         * @param pieData    the pie data
+         * @param chartsData the charts data
+         */
         public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData) {
             this.pieData = pieData;
             this.chartsData = chartsData;
         }
 
+        /**
+         * Gets pie data.
+         *
+         * @return the pie data
+         */
         public MySleepChartsData getPieData() {
             return pieData;
         }
 
+        /**
+         * Gets charts data.
+         *
+         * @return the charts data
+         */
         public DefaultChartsData<LineData> getChartsData() {
             return chartsData;
         }

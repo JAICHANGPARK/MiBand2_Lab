@@ -608,4 +608,22 @@
         It should describe the category of notifications that will be sent through this channel
      -->
     <string name="default_notification_channel_name" translatable="true">News</string>
+
+    <string name="app_update_title">New version available</string>
+    <string name="app_update_message">Please, update app to new version</string>
+    <string name="app_update_positive">Update</string>
+    <string name="app_update_negative">No, thanks</string>
+
+    <string name="user_information_name">NAME</string>
+    <string name="user_information_uuid">UUID</string>
+    <string name="user_information_gender">GENDER</string>
+    <string name="user_information_birth">BIRTH</string>
+    <string name="user_information_email">EMAIL</string>
+    <string name="user_information_phone">PHONE NUMBER</string>
+    <string name="user_information_svae">SAVE</string>
+
+    <string name="FACEBOOK_APP_ID">169563493885122</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">baf822a230081139aad0b6dee673a649</string>
+
+
 </resources>

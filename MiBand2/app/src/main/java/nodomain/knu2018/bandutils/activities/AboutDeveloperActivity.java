@@ -12,11 +12,20 @@ import info.hoang8f.widget.FButton;
 import nodomain.knu2018.bandutils.Const.IntentConst;
 import nodomain.knu2018.bandutils.R;
 
+/**
+ * The type About developer activity.
+ */
 public class AboutDeveloperActivity extends AppCompatActivity {
 
+    /**
+     * The Github button.
+     */
     @BindView(R.id.GithubButton)
     FButton githubButton;
 
+    /**
+     * The Qiita button.
+     */
     @BindView(R.id.qiitaButton)
     FButton qiitaButton;
 
@@ -29,6 +38,11 @@ public class AboutDeveloperActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    /**
+     * On github clicked.
+     *
+     * @param view the view
+     */
     @OnClick(R.id.GithubButton)
     void onGithubClicked(View view) {
         Intent intent = new Intent(this, WebActivity.class);
@@ -36,6 +50,11 @@ public class AboutDeveloperActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * On qitta clicked.
+     *
+     * @param view the view
+     */
     @OnClick(R.id.qiitaButton)
     void onQittaClicked(View view) {
         Intent intent = new Intent(this, WebActivity.class);

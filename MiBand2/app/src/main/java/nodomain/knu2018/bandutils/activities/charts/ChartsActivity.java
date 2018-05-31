@@ -55,6 +55,9 @@ import nodomain.knu2018.bandutils.util.DeviceHelper;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.LimitedQueue;
 
+/**
+ * The type Charts activity.
+ */
 public class ChartsActivity extends AbstractGBFragmentActivity implements ChartsHost {
 
     private TextView mDateControl;
@@ -63,12 +66,21 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
     private Date mEndDate;
     private SwipeRefreshLayout swipeLayout;
 
+    /**
+     * The M activity amount cache.
+     */
     LimitedQueue mActivityAmountCache = new LimitedQueue(60);
 
     private static class ShowDurationDialog extends Dialog {
         private final String mDuration;
         private TextView durationLabel;
 
+        /**
+         * Instantiates a new Show duration dialog.
+         *
+         * @param duration the duration
+         * @param context  the context
+         */
         ShowDurationDialog(String duration, Context context) {
             super(context);
             mDuration = duration;
@@ -83,6 +95,11 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
             setDuration(mDuration);
         }
 
+        /**
+         * Sets duration.
+         *
+         * @param duration the duration
+         */
         public void setDuration(String duration) {
             if (mDuration != null) {
                 durationLabel.setText(duration);
@@ -199,6 +216,9 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
         return getString(R.string.sleep_activity_date_range, dateStringFrom, dateStringTo);
     }
 
+    /**
+     * Init dates.
+     */
     protected void initDates() {
         setEndDate(new Date());
         setStartDate(DateTimeUtils.shiftByDays(getEndDate(), -1));
@@ -304,6 +324,11 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
      */
     public class SectionsPagerAdapter extends AbstractFragmentPagerAdapter {
 
+        /**
+         * Instantiates a new Sections pager adapter.
+         *
+         * @param fm the fm
+         */
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -359,8 +384,17 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
     }
 }
 
+/**
+ * The type Non swipeable view pager.
+ */
 class NonSwipeableViewPager extends ViewPager {
 
+    /**
+     * Instantiates a new Non swipeable view pager.
+     *
+     * @param context the context
+     * @param attrs   the attrs
+     */
     public NonSwipeableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

@@ -57,20 +57,35 @@ import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.ImportExportSharedPreferences;
 
 
+/**
+ * The type Db management activity.
+ */
 public class DbManagementActivity extends AbstractGBActivity {
     private static final String TAG = "DbManagementActivity";
     private static final Logger LOG = LoggerFactory.getLogger(DbManagementActivity.class);
     private static SharedPreferences sharedPrefs;
     private ImportExportSharedPreferences shared_file = new ImportExportSharedPreferences();
 
+    /**
+     * The Export db button.
+     */
     @BindView(R.id.exportDBButton)
     Button exportDBButton;
+    /**
+     * The Import db button.
+     */
     @BindView(R.id.importDBButton)
     Button importDBButton;
 
+    /**
+     * The Compress db button.
+     */
     @BindView(R.id.compressDBButton)
     Button compressDBButton;
 
+    /**
+     * The Zip archive.
+     */
     ZipArchive zipArchive;
     
     //private Button exportDBButton;
@@ -111,6 +126,9 @@ public class DbManagementActivity extends AbstractGBActivity {
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
+    /**
+     * On export db button clicked.
+     */
     @OnClick(R.id.exportDBButton)
     public void onExportDBButtonClicked(){
         exportDB();
@@ -118,18 +136,30 @@ public class DbManagementActivity extends AbstractGBActivity {
         Snackbar.make(getWindow().getDecorView().getRootView(),"추출완료", Snackbar.LENGTH_SHORT).show();
     }
 
+    /**
+     * On import db button clicked.
+     */
     @OnClick(R.id.importDBButton)
     public void onImportDBButtonClicked(){
         importDB();
     }
 
+    /**
+     * On compress db button clicked.
+     */
     @OnClick(R.id.compressDBButton)
     public void onCompressDBButtonClicked(){
         zipFile();
     }
 
 
-    // TODO: 2018-05-06 데이터베이스 추출하는 코드
+    /**
+     * Sqlite export.
+     *
+     * @param dbName         the db name
+     * @param exportFileName the export file name
+     */
+// TODO: 2018-05-06 데이터베이스 추출하는 코드
     public void sqliteExport(String dbName, String exportFileName) {
         //Context ctx = this; // for Activity, or Service. Otherwise simply get the context.
         //String dbname = "mydb.db";

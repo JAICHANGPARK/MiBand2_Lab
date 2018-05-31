@@ -25,9 +25,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="cyanogenmod.permission.ACCESS_WEATHER_MANAGER" />
     <uses-permission android:name="cyanogenmod.permission.READ_WEATHER" />
     <uses-permission android:name="org.omnirom.omnijaws.READ_WEATHER" />
@@ -73,9 +73,23 @@
         android:roundIcon="@mipmap/ic_launcher_02_round"
         android:theme="@style/GadgetbridgeTheme"
         tools:replace="android:allowBackup">
+
+
+        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
+        <meta-data android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+
+        <activity
+            android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+
+
         <activity
             android:name=".activities.ControlCenterv2"
             android:label="@string/title_activity_controlcenter"
+            android:screenOrientation="portrait"
             android:theme="@style/GadgetbridgeTheme.NoActionBar">
 
             <!-- <intent-filter> -->
@@ -484,29 +498,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.WriteHomesActivity"
+            android:name=".activities.writing.WriteHomesActivity"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
-            android:name=".activities.WriteBloodActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:name=".activities.writing.WriteBloodActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
-            android:name=".activities.WriteFitnessActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:name=".activities.writing.WriteFitnessActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
-            android:name=".activities.WriteMealActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:name=".activities.writing.WriteMealActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
-            android:name=".activities.WriteDrugActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:name=".activities.writing.WriteDrugActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
-            android:name=".activities.WriteSleepActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:name=".activities.writing.WriteSleepActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
             android:name=".activities.OpenSourceLicenseActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
             android:name=".activities.ReadDBActivity"
-            android:parentActivityName=".activities.ControlCenterv2" />
+            android:parentActivityName=".activities.ControlCenterv2"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ControlCenterv2" />
+        </activity>
         <activity
             android:name=".activities.AboutContactActivity"
             android:parentActivityName=".activities.ControlCenterv2">
@@ -514,11 +533,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ControlCenterv2" />
         </activity>
-        <activity android:name=".activities.WriteMealSelectActivity" />
+        <activity android:name=".activities.writing.WriteMealSelectActivity" />
         <activity
             android:name=".activities.PreviewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.WriteMealPhotoActivity" />
+        <activity android:name=".activities.writing.WriteMealPhotoActivity" />
         <activity
             android:name=".activities.CameraActivity"
             android:screenOrientation="portrait"
@@ -545,10 +564,10 @@
         <activity android:name=".activities.AppLabActivity" />
         <activity
             android:name=".activities.WebActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
             android:name=".activities.AboutDeveloperActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity
             android:name=".activities.AppIntroV1Activity"
             android:screenOrientation="portrait"
@@ -564,7 +583,7 @@
         <activity
             android:name=".activities.initfood.FoodFetchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar" />
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
 
         <service android:name=".service.fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -577,7 +596,13 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.initfood.SearchFoodActivity"></activity>
+        <activity android:name=".activities.initfood.SearchFoodActivity" >
+        </activity>
+
+        <activity android:name=".activities.UserInformationActivity"
+            android:parentActivityName=".activities.ControlCenterv2">
+
+        </activity>
     </application>
 
 </manifest>

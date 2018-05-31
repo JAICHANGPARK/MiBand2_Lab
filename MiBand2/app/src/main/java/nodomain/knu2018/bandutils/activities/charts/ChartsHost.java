@@ -22,22 +22,69 @@ import java.util.Date;
 
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
+/**
+ * The interface Charts host.
+ */
 public interface ChartsHost {
+    /**
+     * The constant DATE_PREV.
+     */
     String DATE_PREV = ChartsActivity.class.getName().concat(".date_prev");
+    /**
+     * The constant DATE_NEXT.
+     */
     String DATE_NEXT = ChartsActivity.class.getName().concat(".date_next");
+    /**
+     * The constant REFRESH.
+     */
     String REFRESH = ChartsActivity.class.getName().concat(".refresh");
 
+    /**
+     * Gets device.
+     *
+     * @return the device
+     */
     GBDevice getDevice();
 
+    /**
+     * Sets start date.
+     *
+     * @param startDate the start date
+     */
     void setStartDate(Date startDate);
 
+    /**
+     * Sets end date.
+     *
+     * @param endDate the end date
+     */
     void setEndDate(Date endDate);
 
+    /**
+     * Gets start date.
+     *
+     * @return the start date
+     */
     Date getStartDate();
 
+    /**
+     * Gets end date.
+     *
+     * @return the end date
+     */
     Date getEndDate();
 
+    /**
+     * Sets date info.
+     *
+     * @param dateInfo the date info
+     */
     void setDateInfo(String dateInfo);
 
+    /**
+     * Gets date bar.
+     *
+     * @return the date bar
+     */
     ViewGroup getDateBar();
 }

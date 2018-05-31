@@ -25,18 +25,42 @@ import nodomain.knu2018.bandutils.adapter.foodadapter.SearchAdapter;
 import nodomain.knu2018.bandutils.database.fooddb.DBHelper;
 import nodomain.knu2018.bandutils.model.foodmodel.Food;
 
+/**
+ * The type Search food activity.
+ */
 public class SearchFoodActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchFoodActivity";
 
     private static final int REQUEST_PERMISSION = 1000;
 
+    /**
+     * The Recycler view.
+     */
     RecyclerView recyclerView;
+    /**
+     * The Layout manager.
+     */
     RecyclerView.LayoutManager layoutManager;
+    /**
+     * The Adapter.
+     */
     SearchAdapter adapter;
+    /**
+     * The Material search bar.
+     */
     MaterialSearchBar materialSearchBar;
+    /**
+     * The Suggest list.
+     */
     List<String> suggestList = new ArrayList<>();
+    /**
+     * The Food list.
+     */
     ArrayList<Food> foodList  = new ArrayList<>();
+    /**
+     * The Db helper.
+     */
     DBHelper dbHelper;
 
     @Override
@@ -137,6 +161,9 @@ public class SearchFoodActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Sqlite export.
+     */
     public void sqliteExport(){
         //Context ctx = this; // for Activity, or Service. Otherwise simply get the context.
         //String dbname = "mydb.db";
@@ -170,6 +197,9 @@ public class SearchFoodActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * The type Background task.
+     */
     class BackgroundTask extends AsyncTask<Void, Void, String> {
 
         @Override
