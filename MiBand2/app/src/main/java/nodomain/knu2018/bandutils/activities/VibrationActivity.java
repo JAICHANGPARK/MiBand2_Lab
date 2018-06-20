@@ -26,6 +26,9 @@ import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
 
 
+/**
+ * The type Vibration activity.
+ */
 public class VibrationActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(VibrationActivity.class);
     private SeekBar seekBar;

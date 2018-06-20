@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/r1"
-    tools:context="nodomain.knu2018.bandutils.activities.WriteMealSelectActivity">
+    tools:context="nodomain.knu2018.bandutils.activities.writing.WriteMealSelectActivity">
 
     <ScrollView
         android:layout_width="match_parent"

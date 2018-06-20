@@ -47,6 +47,9 @@ import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.util.GB;
 
 
+/**
+ * The type Cal blacklist activity.
+ */
 public class CalBlacklistActivity extends AbstractGBActivity {
 
     private final String[] EVENT_PROJECTION = new String[]{
@@ -110,10 +113,19 @@ public class CalBlacklistActivity extends AbstractGBActivity {
         checked.toggle();
     }
 
+    /**
+     * The type Calendar.
+     */
     class Calendar {
         private final String displayName;
         private final int color;
 
+        /**
+         * Instantiates a new Calendar.
+         *
+         * @param displayName the display name
+         * @param color       the color
+         */
         public Calendar(String displayName, int color) {
             this.displayName = displayName;
             this.color = color;
@@ -122,6 +134,12 @@ public class CalBlacklistActivity extends AbstractGBActivity {
 
     private class CalendarListAdapter extends ArrayAdapter<Calendar> {
 
+        /**
+         * Instantiates a new Calendar list adapter.
+         *
+         * @param context   the context
+         * @param calendars the calendars
+         */
         CalendarListAdapter(@NonNull Context context, @NonNull List<Calendar> calendars) {
             super(context, 0, calendars);
         }

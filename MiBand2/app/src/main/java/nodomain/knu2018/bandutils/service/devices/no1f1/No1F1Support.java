@@ -129,7 +129,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
                 LOG.info("Time is set to: " + (data[1] * 256 + ((int) data[2] & 0xff)) + "-" + data[3] + "-" + data[4] + " " + data[5] + ":" + data[6] + ":" + data[7]);
                 return true;
             case No1F1Constants.CMD_USER_DATA:
-                LOG.info("User data updated");
+                LOG.info("UserInfo data updated");
                 return true;
             case No1F1Constants.CMD_FETCH_STEPS:
             case No1F1Constants.CMD_FETCH_SLEEP:

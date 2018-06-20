@@ -43,6 +43,7 @@ import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -69,8 +70,12 @@ import nodomain.knu2018.bandutils.util.DeviceHelper;
 import nodomain.knu2018.bandutils.util.GB;
 
 
+/**
+ * The type Discovery activity.
+ */
 public class DiscoveryActivity extends AbstractGBActivity implements AdapterView.OnItemClickListener {
     private static final Logger LOG = LoggerFactory.getLogger(DiscoveryActivity.class);
+    private static final String TAG = "DiscoveryActivity";
     private static final long SCAN_DURATION = 60000; // 60s
 
     private ScanCallback newLeScanCallback = null;
@@ -229,6 +234,11 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         return newLeScanCallback;
     }
 
+    /**
+     * Log message content.
+     *
+     * @param value the value
+     */
     public void logMessageContent(byte[] value) {
         if (value != null) {
             for (byte b : value) {
@@ -253,9 +263,21 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
     private GBDeviceCandidate bondingDevice;
 
     private enum Scanning {
+        /**
+         * Scanning bt scanning.
+         */
         SCANNING_BT,
+        /**
+         * Scanning btle scanning.
+         */
         SCANNING_BTLE,
+        /**
+         * Scanning new btle scanning.
+         */
         SCANNING_NEW_BTLE,
+        /**
+         * Scanning off scanning.
+         */
         SCANNING_OFF
     }
 
@@ -265,12 +287,8 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
 
         setContentView(R.layout.activity_discovery);
         startButton = findViewById(R.id.discovery_start);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onStartButtonClick(startButton);
-            }
-        });
+
+        startButton.setOnClickListener(v -> onStartButtonClick(startButton));
 
         progressView = findViewById(R.id.discovery_progressbar);
         progressView.setProgress(0);
@@ -313,6 +331,11 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         }
     }
 
+    /**
+     * On start button click.
+     *
+     * @param button the button
+     */
     public void onStartButtonClick(View button) {
         LOG.debug("Start Button clicked");
         if (isScanning()) {
@@ -354,6 +377,7 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
             }
         }
         if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+            Log.e(TAG, "handleDeviceFound: " +  device.getName() + device.getAddress() +"이미 연결된 장비입니다. " );
             return; // ignore already bonded devices
         }
 
@@ -522,6 +546,16 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
             adapter.getBluetoothLeScanner().startScan(getScanFilters(), getScanSettings(), getScanCallback());
     }
 
+
+    /**
+     * ScanFilter를 통해 원하는 장비만들 스캔해서 가져옵니다.
+     * DeviceHelper 싱글톤 클래스 내의 장비 모든 정보를 가져옵니다.
+     * getAllCoordinators() 메소드를 확인하세요
+     *
+     * @return
+     *
+     * @author : 박제창(Dreamwalker)
+     */
     private List<ScanFilter> getScanFilters() {
         List<ScanFilter> allFilters = new ArrayList<>();
         for (DeviceCoordinator coordinator : DeviceHelper.getInstance().getAllCoordinators()) {

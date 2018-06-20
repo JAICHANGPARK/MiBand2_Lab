@@ -608,4 +608,38 @@
         It should describe the category of notifications that will be sent through this channel
      -->
     <string name="default_notification_channel_name" translatable="true">News</string>
+
+    <string name="app_update_title">New version available</string>
+    <string name="app_update_message">Please, update app to new version</string>
+    <string name="app_update_positive">Update</string>
+    <string name="app_update_negative">No, thanks</string>
+
+    <string name="user_information_name">NAME</string>
+    <string name="user_information_uuid">UUID</string>
+    <string name="user_information_aim">AIM INTERVAL</string>
+    <string name="user_information_gender">GENDER</string>
+    <string name="user_information_age">AGE</string>
+    <string name="user_information_birth">BIRTH</string>
+    <string name="user_information_email">EMAIL</string>
+    <string name="user_information_phone">PHONE NUMBER</string>
+    <string name="user_information_svae">SAVE</string>
+
+    <string name="FACEBOOK_APP_ID">169563493885122</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">baf822a230081139aad0b6dee673a649</string>
+
+    <string name="app_rating_title">Rate this application</string>
+    <string name="app_rating_description">Please select some stars and give your feedback</string>
+    <string name="app_rating_hint">Please write your comment here ...</string>
+    <string name="app_rating_positive_button">Submit</string>
+    <string name="app_rating_negative_button">Cancle</string>
+    <string name="app_rating_neutral_button">Later</string>
+
+    <string name="category_toolbar">CATEGORY</string>
+    <string name="category_first_image">Fitness Device</string>
+    <string name="category_second_image">Intake Device</string>
+    <string name="category_third_image">Drug Device</string>
+    <string name="category_fourth_image">GSM Device</string>
+    <string name="category_bottom_image">Select Category</string>
+    <string name="category_select_text">Choose your Device</string>
+
 </resources>

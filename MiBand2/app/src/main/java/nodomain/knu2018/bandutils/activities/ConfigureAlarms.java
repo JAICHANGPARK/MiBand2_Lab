@@ -38,6 +38,9 @@ import nodomain.knu2018.bandutils.util.Prefs;
 import static nodomain.knu2018.bandutils.devices.miband.MiBandConst.PREF_MIBAND_ALARMS;
 
 
+/**
+ * The type Configure alarms.
+ */
 public class ConfigureAlarms extends AbstractGBActivity {
 
     private static final int REQ_CONFIGURE_ALARM = 1;
@@ -108,6 +111,11 @@ public class ConfigureAlarms extends AbstractGBActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Configure alarm.
+     *
+     * @param alarm the alarm
+     */
     public void configureAlarm(GBAlarm alarm) {
         avoidSendAlarmsToDevice = true;
         Intent startIntent = new Intent(getApplicationContext(), AlarmDetails.class);

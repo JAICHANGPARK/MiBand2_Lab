@@ -41,6 +41,9 @@ import nodomain.knu2018.bandutils.util.AndroidUtils;
 import nodomain.knu2018.bandutils.util.GB;
 
 
+/**
+ * The type Activity summaries activity.
+ */
 public class ActivitySummariesActivity extends AbstractListActivity<BaseActivitySummary> {
 
     private GBDevice mGBDevice;
@@ -214,6 +217,9 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
         });
     }
 
+    /**
+     * Reset fetch timestamp to chosen date.
+     */
     public void resetFetchTimestampToChosenDate() {
         final Calendar currentDate = Calendar.getInstance();
         new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {

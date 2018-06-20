@@ -25,6 +25,9 @@ import com.github.mikephil.charting.data.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Single entry value animator.
+ */
 public class SingleEntryValueAnimator extends ChartAnimator {
     private static final Logger LOG = LoggerFactory.getLogger(SingleEntryValueAnimator.class);
 
@@ -32,12 +35,23 @@ public class SingleEntryValueAnimator extends ChartAnimator {
     private final ValueAnimator.AnimatorUpdateListener listener;
     private float previousValue;
 
+    /**
+     * Instantiates a new Single entry value animator.
+     *
+     * @param singleEntry the single entry
+     * @param listener    the listener
+     */
     public SingleEntryValueAnimator(Entry singleEntry, ValueAnimator.AnimatorUpdateListener listener) {
         super(listener);
         this.listener = listener;
         entry = singleEntry;
     }
 
+    /**
+     * Sets entry y value.
+     *
+     * @param value the value
+     */
     public void setEntryYValue(float value) {
         this.previousValue = entry.getY();
         entry.setY(value);

@@ -202,7 +202,7 @@ public class DBHelper {
      *
      * Note: so far there is only ever a single user; there is no multi-user support yet
      * @param session
-     * @return the User entity
+     * @return the UserInfo entity
      */
     @NonNull
     public static User getUser(DaoSession session) {

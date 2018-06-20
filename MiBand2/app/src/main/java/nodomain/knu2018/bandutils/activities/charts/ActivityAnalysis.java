@@ -28,14 +28,26 @@ import nodomain.knu2018.bandutils.model.ActivityAmounts;
 import nodomain.knu2018.bandutils.model.ActivityKind;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 
+/**
+ * The type Activity analysis.
+ */
 class ActivityAnalysis {
     private static final Logger LOG = LoggerFactory.getLogger(ActivityAnalysis.class);
 
-    // store raw steps and duration
+    /**
+     * The Stats.
+     */
+// store raw steps and duration
     protected HashMap<Integer, Long> stats = new HashMap<Integer, Long>();
     // max speed determined from samples
     private int maxSpeed = 0;
 
+    /**
+     * Calculate activity amounts activity amounts.
+     *
+     * @param samples the samples
+     * @return the activity amounts
+     */
     ActivityAmounts calculateActivityAmounts(List<? extends ActivitySample> samples) {
         ActivityAmount deepSleep = new ActivityAmount(ActivityKind.TYPE_DEEP_SLEEP);
         ActivityAmount lightSleep = new ActivityAmount(ActivityKind.TYPE_LIGHT_SLEEP);
@@ -113,6 +125,12 @@ class ActivityAnalysis {
         return result;
     }
 
+    /**
+     * Calculate total steps int.
+     *
+     * @param samples the samples
+     * @return the int
+     */
     int calculateTotalSteps(List<? extends ActivitySample> samples) {
         int totalSteps = 0;
         for (ActivitySample sample : samples) {

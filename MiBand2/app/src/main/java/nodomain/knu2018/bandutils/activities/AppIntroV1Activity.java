@@ -39,6 +39,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * The type App intro v 1 activity.
+ */
 public class AppIntroV1Activity extends WoWoActivity {
     private static final String TAG = "AppIntroV1Activity";
 
@@ -49,13 +52,31 @@ public class AppIntroV1Activity extends WoWoActivity {
     private ImageView targetPlanet;
     private View loginLayout;
 
+    /**
+     * The Retrofit.
+     */
     Retrofit retrofit;
+    /**
+     * The Service.
+     */
     IUploadAPI service;
 
+    /**
+     * The Pref.
+     */
     SharedPreferences pref;
+    /**
+     * The UserInfo name.
+     */
     String userName;
+    /**
+     * The UserInfo uuid.
+     */
     String userUUID;
 
+    /**
+     * The Dialog.
+     */
     AlertDialog dialog;
 
     @Override
@@ -325,7 +346,6 @@ public class AppIntroV1Activity extends WoWoActivity {
                                     ed.putBoolean("activity_executed", true);
                                     //ed.commit();
                                     ed.apply();
-
 
                                     Paper.book().write("userName", userName);
                                     Paper.book().write("userUUID", userUUID);

@@ -87,6 +87,12 @@ public abstract class AbstractSettingsActivity extends AppCompatPreferenceActivi
             return true;
         }
 
+        /**
+         * Update summary.
+         *
+         * @param preference the preference
+         * @param value      the value
+         */
         public void updateSummary(Preference preference, Object value) {
             String stringValue = String.valueOf(value);
 
@@ -113,6 +119,11 @@ public abstract class AbstractSettingsActivity extends AppCompatPreferenceActivi
     private static class ExtraSetSummaryOnChangeListener extends SimpleSetSummaryOnChangeListener {
         private final Preference.OnPreferenceChangeListener prefChangeListener;
 
+        /**
+         * Instantiates a new Extra set summary on change listener.
+         *
+         * @param prefChangeListener the pref change listener
+         */
         public ExtraSetSummaryOnChangeListener(Preference.OnPreferenceChangeListener prefChangeListener) {
             this.prefChangeListener = prefChangeListener;
         }
@@ -174,6 +185,8 @@ public abstract class AbstractSettingsActivity extends AppCompatPreferenceActivi
      * Subclasses should reimplement this to return the keys of those
      * preferences which should print its values as a summary below the
      * preference name.
+     *
+     * @return the string [ ]
      */
     protected String[] getPreferenceKeysWithSummary() {
         return new String[0];

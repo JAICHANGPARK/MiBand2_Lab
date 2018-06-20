@@ -32,10 +32,19 @@ import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.util.AndroidUtils;
 
 
+/**
+ * The type Abstract gb activity.
+ */
 public abstract class AbstractGBActivity extends AppCompatActivity implements GBActivity {
     private boolean isLanguageInvalid = false;
 
+    /**
+     * The constant NONE.
+     */
     public static final int NONE = 0;
+    /**
+     * The constant NO_ACTIONBAR.
+     */
     public static final int NO_ACTIONBAR = 1;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -63,10 +72,21 @@ public abstract class AbstractGBActivity extends AppCompatActivity implements GB
         AndroidUtils.setLanguage(this, language);
     }
 
+    /**
+     * Init.
+     *
+     * @param activity the activity
+     */
     public static void init(GBActivity activity) {
         init(activity, NONE);
     }
 
+    /**
+     * Init.
+     *
+     * @param activity the activity
+     * @param flags    the flags
+     */
     public static void init(GBActivity activity, int flags) {
         if (GBApplication.isDarkThemeEnabled()) {
             if ((flags & NO_ACTIONBAR) != 0) {

@@ -55,9 +55,15 @@ import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_STEPS_GOAL
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_WEIGHT_KG;
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_YEAR_OF_BIRTH;
 
+/**
+ * The type Settings activity.
+ */
 public class SettingsActivity extends AbstractSettingsActivity {
     private static final Logger LOG = LoggerFactory.getLogger(SettingsActivity.class);
 
+    /**
+     * The constant PREF_MEASUREMENT_SYSTEM.
+     */
     public static final String PREF_MEASUREMENT_SYSTEM = "measurement_system";
 
     private static final int FILE_REQUEST_CODE = 4711;

@@ -9,14 +9,13 @@
     <color name="accent" type="color">#0091ea</color>
 
 
-    <color name="primary_custom_light" type="color">#607D8B</color>
-    <color name="primarydark_custom_light" type="color">#455A64</color>
+    <color name="primary_custom_light">#607D8B</color>
+    <color name="primarydark_custom_light">#455A64</color>
 
-    <color name="primary_custom_dark" type="color">#607D8B</color>
-    <color name="primarydark_custom_dark" type="color">#455A64</color>
+    <color name="primary_custom_dark">#607D8B</color>
+    <color name="primarydark_custom_dark">#455A64</color>
 
-    <color name="accent_custom" type="color">#ff9800</color>
-
+    <color name="accent_custom">#ff9800</color>
 
 
     <color name="primarytext_light" type="color">#000000</color>
@@ -78,4 +77,20 @@
     <color name="rocket_fire">#EFC75E</color>
 
 
+    <!--app rating dialog-->
+
+    <color name="starColor">#45b9ad</color>
+    <color name="noteDescriptionTextColor">#45b9ad</color>
+    <color name="titleTextColor">#FFFFFF</color>
+    <color name="descriptionTextColor">#A6FFFFFF</color>
+    <color name="commentTextColor">#FFFFFF</color>
+    <color name="hintTextColor">#FFFFFF</color>
+
+    <!--time-line-pallett-->
+
+    <color name="time_line_color_1">#f79f79</color>
+    <color name="time_line_color_2">#f7d08a</color>
+    <color name="time_line_color_3">#e3f09b</color>
+    <color name="time_line_color_4">#87b6a7</color>
+    <color name="time_line_color_5">#5b5941</color>
 </resources>

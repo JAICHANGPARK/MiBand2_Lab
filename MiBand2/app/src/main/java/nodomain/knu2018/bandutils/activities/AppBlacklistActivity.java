@@ -31,6 +31,9 @@ import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.adapter.AppBlacklistAdapter;
 
 
+/**
+ * The type App blacklist activity.
+ */
 public class AppBlacklistActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(AppBlacklistActivity.class);
 

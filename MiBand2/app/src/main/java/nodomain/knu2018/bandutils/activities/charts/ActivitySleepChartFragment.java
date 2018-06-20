@@ -45,7 +45,13 @@ import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 
 
+/**
+ * The type Activity sleep chart fragment.
+ */
 public class ActivitySleepChartFragment extends AbstractChartFragment {
+    /**
+     * The constant LOG.
+     */
     protected static final Logger LOG = LoggerFactory.getLogger(ActivitySleepChartFragment.class);
 
     private LineChart mChart;

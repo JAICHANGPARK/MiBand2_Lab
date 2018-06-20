@@ -2,8 +2,12 @@ apply plugin: "com.android.application"
 apply plugin: "findbugs"
 apply plugin: "pmd"
 apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
+
 
 def ABORT_ON_CHECK_FAILURE = false
+def htextview_version = "0.1.6"
+
 
 tasks.withType(Test) {
     systemProperty "MiFirmwareDir", System.getProperty("MiFirmwareDir", null)
@@ -33,8 +37,8 @@ android {
         targetSdkVersion 27
 
         // Note: always bump BOTH versionCode and versionName!
-        versionName "1.0.7"
-        versionCode 5
+        versionName "1.0.16"
+        versionCode 14
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -60,6 +64,7 @@ android {
     }
     productFlavors {
     }
+
 }
 
 pmd {
@@ -85,6 +90,12 @@ dependencies {
     implementation('com.github.tony19:logback-android-classic:1.1.1-6') {
         exclude group: "com.google.android", module: "android"
     }
+
+    implementation 'com.android.billingclient:billing:1.1'
+
+
+    implementation 'com.android.support:support-annotations:27.1.1'
+
     implementation 'org.slf4j:slf4j-api:1.7.12'
     implementation 'com.github.Freeyourgadget:MPAndroidChart:5e5bd6c1d3e95c515d4853647ae554e48ee1d593'
     implementation 'com.github.pfichtner:durationformatter:0.1.1'
@@ -132,6 +143,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-config:15.0.2'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
 
     implementation 'com.github.d-max:spots-dialog:0.7@aar' // Spot Dialog
     implementation 'com.github.jd-alexander:android-flat-button:v1.1' //fbutton
@@ -139,7 +151,38 @@ dependencies {
     implementation 'com.nightonke:wowoviewpager:2.0.0'
 
     implementation 'com.github.mancj:MaterialSearchBar:0.7.6'
+    implementation 'com.stepstone.apprating:app-rating:2.2.0'
+    implementation 'com.github.vipulasri:timelineview:1.0.6'
+    implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.1'
 
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
+    implementation 'com.sdsmdg.harjot:rotatingtext:1.0.2'
+    implementation 'com.hanks:htextview-base:0.1.6'       // base library
+    implementation 'com.hanks:htextview-scale:0.1.6'       // optional
+
+    implementation 'com.sunfusheng:marqueeview:1.3.3'
+
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
+
+    implementation 'com.github.sharish:CreditCardView:v1.0.4'
+
+    implementation 'com.tomer:fadingtextview:2.5'
+    implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
+    implementation 'com.facebook.android:account-kit-sdk:4.+'
+
+    implementation 'com.szagurskii:patternedtextwatcher:0.5.0'
+
+    implementation 'com.tomer:fadingtextview:2.5'
+    implementation 'com.ruesga.timeline-chart-view:timeline-chart-view:1.0.2'
+
+    implementation 'com.github.florent37:diagonallayout:1.0.7'
+    implementation 'com.github.santalu:diagonal-imageview:1.0.5'
+    implementation 'com.github.IntruderShanky:Frisson:2.1.1'
+
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.mikhaellopez:circularimageview:3.0.2'
     //    implementation project(":DaoCore")
 
 }

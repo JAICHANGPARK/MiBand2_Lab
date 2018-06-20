@@ -15,13 +15,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import nodomain.knu2018.bandutils.R;
 
+/**
+ * The type Camera activity.
+ */
 public class CameraActivity extends AppCompatActivity {
 
     private static final String TAG = CameraActivity.class.getSimpleName();
 
+    /**
+     * The Parent.
+     */
     @BindView(R.id.contentFrame)
     ViewGroup parent;
 
+    /**
+     * The Camera.
+     */
     @BindView(R.id.camera)
     CameraView camera;
 
@@ -75,8 +84,23 @@ public class CameraActivity extends AppCompatActivity {
 
     private static abstract class CameraSetting {
 
+        /**
+         * Gets title.
+         *
+         * @return the title
+         */
         abstract String getTitle();
+
+        /**
+         * Gets value.
+         *
+         * @return the value
+         */
         abstract String getValue();
+
+        /**
+         * Toggle.
+         */
         abstract void toggle();
 
     }

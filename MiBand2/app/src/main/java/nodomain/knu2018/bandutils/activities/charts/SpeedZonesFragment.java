@@ -45,7 +45,13 @@ import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.ActivityUser;
 
 
+/**
+ * The type Speed zones fragment.
+ */
 public class SpeedZonesFragment extends AbstractChartFragment {
+    /**
+     * The constant LOG.
+     */
     protected static final Logger LOG = LoggerFactory.getLogger(SpeedZonesFragment.class);
 
     private HorizontalBarChart mStatsChart;
@@ -152,10 +158,20 @@ public class SpeedZonesFragment extends AbstractChartFragment {
     private static class MySpeedZonesData extends ChartsData {
         private final BarData barData;
 
+        /**
+         * Instantiates a new My speed zones data.
+         *
+         * @param barData the bar data
+         */
         MySpeedZonesData(BarData barData) {
             this.barData = barData;
         }
 
+        /**
+         * Gets bar data.
+         *
+         * @return the bar data
+         */
         BarData getBarData() {
             return barData;
         }
@@ -164,10 +180,20 @@ public class SpeedZonesFragment extends AbstractChartFragment {
     private static class MyChartsData extends ChartsData {
         private final MySpeedZonesData chartsData;
 
+        /**
+         * Instantiates a new My charts data.
+         *
+         * @param chartsData the charts data
+         */
         MyChartsData(MySpeedZonesData chartsData) {
             this.chartsData = chartsData;
         }
 
+        /**
+         * Gets charts data.
+         *
+         * @return the charts data
+         */
         MySpeedZonesData getChartsData() {
             return chartsData;
         }

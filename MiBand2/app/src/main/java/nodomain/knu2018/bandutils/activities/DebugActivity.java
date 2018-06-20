@@ -56,6 +56,9 @@ import nodomain.knu2018.bandutils.util.GB;
 import static nodomain.knu2018.bandutils.util.GB.NOTIFICATION_CHANNEL_ID;
 
 
+/**
+ * The type Debug activity.
+ */
 public class DebugActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(DebugActivity.class);
 

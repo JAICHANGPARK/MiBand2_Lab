@@ -75,12 +75,30 @@
                 grid:layout_columnSpan="2"
                 grid:layout_columnWeight="1" />
 
+
+
             <Button
                 android:id="@+id/compressDBButton"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/bmhanna"
                 android:text="Compress DB"
                 grid:layout_column="0" />
+
+            <Button
+                android:id="@+id/backupDBButton"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/bmhanna"
+                android:text="Backup DB"
+                grid:layout_column="1" />
+
+            <TextView
+                android:id="@+id/date_time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bmhanna"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                grid:layout_columnSpan="2"
+                grid:layout_columnWeight="1" />
 
             <TextView
                 android:id="@+id/mergeOldActivityDataTitle"

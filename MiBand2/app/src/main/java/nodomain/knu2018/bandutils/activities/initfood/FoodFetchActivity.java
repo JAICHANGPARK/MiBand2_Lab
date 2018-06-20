@@ -36,28 +36,70 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The type Food fetch activity.
+ */
 public class FoodFetchActivity extends AppCompatActivity {
 
     private static final String TAG = "FoodFetchActivity";
     private static final String APP_VERSION_KEY = "food_db_version";
+    /**
+     * The constant API_URL.
+     */
     public static final String API_URL = "http://www.kangwonelec.com/";
     private static final int REQUEST_PERMISSION = 1000;
 
+    /**
+     * The M firebase remote config.
+     */
     FirebaseRemoteConfig mFirebaseRemoteConfig;
+    /**
+     * The Shared preferences.
+     */
     SharedPreferences sharedPreferences;
 
+    /**
+     * The File length.
+     */
     long fileLength;
+    /**
+     * The Count.
+     */
     long count = 0;
 
+    /**
+     * The Db version.
+     */
     String dbVersion;
+    /**
+     * The Retrofit.
+     */
     Retrofit retrofit;
+    /**
+     * The M service.
+     */
     FoodDataFetch mService;
 
+    /**
+     * The Dialog.
+     */
     AlertDialog dialog;
+    /**
+     * The Progress dialog.
+     */
     ProgressDialog progressDialog;
+    /**
+     * The Db helper.
+     */
     DBHelper dbHelper;
 
+    /**
+     * The Result list.
+     */
     ArrayList<Foods> resultList;
+    /**
+     * The Array list.
+     */
     ArrayList<Food> arrayList;
 
     @Override
@@ -255,9 +297,22 @@ public class FoodFetchActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * The type Background task.
+     */
     class BackgroundTask extends AsyncTask<Void, Void, String> {
+        /**
+         * The Progress dialog.
+         */
         ProgressDialog progressDialog;
+        /**
+         * The Db helper.
+         */
         DBHelper dbHelper;
+
+        /**
+         * Instantiates a new Background task.
+         */
         public BackgroundTask() {
 
             dbHelper = new DBHelper(FoodFetchActivity.this);
