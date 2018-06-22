@@ -527,6 +527,8 @@
     <string name="user_information_birth">생년월일</string>
     <string name="user_information_email">이메일 주소</string>
     <string name="user_information_phone">휴대폰 번호</string>
+    <string name="user_information_bs_min">최소 목표 혈당</string>
+    <string name="user_information_bs_max">최대 목표 혈당</string>
 
     <string name="app_rating_title">앱을 평가해주세요.</string>
     <string name="app_rating_description">별점과 피드백을 주시면 앱 개선에 도움이 됩니다.</string>
@@ -546,5 +548,21 @@
     <string name="category_fourth_image">혈당기</string>
     <string name="category_bottom_image">연결 범주 선택</string>
     <string name="category_select_text">연결할 장비를 선택하세요</string>
+
+    <string name="nav_header_text_name">당뇨그루-밴드유틸</string>
+
+
+    <string name="profile_edit_photo">프로필 사진</string>
+    <string name="profile_edit_user_info">정보 수정</string>
+    <string name="profile_edit_user_drug">약물 정보</string>
+
+    <string name="rapid">초속효성</string>
+    <string name="rapid2">속효성</string>
+    <string name="netural">중간형</string>
+    <string name="longtime">지속형</string>
+    <string name="mixed">혼합형</string>
+
+    <string name="select_drug_title">약물 선택</string>
+    <string name="select_drug_unit">약물 단위 선택</string>
 
 </resources>

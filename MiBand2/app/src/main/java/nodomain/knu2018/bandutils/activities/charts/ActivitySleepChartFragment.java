@@ -79,6 +79,7 @@ public class ActivitySleepChartFragment extends AbstractChartFragment {
     }
 
     private void setupChart() {
+
         mChart.setBackgroundColor(BACKGROUND_COLOR);
         mChart.getDescription().setTextColor(DESCRIPTION_COLOR);
         configureBarLineChartDefaults(mChart);
@@ -94,8 +95,8 @@ public class ActivitySleepChartFragment extends AbstractChartFragment {
         YAxis y = mChart.getAxisLeft();
         y.setDrawGridLines(false);
 //        y.setDrawLabels(false);
-        // TODO: make fixed max value optional
-        y.setAxisMaximum(1f);
+        // TODO: make fixed max value optional Default value = 1 - 0
+        y.setAxisMaximum(2f);
         y.setAxisMinimum(0);
         y.setDrawTopYLabelEntry(false);
         y.setTextColor(CHART_TEXT_COLOR);

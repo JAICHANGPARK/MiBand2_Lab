@@ -168,7 +168,7 @@ public class WriteDrugActivity extends AppCompatActivity {
      */
     String inputType2;
     /**
-     * The Drug unit.
+     * The SelectDrug unit.
      */
     String drugUnit;
 

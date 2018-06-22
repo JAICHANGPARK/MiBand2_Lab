@@ -528,6 +528,8 @@
     <string name="user_information_birth">お誕生日</string>
     <string name="user_information_email">Eメール</string>
     <string name="user_information_phone">スマホ番号</string>
+    <string name="user_information_bs_min">目標 (MIN)</string>
+    <string name="user_information_bs_max">目標 (MAX)</string>
 
     <string name="app_rating_title">アプリの評価お願いします。</string>
     <string name="app_rating_description">参考になり、改正に</string>

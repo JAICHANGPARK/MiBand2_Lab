@@ -28,6 +28,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ import nodomain.knu2018.bandutils.util.GB;
  * Adapter for displaying GBDevice instances.
  */
 public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.ViewHolder> {
+    private static final String TAG = "GBDeviceAdapterv2";
 
     private final Context context;
     private List<GBDevice> deviceList;
@@ -109,8 +111,15 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                 return true;
             }
         });
-        holder.deviceImageView.setImageResource(R.drawable.ic_band_ok);
+
+        holder.deviceImageView.setImageResource(R.drawable.level_list_device);
         //level-list does not allow negative values, hence we always add 100 to the key.
+        Log.e(TAG, "getKey 1 - "  + device.getType().getKey());
+        Log.e(TAG, "getKey 2 - "  + device.getType().getKey() + 100);
+        Log.e(TAG, "isInitialized  - "  + device.isInitialized());
+
+        Log.e(TAG, "setImageLevel: "  + device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
+
         holder.deviceImageView.setImageLevel(device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
 
         holder.deviceNameLabel.setText(getUniqueDeviceName(device));

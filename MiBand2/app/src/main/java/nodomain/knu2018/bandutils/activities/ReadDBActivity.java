@@ -255,7 +255,7 @@ public class ReadDBActivity extends AppCompatActivity {
      */
     ArrayList<BloodSugar> bloodSugars = new ArrayList<>();
     /**
-     * The Drug.
+     * The SelectDrug.
      */
     ArrayList<Drug> drug = new ArrayList<>();
     /**

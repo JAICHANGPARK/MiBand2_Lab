@@ -93,4 +93,10 @@
     <color name="time_line_color_3">#e3f09b</color>
     <color name="time_line_color_4">#87b6a7</color>
     <color name="time_line_color_5">#5b5941</color>
+
+
+    <color name="grey">#BEBEBE</color>
+    <color name="twitter">#23C4FF</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

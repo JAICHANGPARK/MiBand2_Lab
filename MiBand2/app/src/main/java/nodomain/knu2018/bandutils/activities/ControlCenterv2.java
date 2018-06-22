@@ -87,6 +87,7 @@ import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.Remote.IUploadAPI;
 import nodomain.knu2018.bandutils.activities.selectdevice.CategoryActivity;
+import nodomain.knu2018.bandutils.activities.userprofile.HomeProfileActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteHomesActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteMealActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteMealSelectActivity;
@@ -295,7 +296,7 @@ public class ControlCenterv2 extends AppCompatActivity
         textUserName.setText(userName);
         textUserUUID.setText(userUUID);
 
-        headView.setOnClickListener(v -> startActivity(new Intent(ControlCenterv2.this, UserInformationActivity.class)));
+        headView.setOnClickListener(v -> startActivity(new Intent(ControlCenterv2.this, HomeProfileActivity.class)));
 
         //end of material design boilerplate
         deviceManager = ((GBApplication) getApplication()).getDeviceManager();
@@ -308,6 +309,11 @@ public class ControlCenterv2 extends AppCompatActivity
         List<GBDevice> deviceList = deviceManager.getDevices();
         mGBDeviceAdapter = new GBDeviceAdapterv2(this, deviceList);
 
+        // TODO: 2018-06-20 디바이스 디버그좀 할께요 - 박제창
+        for (GBDevice device: deviceList) {
+            Log.e(TAG, "loop device" + device.getAddress());
+        }
+        
         deviceListView.setAdapter(this.mGBDeviceAdapter);
 
         /* uncomment to enable fixed-swipe to reveal more actions
@@ -358,8 +364,12 @@ public class ControlCenterv2 extends AppCompatActivity
         /*
          * Ask for permission to intercept notifications on first run.
          */
+        // TODO: 2018-06-20 설치 시 처음 딱 한번 실행되는 부분입니다. - DREAMWALKER
+
         Prefs prefs = GBApplication.getPrefs();
         if (prefs.getBoolean("firstrun", true)) {
+            Toast.makeText(this, "알람 설정을 켜놓으면 좋습니다. " +
+                    "원하지 않으시면 뒤로가기 또는 취소버튼을 눌러주세요.", Toast.LENGTH_SHORT).show();
             prefs.getPreferences().edit().putBoolean("firstrun", false).apply();
             Intent enableIntent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
             startActivity(enableIntent);

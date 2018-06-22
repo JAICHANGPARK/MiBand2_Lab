@@ -50,7 +50,7 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.bluetooth"
-        android:required="false" />
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="false" />
@@ -419,8 +419,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.DiscoveryActivity"
-            android:label="@string/title_activity_discovery"
-            android:parentActivityName=".activities.ControlCenterv2" />
+            android:label="@string/title_activity_discovery" />
         <activity
             android:name=".activities.AndroidPairingActivity"
             android:label="@string/title_activity_android_pairing" />
@@ -597,8 +596,8 @@
 
         <activity android:name=".activities.initfood.SearchFoodActivity" />
         <activity
-            android:name=".activities.UserInformationActivity"
-            android:parentActivityName=".activities.ControlCenterv2" />
+            android:name=".activities.userprofile.UserInformationActivity"
+            android:parentActivityName=".activities.userprofile.HomeProfileActivity" />
         <activity
             android:name=".activities.AnalysisUserActivity"
             android:parentActivityName=".activities.ReadDBActivity"
@@ -622,17 +621,25 @@
         <activity
             android:name=".activities.selectdevice.FitnessDeviceActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
         <activity
             android:name=".activities.selectdevice.FoodDeviceActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
         <activity
             android:name=".activities.selectdevice.DrugDeviceActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
+        <activity
+            android:name=".activities.selectdevice.BSMDeviceActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
 
-        <activity android:name=".activities.selectdevice.BSMDeviceActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar2"></activity>
+        <activity
+            android:name=".activities.userprofile.HomeProfileActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
+
+        <activity android:name=".activities.selectdrug.SelectDrugActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2"/>
+
+        <activity android:name=".activities.selectdrug.SelectDrugUnitActivity">
+        </activity>
     </application>
 
 </manifest>

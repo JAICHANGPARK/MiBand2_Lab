@@ -30,6 +30,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -59,6 +60,7 @@ import nodomain.knu2018.bandutils.util.LimitedQueue;
  * The type Charts activity.
  */
 public class ChartsActivity extends AbstractGBFragmentActivity implements ChartsHost {
+    private static final String TAG = "ChartsActivity";
 
     private TextView mDateControl;
 
@@ -218,9 +220,15 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
 
     /**
      * Init dates.
+     * 시간을 가져오는 부분
+     * 인터페이스를 구현하여 사용한다.
+     * 종료시간과 시작 시간을 받아온다.
+     *
+     * @author  DREAMWALKER
      */
     protected void initDates() {
         setEndDate(new Date());
+        Log.e(TAG, "initDates: 종료시간 시작시간 구하는 것 ? " + DateTimeUtils.shiftByDays(getEndDate(), -1).getTime() );
         setStartDate(DateTimeUtils.shiftByDays(getEndDate(), -1));
     }
 
@@ -236,6 +244,7 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
 
     @Override
     public void setEndDate(Date endDate) {
+        Log.e(TAG, "setEndDate: 종료시간?  " + endDate.getTime());
         mEndDate = endDate;
     }
 

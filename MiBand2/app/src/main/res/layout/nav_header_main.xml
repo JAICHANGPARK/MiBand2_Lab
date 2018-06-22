@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:text="Diabetes Grue-BandUtils" />
+            android:text="@string/nav_header_text_name" />
     </LinearLayout>
 
     <LinearLayout
