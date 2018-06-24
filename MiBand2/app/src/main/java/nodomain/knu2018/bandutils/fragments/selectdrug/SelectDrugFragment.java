@@ -50,8 +50,6 @@ public class SelectDrugFragment extends Fragment {
 
     EventBus bus = EventBus.getDefault();
 
-
-
     private OnFragmentInteractionListener mListener;
 
     public SelectDrugFragment() {
@@ -89,6 +87,11 @@ public class SelectDrugFragment extends Fragment {
         setAllArrayList();
     }
 
+    /**
+     * 인슐린 종류별 데이터 처리를 위한 ArrayList 객체를 생성하고 초기화한다.
+     * @author  박제창(Dreamwalker)
+     *
+     */
     private void setAllArrayList(){
 
         rrapid = new ArrayList<>();
@@ -123,6 +126,11 @@ public class SelectDrugFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 라벨 뷰와 리사이클러 뷰 , 인플레이션 진행
+     * @param view
+     * @author 박제창(Dreamwalker)
+     */
     private void findViews(View view) {
         mAutoLabel = (AutoLabelUI) view.findViewById(R.id.label_view);
         mAutoLabel.setBackgroundResource(R.drawable.round_corner_background);
@@ -142,6 +150,17 @@ public class SelectDrugFragment extends Fragment {
             }
         }
     }
+
+
+    /**
+     * 약물 카드 뷰를 선택했을때 뷰 처리와 데이터 처리
+     * 이벤트 버스를 통해 이벤트를 액티비티로 전송
+     * 이벤트 는 SelectDrugActivity에서 수신합니다. 코드를 확인하세요
+     *
+     * @param position
+     *
+     * @author 박제창(Dreamwalker)
+     */
 
     private void itemListClicked(int position) {
         SelectDrug person = mPersonList.get(position);
@@ -200,9 +219,88 @@ public class SelectDrugFragment extends Fragment {
         }
     }
 
+
+    /**
+     *
+     * lable을 눌러 선택한 약물을 삭제했을때 데이터 처리를 진행해야합니다.
+     * 위치를 입력받고 삭제되면 데이터를 삭제하고
+     * 다시 선택되면 데이터를 추가하는 기능을 합니다.
+     * @param position
+     * @author 박제창 (Dreamwalker)
+     *
+     */
+    private void removeItemListClicked(int position) {
+        SelectDrug person = mPersonList.get(position);
+        boolean isSelected = person.isSelected();
+        boolean success;
+        int index = 0;
+
+        // TODO: 2018-06-23 선택 해제 했을 때
+        if (isSelected) {
+            if (mParam1.equals("1")) {
+                rrapid.set(position, "unknown");
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 1));
+            } else if (mParam1.equals("2")) {
+                rapid.set(position, "unknown");
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 2));
+            } else if (mParam1.equals("3")) {
+                neutral.set(position, "unknown");
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 3));
+            } else if (mParam1.equals("4")) {
+                longtime.set(position, "unknown");
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 4));
+            } else if (mParam1.equals("5")) {
+                mixed.set(position, "unknown");
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 5));
+            }
+
+            Log.e(TAG, "itemListClicked: removeLabel " + person.getAge() + ", " + person.getName() + "position :" + position);
+            success = mAutoLabel.removeLabel(position);
+            adapter.setItemSelected(position, false);
+
+
+        } else {
+            // TODO: 2018-06-23 선택했을때.
+            if (mParam1.equals("1")) {
+                rrapid.set(position, person.getName());
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 1));
+            } else if (mParam1.equals("2")) {
+                rapid.set(position, person.getName());
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 2));
+            } else if (mParam1.equals("3")) {
+                neutral.set(position, person.getName());
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 3));
+            } else if (mParam1.equals("4")) {
+                longtime.set(position, person.getName());
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 4));
+            } else if (mParam1.equals("5")) {
+                mixed.set(position, person.getName());
+                bus.post(new DrugDataEvent(rrapid, rapid, neutral, longtime, mixed, index, 5));
+            }
+
+            Log.e(TAG, "itemListClicked:  addLabel " + person.getAge() + ", " + person.getName() + "position :" + position);
+            success = mAutoLabel.addLabel(person.getName(), position);
+            adapter.setItemSelected(position, true);
+        }
+        if (success) {
+            Log.e(TAG, "itemListClicked:  success " + person.getAge() + ", " + person.getName() + "position :" + position);
+
+//            for (int i = 0; i < r.size(); i++) {
+//                Log.e(TAG, "ArrayList Value : " + "index : " + i + "value : " + temp.get(i));
+//            }
+        }
+    }
+
     private void setListeners() {
         mAutoLabel.setOnLabelsCompletedListener(() -> Snackbar.make(recyclerView, "Completed!", Snackbar.LENGTH_SHORT).show());
-        mAutoLabel.setOnRemoveLabelListener((view, position) -> adapter.setItemSelected(position, false));
+        mAutoLabel.setOnRemoveLabelListener((view, position) ->
+        {
+            // TODO: 2018-06-23 label에서 삭제 인터페이스를 진행했음에도 불구하고 다음 Activity에서 추가되어 있는 오류를 수정해야합니다.- 박제창 (Dreamwalker)
+            Log.e(TAG, "setOnRemoveLabelListener: " + position);
+            //adapter.setItemSelected(position, false);
+            removeItemListClicked(position);
+
+        });
         mAutoLabel.setOnLabelsEmptyListener(() -> Snackbar.make(recyclerView, "EMPTY!", Snackbar.LENGTH_SHORT).show());
         mAutoLabel.setOnLabelClickListener(v -> Snackbar.make(recyclerView, "" + v.getId(), Snackbar.LENGTH_SHORT).show());
     }
@@ -266,12 +364,8 @@ public class SelectDrugFragment extends Fragment {
 
         adapter = new SelectDrugAdapter(mPersonList);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new SelectDrugAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                itemListClicked(position);
-            }
-        });
+        adapter.setOnItemClickListener((view, position) -> itemListClicked(position));
+
     }
 
 

@@ -555,6 +555,7 @@
     <string name="profile_edit_photo">프로필 사진</string>
     <string name="profile_edit_user_info">정보 수정</string>
     <string name="profile_edit_user_drug">약물 정보</string>
+    <string name="profile_network_exception_message">네트워크를 연결해주세요. 캐시 정보를 가져왔어요</string>
 
     <string name="rapid">초속효성</string>
     <string name="rapid2">속효성</string>
@@ -562,7 +563,12 @@
     <string name="longtime">지속형</string>
     <string name="mixed">혼합형</string>
 
-    <string name="select_drug_title">약물 선택</string>
-    <string name="select_drug_unit">약물 단위 선택</string>
+
+    <string name="select_drug_title">Select Insulin</string>
+    <string name="select_drug_unit">Select Unit</string>
+    <string name="select_drug_none">선택된 약물 없음</string>
+    <string name="select_drug_dialog_title">알림</string>
+    <string name="select_drug_dialog_message">투약중인 약물을 선택해주세요.</string>
+    <string name="select_drug_dialog_positive">확인</string>
 
 </resources>

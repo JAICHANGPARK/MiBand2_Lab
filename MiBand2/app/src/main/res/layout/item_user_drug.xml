@@ -39,19 +39,19 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical|start"
-                android:text="asdasdsa"
+                android:text="Name"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <TextView
+                android:textSize="24sp"
                 android:fontFamily="@font/bmjua"
-                android:textSize="18sp"
                 android:id="@+id/value"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="asdasdsa"
+                android:text="Unit"
                 android:textStyle="italic" />
 
         </LinearLayout>

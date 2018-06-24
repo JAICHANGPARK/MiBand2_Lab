@@ -41,6 +41,10 @@ import nodomain.knu2018.bandutils.fragments.profile.UserBaseInfoFragment;
 import nodomain.knu2018.bandutils.fragments.profile.UserDeviceFragment;
 import nodomain.knu2018.bandutils.fragments.profile.UserDrugFragment;
 
+import static nodomain.knu2018.bandutils.Const.DataKeys.USER_NAME;
+import static nodomain.knu2018.bandutils.Const.DataKeys.USER_UUID;
+import static nodomain.knu2018.bandutils.Const.DataKeys.USER_UUID_V2;
+
 /**
  * @author Dreamwaler(박제창)
  */
@@ -88,11 +92,11 @@ public class HomeProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Paper.init(this);
 
-        userInfo.put("userName", Paper.book().read("userName"));
-        userInfo.put("userUUID", Paper.book().read("userUUIDV2"));
+        userInfo.put(USER_NAME, Paper.book().read(USER_NAME));
+        userInfo.put(USER_UUID, Paper.book().read(USER_UUID_V2));
 
-        userNameTextView.setText(userInfo.get("userName"));
-        userUUIDTextView.setText(userInfo.get("userUUID"));
+        userNameTextView.setText(userInfo.get(USER_NAME));
+        userUUIDTextView.setText(userInfo.get(USER_UUID));
 
         pixelDensity = getPixelDensity();
         // Adding the tabs using addTab() method
@@ -114,6 +118,7 @@ public class HomeProfileActivity extends AppCompatActivity {
     public void onEditUserDrugButtonClicked(){
         Intent intent = new Intent(HomeProfileActivity.this, SelectDrugActivity.class);
         startActivity(intent);
+        finish();
     }
 
     /**

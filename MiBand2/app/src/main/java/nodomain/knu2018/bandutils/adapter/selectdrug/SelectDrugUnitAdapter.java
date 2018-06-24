@@ -20,37 +20,42 @@ import nodomain.knu2018.bandutils.events.selectdrug.SelectDrugEvent;
 
 /**
  * Created by KNU2017 on 2018-02-09.
+ * @author 박제창 (Dreamwalker)
+ * 투약 단위 입력 Adapter View Holder
  */
-class MyViewHoler extends RecyclerView.ViewHolder {
+class MyViewHolder extends RecyclerView.ViewHolder {
     TextView drugNameTextView;
     StepperTouch stepperTouch;
 
-    public MyViewHoler(View itemView) {
+    public MyViewHolder(View itemView) {
         super(itemView);
         drugNameTextView = (TextView) itemView.findViewById(R.id.drugNameTextView);
         stepperTouch = (StepperTouch) itemView.findViewById(R.id.stepperTouch);
     }
 }
 
-public class SelectDrugUnitAdapter extends RecyclerView.Adapter<MyViewHoler> {
+public class SelectDrugUnitAdapter extends RecyclerView.Adapter<MyViewHolder> {
+
     ArrayList<String> arrayList;
     Context context;
+    // TODO: 2018-06-23 Adapter에 EventBus를 등록합니다. - 박제창 (Dreamwalker)
     EventBus bus = EventBus.getDefault();
+
     public SelectDrugUnitAdapter(ArrayList<String> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }
 
     @Override
-    public MyViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_drug_unit_card, parent, false);
-        MyViewHoler myViewHoler = new MyViewHoler(view);
+        MyViewHolder myViewHoler = new MyViewHolder(view);
         return myViewHoler;
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHoler holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.drugNameTextView.setText(arrayList.get(position));
 
         holder.stepperTouch.stepper.setValue(1);

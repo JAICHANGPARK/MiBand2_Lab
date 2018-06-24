@@ -661,6 +661,9 @@
     <string name="profile_duplicate">DUPLICATE</string>
     <string name="profile_schedule">SCHEDULE</string>
     <string name="profile_delete">DELETE</string>
+    <string name="profile_network_exception_message">PLEASE CONNECT NETWORK. READ CACHE DATA</string>
+
+    
 
     <string name="rapid">초속효성</string>
     <string name="rapid2">속효성</string>
@@ -670,6 +673,10 @@
 
     <string name="select_drug_title">Select Insulin</string>
     <string name="select_drug_unit">Select Unit</string>
+    <string name="select_drug_none">선택된 약물 없음</string>
+    <string name="select_drug_dialog_title">ERROR</string>
+    <string name="select_drug_dialog_message">PLEASE CHOOSE YOUR INSULIN!</string>
+    <string name="select_drug_dialog_positive">OK</string>
 
 
     <!--약물 샘플 -->

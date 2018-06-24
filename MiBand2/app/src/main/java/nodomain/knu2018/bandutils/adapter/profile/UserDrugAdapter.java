@@ -59,9 +59,10 @@ public class UserDrugAdapter extends RecyclerView.Adapter<UserDrugViewHolder> {
     public void onBindViewHolder(@NonNull UserDrugViewHolder holder, int position) {
 
         Glide.with(parent.getContext()).load(R.drawable.device_syringe).into(holder.drugImageView);
+        String unit = drugList.get(position).getValueUnit() + "Unit";
 
         holder.drugNameLabel.setText(drugList.get(position).getDrugName());
-        holder.drugValueLabel.setText(drugList.get(position).getValueUnit());
+        holder.drugValueLabel.setText(unit);
 
     }
 

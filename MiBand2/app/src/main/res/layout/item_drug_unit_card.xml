@@ -46,7 +46,6 @@
 
             <nl.dionsegijn.steppertouch.StepperTouch
                 android:id="@+id/stepperTouch"
-
                 android:layout_width="110dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical|right"

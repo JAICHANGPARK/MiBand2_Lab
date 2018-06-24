@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.0.17" versioncode="58">
+        <change>Date : 2018-06-23</change>
+        <change>기능 : 연결된 장비 목록 확인 기능 추가</change>
+        <change>기능 : 사용하는 약물 입력 기능 추가</change>
+        <change>UI : 사용자 정보 UI 변경</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.0.16" versioncode="57">
         <change>Date : 2018-06-19</change>
         <change>장비 추가 UI 개선했어요</change>

@@ -138,7 +138,7 @@ public class UserInformationActivity extends AppCompatActivity {
     /**
      * 네트워크 시스템 연결 객체를 가져오는 메소드
      *
-     * @return
+     * @return networkInfo
      * @author : 박제창 (Dreamwalker)
      */
     private NetworkInfo getNetworkInfo() {
