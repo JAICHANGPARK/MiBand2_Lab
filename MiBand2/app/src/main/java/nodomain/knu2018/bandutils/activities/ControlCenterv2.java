@@ -86,6 +86,7 @@ import nodomain.knu2018.bandutils.BuildConfig;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.activities.initfood.SearchFoodActivity;
 import nodomain.knu2018.bandutils.activities.selectdevice.CategoryActivity;
 import nodomain.knu2018.bandutils.activities.userprofile.HomeProfileActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteHomesActivity;
@@ -438,16 +439,16 @@ public class ControlCenterv2 extends AppCompatActivity
 
         TapTargetView.showFor(this,                 // `this` is an Activity
                 TapTarget.forView(findViewById(R.id.fab),
-                        "터치하여 기록하기", "장비등록, 생활패턴 기록을 빠르게 기록하세요.")
+                        getString(R.string.home_tap_target_title), getString(R.string.home_tap_target_description))
                         // All options below are optional
-                        .outerCircleColor(R.color.primary_custom_light)      // Specify a color for the outer circle
+                        .outerCircleColor(R.color.primarydark_custom_dark)      // Specify a color for the outer circle
                         .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
                         .targetCircleColor(R.color.white)   // Specify a color for the target circle
                         .titleTextSize(20)                  // Specify the size (in sp) of the title text
                         .titleTextColor(R.color.white)      // Specify the color of the title text
                         .descriptionTextSize(15)            // Specify the size (in sp) of the description text
-                        .descriptionTextColor(R.color.primary_custom_light)  // Specify the color of the description text
-                        .textColor(R.color.accent_custom)            // Specify a color for both the title and description text
+                        .descriptionTextColor(R.color.primarydark_custom_dark)  // Specify the color of the description text
+                        .textColor(R.color.white)            // Specify a color for both the title and description text
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
                         .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
@@ -606,6 +607,13 @@ public class ControlCenterv2 extends AppCompatActivity
         }
     }
 
+
+    /**
+     * Navigation Drawer 메뉴 선택 처리 메소드
+     * @param item
+     * @return
+     * @author 박제창 (Dreamwalker)
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -613,10 +621,17 @@ public class ControlCenterv2 extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         switch (item.getItemId()) {
+
+            case R.id.food_check_db:
+                Intent foodSearchIntent = new Intent(this, SearchFoodActivity.class);
+                startActivity(foodSearchIntent);
+                return true;
+
             case R.id.action_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
                 return true;
+
             case R.id.action_debug:
                 Intent debugIntent = new Intent(this, DebugActivity.class);
                 startActivity(debugIntent);
@@ -636,6 +651,12 @@ public class ControlCenterv2 extends AppCompatActivity
                 Intent dbIntent = new Intent(this, DbManagementActivity.class);
                 startActivity(dbIntent);
                 return true;
+
+            case R.id.action_user_information:
+                Intent myInformationIntent = new Intent(this, HomeProfileActivity.class);
+                startActivity(myInformationIntent);
+                return true;
+
             case R.id.action_licenses:
                 Intent intent = new Intent(this, OpenSourceLicenseActivity.class);
                 startActivity(intent);

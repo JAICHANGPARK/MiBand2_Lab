@@ -73,7 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = null;
-        // TODO: 2018-02-11 혈당 값 가져오기
+        // TODO: 2018-06-25 모든 데이터에서 음식 이름만 가져오기 - 박제창
         sb.append(" SELECT foodName FROM mealdb");
         //sb.append(" LIMIT 20");
 
@@ -97,7 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = null;
-        // TODO: 2018-02-11 혈당 값 가져오기
+        // TODO: 2018-06-25 모든 데이터에서 음식 이름, 식품군 가져오기 - 박제창
         sb.append(" SELECT foodName, foodGroup FROM mealdb");
         sb.append(" LIMIT 20");
 
@@ -121,7 +121,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = null;
-        // TODO: 2018-02-11 혈당 값 가져오기
+        // TODO: 2018-06-25 검색되는 음식 이름, 식품군 가져오기 - 박제창
         sb.append(" SELECT foodName,foodGroup FROM mealdb ");
         sb.append(" WHERE foodName LIKE '%" + name + "%'");
         //sb.append(" LIMIT 20");

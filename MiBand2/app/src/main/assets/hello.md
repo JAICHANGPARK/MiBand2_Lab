@@ -36,14 +36,17 @@
 - [Github](https://github.com/pilgr/Paper)
 - https://github.com/pilgr/Paper
 
-#### MarkdownView (falnatsheh)
+#### EventBus (Markus Junginger, greenrobot)
+- [Github](https://github.com/greenrobot/EventBus)
+- https://github.com/greenrobot/EventBus
 
+
+#### MarkdownView (falnatsheh)
 - [Github](https://github.com/falnatsheh/MarkdownView) 
 -  https://github.com/falnatsheh/MarkdownView
 
 
 #### TapTargetView (Keepsafe)
-
 - [Github](https://github.com/KeepSafe/TapTargetView) 
 - https://github.com/KeepSafe/TapTargetView
 
@@ -128,9 +131,31 @@
 - [Github](https://github.com/stepstone-tech/android-material-app-rating)
 - https://github.com/stepstone-tech/android-material-app-rating
 
-#### android-material-app-rating (StepStone Services)
-- [Github](https://github.com/stepstone-tech/android-material-app-rating)
-- https://github.com/stepstone-tech/android-material-app-rating
+#### KenBurnsView (flavioarfaria)
+- [Github](https://github.com/flavioarfaria/KenBurnsView)
+- https://github.com/flavioarfaria/KenBurnsView
+
+#### diagonallayout (florent37)
+- [Github](https://github.com/florent37/DiagonalLayout)
+- https://github.com/florent37/DiagonalLayout
+
+#### diagonal-imageview (Fatih Santalu)
+- [Github](https://github.com/santalu/diagonal-imageview)
+- https://github.com/santalu/diagonal-imageview
+
+#### Circularimageview (Lopez Mikhael)
+- [Github](https://github.com/lopspower/CircularImageView)
+- [site](http://mikhaellopez.com/project-15)
+- https://github.com/lopspower/CircularImageView
+
+#### AutoLabelUI (David Pizarro)
+- [Github](https://github.com/DavidPizarro/AutoLabelUI)
+- https://github.com/DavidPizarro/AutoLabelUI
+
+
+#### Stepper-Touch (DanielMartinus)
+- [Github](https://github.com/DanielMartinus/Stepper-Touch)
+- https://github.com/DanielMartinus/Stepper-Touch
 
 
 ***
@@ -145,6 +170,10 @@
 #### MaterialSearchBar (mancj)
 - [Github](https://github.com/mancj/MaterialSearchBar)
 - https://github.com/mancj/MaterialSearchBar
+
+#### Frisson (Aakash Jain)
+- [Github](https://github.com/IntruderShanky/Frisson)
+- https://github.com/IntruderShanky/Frisson
 
 ***
 
