@@ -7,6 +7,16 @@
     <string name="action_debug">Debug</string>
     <string name="action_quit">Quit</string>
     <string name="action_donate">Donate</string>
+    <string name="action_licenses">Licenses</string>
+    <string name="action_about">About</string>
+    <string name="action_check_db">Pattern Data</string>
+    <string name="food_check_db">Food Search</string>
+    <string name="sub_header">Management</string>
+    <string name="action_storage">Database Management</string>
+    <string name="footer_header">Information</string>
+    <string name="action_user_information">My Information</string>
+
+
     <string name="controlcenter_fetch_activity_data">Synchronize</string>
     <string name="controlcenter_find_device">Find lost Device</string>
     <string name="controlcenter_take_screenshot">Take Screenshot</string>
@@ -608,6 +618,11 @@
         It should describe the category of notifications that will be sent through this channel
      -->
     <string name="default_notification_channel_name" translatable="true">News</string>
+
+
+
+    <string name="home_tap_target_title">Touch &amp; Write</string>
+    <string name="home_tap_target_description">You can register device and write life pattern</string>
 
     <string name="app_update_title">New version available</string>
     <string name="app_update_message">Please, update app to new version</string>

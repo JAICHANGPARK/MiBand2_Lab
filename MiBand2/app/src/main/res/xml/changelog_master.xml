@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.0.18" versioncode="59">
+        <change>Date : 2018-06-25</change>
+        <change>사용자 메뉴 재 정렬</change>
+        <change>식품 데이터 검색 기능 수정</change>
+        <change>라이센스 정보 추가</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
     <release version="1.0.17" versioncode="58">
         <change>Date : 2018-06-23</change>
         <change>기능 : 연결된 장비 목록 확인 기능 추가</change>

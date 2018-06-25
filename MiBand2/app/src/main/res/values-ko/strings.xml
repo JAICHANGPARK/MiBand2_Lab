@@ -2,9 +2,20 @@
 <resources>
     <string name="app_name">BandUtils</string>
     <string name="title_activity_controlcenter">BandUtils</string>
+
+    <string name="sub_header">관리</string>
+    <string name="footer_header">정보</string>
+
     <string name="action_settings">설정</string>
     <string name="action_debug">디버그</string>
     <string name="action_quit">종료</string>
+    <string name="action_licenses">라이센스</string>
+    <string name="action_about">앱 정보</string>
+    <string name="action_check_db">생활 데이터 확인</string>
+    <string name="food_check_db">식품 데이터 검색</string>
+    <string name="action_storage">데이터 저장소 관리</string>
+    <string name="action_user_information">내 정보</string>
+
     <string name="controlcenter_fetch_activity_data">동기화</string>
     <string name="controlcenter_start_sleepmonitor">수면 측정계 (초기 버전)</string>
     <string name="controlcenter_find_device">잃어버린 기기 찾기</string>
@@ -513,6 +524,11 @@
     <string name="devicetype_miband2">Mi Band 2</string>
     <string name="devicetype_amazfit_bip">Amazfit Bip</string>
     <string name="devicetype_amazfit_cor">Amazfit Cor</string>
+
+
+
+    <string name="home_tap_target_title">터치하여 기록하기</string>
+    <string name="home_tap_target_description">장비등록, 생활패턴 기록을 빠르게 기록하세요</string>
 
     <string name="app_update_title">새로운 버전이 출시 됐어요.</string>
     <string name="app_update_message">보다 최적한 사용을 위해 새로운 버전으로 업데이트 해주세요.</string>
