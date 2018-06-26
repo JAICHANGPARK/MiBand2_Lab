@@ -630,16 +630,14 @@
         <activity
             android:name=".activities.selectdevice.BSMDeviceActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
         <activity
             android:name=".activities.userprofile.HomeProfileActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
-        <activity android:name=".activities.selectdrug.SelectDrugActivity"
-            android:theme="@style/GadgetbridgeTheme.NoActionBar2"/>
-
-        <activity android:name=".activities.selectdrug.SelectDrugUnitActivity">
-        </activity>
+        <activity
+            android:name=".activities.selectdrug.SelectDrugActivity"
+            android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
+        <activity android:name=".activities.selectdrug.SelectDrugUnitActivity"></activity>
+        <activity android:name=".activities.initfood.DetailFoodInfoActivity"></activity>
     </application>
 
 </manifest>

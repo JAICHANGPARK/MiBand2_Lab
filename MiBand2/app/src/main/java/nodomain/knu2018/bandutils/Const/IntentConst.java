@@ -9,4 +9,7 @@ public class IntentConst {
     public static final String WEB_URL = "WEB_URL";
     public static final String SELECT_DRUG_TYPE  = "SELECT_DRUG_TYPE";
 
+    public static final String SELECT_FOOD_NAME = "FOOD_NAME";
+    public static final String SELECT_FOOD_NUMBER = "FOOD_NUMBER";
+
 }

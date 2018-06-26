@@ -874,6 +874,11 @@ public class ControlCenterv2 extends AppCompatActivity
         AndroidUtils.setLanguage(this, language);
     }
 
+    /**
+     * fab 클릭시 이밴트 처리
+     * @param view
+     * @param id
+     */
     @Override
     public void onMenuItemSelected(View view, int id) {
         if (id == R.id.menu_add_information) {

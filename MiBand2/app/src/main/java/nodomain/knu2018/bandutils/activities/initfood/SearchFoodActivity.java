@@ -20,6 +20,8 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.adapter.foodadapter.SearchAdapter;
 import nodomain.knu2018.bandutils.database.fooddb.DBHelper;
@@ -35,9 +37,17 @@ public class SearchFoodActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION = 1000;
 
     /**
-     * The Recycler view.
+     * The Recycler View.
      */
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    /**
+     * The Material search bar.
+     */
+    @BindView(R.id.search_bar)
+    MaterialSearchBar materialSearchBar;
+
     /**
      * The Layout manager.
      */
@@ -46,10 +56,7 @@ public class SearchFoodActivity extends AppCompatActivity {
      * The Adapter.
      */
     SearchAdapter adapter;
-    /**
-     * The Material search bar.
-     */
-    MaterialSearchBar materialSearchBar;
+
     /**
      * The Suggest list.
      */
@@ -63,17 +70,16 @@ public class SearchFoodActivity extends AppCompatActivity {
      */
     DBHelper dbHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_food);
+        setTitle(getResources().getString(R.string.search_food_activity_title));
 
-        setTitle("식품 검색");
+        ButterKnife.bind(this);
 
         dbHelper = new DBHelper(this);
-
-        recyclerView =  (RecyclerView)findViewById(R.id.recycler_view);
-        materialSearchBar = (MaterialSearchBar)findViewById(R.id.search_bar);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -83,11 +89,25 @@ public class SearchFoodActivity extends AppCompatActivity {
 
         foodList = dbHelper.readSomeDate();
 
-        materialSearchBar.setHint("Search");
+        initSearchBar();
+        loadSuggestList();
+        setSearchBarListener();
+
+
+        adapter = new SearchAdapter(SearchFoodActivity.this, foodList);
+        recyclerView.setAdapter(adapter);
+
+        //sqliteExport();
+
+    }
+
+    private void initSearchBar(){
+        materialSearchBar.setHint(getString(R.string.search_food_activity_search_bar_hint));
         materialSearchBar.setCardViewElevation(10);
         materialSearchBar.setMaxSuggestionCount(10);
+    }
 
-        loadSuggestList();
+    private void setSearchBarListener(){
 
         materialSearchBar.addTextChangeListener(new TextWatcher() {
             @Override
@@ -102,11 +122,8 @@ public class SearchFoodActivity extends AppCompatActivity {
                 for (String search : suggestList){
                     if (search.toLowerCase().contains(materialSearchBar.getText().toLowerCase()))
                         suggest.add(search);
-
                 }
-
                 materialSearchBar.setLastSuggestions(suggest);
-
             }
 
             @Override
@@ -133,12 +150,6 @@ public class SearchFoodActivity extends AppCompatActivity {
 
             }
         });
-
-        adapter = new SearchAdapter(SearchFoodActivity.this, foodList);
-        recyclerView.setAdapter(adapter);
-
-        //sqliteExport();
-
     }
 
     private void startSearch(String s) {
@@ -151,7 +162,14 @@ public class SearchFoodActivity extends AppCompatActivity {
     }
 
     /**
+     *
      * 처음 화면이 로딩될때 20개 정도의 데이터를 가져오는 메소드
+     *
+     * 수정(2018-06-06) :
+     * Intent 전달시 TransactionTooLargeException 오류가 발생하는데 여기서 20개 이상의 데이터
+     * 약 3만 바이트 이상을 차지하기 하고 있었고
+     * 10개를 읽어 오는것으로 수정했다. - 박제창
+     *
      * @Author : JAICHANGPARK(DREAMWALKER)
      */
     private void loadSuggestList() {
@@ -212,8 +230,6 @@ public class SearchFoodActivity extends AppCompatActivity {
 
             return null;
         }
-
-
 
     }
 }
