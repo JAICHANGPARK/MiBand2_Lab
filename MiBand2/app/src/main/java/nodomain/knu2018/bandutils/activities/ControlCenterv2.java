@@ -28,6 +28,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -90,10 +92,9 @@ import nodomain.knu2018.bandutils.activities.initfood.SearchFoodActivity;
 import nodomain.knu2018.bandutils.activities.selectdevice.CategoryActivity;
 import nodomain.knu2018.bandutils.activities.userprofile.HomeProfileActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteHomesActivity;
-import nodomain.knu2018.bandutils.activities.writing.WriteMealActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteMealSelectActivity;
-import nodomain.knu2018.bandutils.activities.writing.WriteSleepActivity;
 import nodomain.knu2018.bandutils.adapter.GBDeviceAdapterv2;
+import nodomain.knu2018.bandutils.adapter.home.WriteHorizontalAdapter;
 import nodomain.knu2018.bandutils.devices.DeviceManager;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.util.AndroidUtils;
@@ -150,19 +151,26 @@ public class ControlCenterv2 extends AppCompatActivity
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private DeviceManager deviceManager;
-    //private ImageView background;
-
-    private GBDeviceAdapterv2 mGBDeviceAdapter;
-    private RecyclerView deviceListView;
-
-    private boolean isLanguageInvalid = false;
-
     /**
      * The Lottie animation view.
      */
+    // TODO: 2018-06-26 연결된 장비 없을때 처리할 Animation - 박제창 (Dreamwalker)
     @BindView(R.id.lottie_animation)
     LottieAnimationView lottieAnimationView;
+
+    private DeviceManager deviceManager;
+    //private ImageView background;
+
+    // TODO: 2018-06-26 연결된 장비 확인을 위한 리스트 뷰 - 박제창 (Dreamwalker)
+    private GBDeviceAdapterv2 mGBDeviceAdapter;
+    private RecyclerView deviceListView;
+
+    // TODO: 2018-06-26 Horizontal RecyclerView 뷰 - 박제창 (Dreamwalker)
+    @BindView(R.id.write_recycler_view)
+    RecyclerView writeRecyclerView;
+
+
+    private boolean isLanguageInvalid = false;
 
     /**
      * The Fab menu.
@@ -209,6 +217,95 @@ public class ControlCenterv2 extends AppCompatActivity
      */
     IUploadAPI service;
 
+    NetworkInfo networkInfo;
+
+
+    private ArrayList<String> titleList = new ArrayList<>();
+    private ArrayList<String> url = new ArrayList<>();
+
+    private NetworkInfo getNetworkInfo() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo;
+    }
+
+    private void initNetworkSetting() {
+        networkInfo = getNetworkInfo();
+    }
+
+
+    /**
+     *
+     * 기록하기 Horizontal 데이터를 넣습니다.
+     * 인터넷의 연결 상태를 확인합니다.
+     *
+     * @author : 박제창(Dreamwalker)
+     *
+     */
+
+    private void setWriteHorizontalData() {
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            url.add("https://cdn.pixabay.com/photo/2018/04/11/11/53/the-level-of-sugar-in-the-blood-3310318_960_720.jpg");
+            titleList.add(getResources().getString(R.string.home_horizontal_blood_sugar));
+
+            url.add("https://cdn.pixabay.com/photo/2016/11/14/03/06/woman-1822459_960_720.jpg");
+            titleList.add(getResources().getString(R.string.home_horizontal_fitness));
+
+            url.add("https://cdn.pixabay.com/photo/2017/01/11/20/11/insulin-syringe-1972788_960_720.jpg");
+            titleList.add(getResources().getString(R.string.home_horizontal_drug));
+
+            url.add("https://cdn.pixabay.com/photo/2015/03/26/09/42/breakfast-690128_960_720.jpg");
+            titleList.add(getResources().getString(R.string.home_horizontal_meal));
+
+            url.add("https://cdn.pixabay.com/photo/2016/06/12/00/06/instagram-1451137_960_720.jpg");
+            titleList.add(getResources().getString(R.string.home_horizontal_meal_photo));
+
+            url.add("https://cdn.pixabay.com/photo/2016/01/20/11/11/baby-1151351_960_720.jpg");
+            titleList.add(getResources().getString(R.string.home_horizontal_sleep));
+
+            initWriteRecyclerView(true);
+        } else {
+            url.add("none");
+            titleList.add(getResources().getString(R.string.home_horizontal_blood_sugar));
+
+            url.add("none");
+            titleList.add(getResources().getString(R.string.home_horizontal_fitness));
+
+            url.add("none");
+            titleList.add(getResources().getString(R.string.home_horizontal_drug));
+
+            url.add("none");
+            titleList.add(getResources().getString(R.string.home_horizontal_meal));
+
+            url.add("none");
+            titleList.add(getResources().getString(R.string.home_horizontal_meal_photo));
+
+            url.add("none");
+            titleList.add(getResources().getString(R.string.home_horizontal_sleep));
+            initWriteRecyclerView(false);
+        }
+
+    }
+
+    /**
+     * 기록하기 Horizontal RecyclerView 객체와 Adapter를 생성합니다.
+     * 인터넷 연결이 되어있는지 없는지에 따라 예외처리를 하기위해
+     * 네트워크 상태를 Boolean 형의 파라미터로 입력 받습니다.
+     *
+     * 인터넷 연결이 있으면 true
+     * 인터넷 연결이 없으면 false
+     *
+     * @param networkState
+     * @author : 박제창(Dreamwalker)
+     *
+     */
+    private void initWriteRecyclerView(Boolean networkState) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        writeRecyclerView.setLayoutManager(layoutManager);
+        WriteHorizontalAdapter adapter = new WriteHorizontalAdapter(this, titleList, url, networkState);
+        writeRecyclerView.setAdapter(adapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +321,8 @@ public class ControlCenterv2 extends AppCompatActivity
 
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
         service = retrofit.create(IUploadAPI.class);
+
+        initNetworkSetting();
 
         // TODO: 2018-06-04 애플리케이션 평가 처리를 진행합니다. -- 박제창
         if (Paper.book().read("app_open_count") == null) {
@@ -288,16 +387,19 @@ public class ControlCenterv2 extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // TODO: 2018-05-22 네비게이션 뷰의 해더 부분 인플레이트
+        // TODO: 2018-05-22 네비게이션 뷰의 해더 부분 인플레이트 - 박제창 (Dreamwalker)
         View headView = navigationView.getHeaderView(0);
         TextView textUserName = (TextView) headView.findViewById(R.id.text_name);
         TextView textUserUUID = (TextView) headView.findViewById(R.id.text_uuid);
 
-        // TODO: 2018-05-22 등록된 유저 정보 표기
+        // TODO: 2018-05-22 등록된 유저 정보 표기 - 박제창 (Dreamwalker)
         textUserName.setText(userName);
         textUserUUID.setText(userUUID);
 
         headView.setOnClickListener(v -> startActivity(new Intent(ControlCenterv2.this, HomeProfileActivity.class)));
+
+        // TODO: 2018-06-26 Horizontal Recycler 생성 - 박제창 (Dreamwalker)
+        setWriteHorizontalData();
 
         //end of material design boilerplate
         deviceManager = ((GBApplication) getApplication()).getDeviceManager();
@@ -310,11 +412,11 @@ public class ControlCenterv2 extends AppCompatActivity
         List<GBDevice> deviceList = deviceManager.getDevices();
         mGBDeviceAdapter = new GBDeviceAdapterv2(this, deviceList);
 
-        // TODO: 2018-06-20 디바이스 디버그좀 할께요 - 박제창
-        for (GBDevice device: deviceList) {
+        // TODO: 2018-06-20 디바이스 디버그좀 할께요 - 박제창 (Dreamwalker)
+        for (GBDevice device : deviceList) {
             Log.e(TAG, "loop device" + device.getAddress());
         }
-        
+
         deviceListView.setAdapter(this.mGBDeviceAdapter);
 
         /* uncomment to enable fixed-swipe to reveal more actions
@@ -610,6 +712,7 @@ public class ControlCenterv2 extends AppCompatActivity
 
     /**
      * Navigation Drawer 메뉴 선택 처리 메소드
+     *
      * @param item
      * @return
      * @author 박제창 (Dreamwalker)
@@ -778,13 +881,19 @@ public class ControlCenterv2 extends AppCompatActivity
             //Toast.makeText(this, "Place Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.menu_write_meal_detail) {
             startActivity(new Intent(this, WriteMealSelectActivity.class));
-        } else if (id == R.id.menu_write_meal) {
-            startActivity(new Intent(this, WriteMealActivity.class));
-            //Toast.makeText(this, " ", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menu_write_sleep) {
-            startActivity(new Intent(this, WriteSleepActivity.class));
-            //Toast.makeText(this, "장비 추가 ", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menu_add_watch) {
+        }
+
+        // TODO: 2018-06-26 식사 쓰기와 수면 쓰기를 잠시 삭제 해봅니다. -박제창 (Dreamwalker)
+//        else if (id == R.id.menu_write_meal) {
+//            startActivity(new Intent(this, WriteMealActivity.class));
+//            //Toast.makeText(this, " ", Toast.LENGTH_SHORT).show();
+//        }
+//        else if (id == R.id.menu_write_sleep) {
+//            startActivity(new Intent(this, WriteSleepActivity.class));
+//            //Toast.makeText(this, "장비 추가 ", Toast.LENGTH_SHORT).show();
+//        }
+//
+        else if (id == R.id.menu_add_watch) {
             launchSelectCategoryActivity();
             //launchDiscoveryActivity();
             Toast.makeText(this, "장비 추가 ", Toast.LENGTH_SHORT).show();

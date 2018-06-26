@@ -694,6 +694,16 @@
     <string name="select_drug_dialog_positive">OK</string>
 
 
+    <string name="home_horizontal_write_title">Write</string>
+    <string name="home_horizontal_device_title">Accessory</string>
+    <string name="home_horizontal_blood_sugar">Blood Sugar</string>
+    <string name="home_horizontal_fitness">Workout</string>
+    <string name="home_horizontal_drug">Insulin</string>
+    <string name="home_horizontal_meal">Meal</string>
+    <string name="home_horizontal_meal_photo">촬영</string>
+    <string name="home_horizontal_sleep">Sleep</string>
+
+
     <!--약물 샘플 -->
     <!--초속효성-->
     <array name="names_RRapid">

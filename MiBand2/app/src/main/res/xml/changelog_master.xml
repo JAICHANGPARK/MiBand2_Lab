@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.1.0" versioncode="61">
+        <change>Date : 2018-06-26</change>
+        <change>홈 화면 UI 개편</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.19" versioncode="60">
+        <change>Date : 2018-06-25</change>
+        <change>인터넷 연결이 없을때 종료되었던 문제 해결</change>
+        <change>라이센스 정보 추가</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.0.18" versioncode="59">
         <change>Date : 2018-06-25</change>
         <change>사용자 메뉴 재 정렬</change>
