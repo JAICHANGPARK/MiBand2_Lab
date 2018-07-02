@@ -694,6 +694,8 @@
 
     <string name="home_horizontal_write_title">Write</string>
     <string name="home_horizontal_device_title">Accessory</string>
+    <string name="home_horizontal_beacon_title">Near By Accessories</string>
+
     <string name="home_horizontal_blood_sugar">Blood Sugar</string>
     <string name="home_horizontal_fitness">Workout</string>
     <string name="home_horizontal_drug">Insulin</string>

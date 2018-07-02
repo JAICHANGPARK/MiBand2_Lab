@@ -20,6 +20,7 @@ package nodomain.knu2018.bandutils.activities;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -71,11 +73,21 @@ import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
+
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -94,9 +106,11 @@ import nodomain.knu2018.bandutils.activities.userprofile.HomeProfileActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteHomesActivity;
 import nodomain.knu2018.bandutils.activities.writing.WriteMealSelectActivity;
 import nodomain.knu2018.bandutils.adapter.GBDeviceAdapterv2;
+import nodomain.knu2018.bandutils.adapter.home.BeaconDeviceAdapter;
 import nodomain.knu2018.bandutils.adapter.home.WriteHorizontalAdapter;
 import nodomain.knu2018.bandutils.devices.DeviceManager;
 import nodomain.knu2018.bandutils.impl.GBDevice;
+import nodomain.knu2018.bandutils.model.beacon.KNUBeacon;
 import nodomain.knu2018.bandutils.util.AndroidUtils;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.Prefs;
@@ -105,6 +119,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static nodomain.knu2018.bandutils.Const.BeaconConst.ALTBEACON_LAYOUT;
+import static nodomain.knu2018.bandutils.Const.BeaconConst.EDDYSTONE_TLM_LAYOUT;
+import static nodomain.knu2018.bandutils.Const.BeaconConst.EDDYSTONE_UID_LAYOUT;
+import static nodomain.knu2018.bandutils.Const.BeaconConst.EDDYSTONE_URL_LAYOUT;
+import static nodomain.knu2018.bandutils.Const.BeaconConst.EDDYSTON_BEACON_PARSER;
 
 
 /**
@@ -120,12 +140,17 @@ import retrofit2.Retrofit;
 public class ControlCenterv2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GBActivity,
         OnFABMenuSelectedListener,
-        RatingDialogListener {
+        RatingDialogListener,
+        BeaconConsumer {
 
     private static final String TAG = "ControlCenterv2";
     private static final String APP_VERSION_KEY = "bandutil_version";
     private static final String BASE_URL = "http://kangwonelec.com/";
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+    private static final int REQUEST_ENABLE_BT = 2;
 
+    private DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    BeaconManager beaconManager;
 
     /**
      * The .
@@ -168,6 +193,17 @@ public class ControlCenterv2 extends AppCompatActivity
     // TODO: 2018-06-26 Horizontal RecyclerView 뷰 - 박제창 (Dreamwalker)
     @BindView(R.id.write_recycler_view)
     RecyclerView writeRecyclerView;
+
+    // TODO: 2018-07-02 비콘 관련 뷰 및 객체 - 박제창 (Dreamwalker)
+    @BindView(R.id.beaconListView)
+    RecyclerView beaconRecyclerView;
+    @BindView(R.id.animation_view)
+    LottieAnimationView animationView;
+    // TODO: 2018-07-02 비콘 스캔 관련 객체 - 박제창 (Dreamwalker)
+    ArrayList<KNUBeacon> beaconArrayList;
+    BeaconDeviceAdapter BeaconAdapter;
+    BluetoothAdapter bluetoothAdapter;
+    BackgroundPowerSaver backgroundPowerSaver;
 
 
     private boolean isLanguageInvalid = false;
@@ -235,12 +271,10 @@ public class ControlCenterv2 extends AppCompatActivity
 
 
     /**
-     *
      * 기록하기 Horizontal 데이터를 넣습니다.
      * 인터넷의 연결 상태를 확인합니다.
      *
      * @author : 박제창(Dreamwalker)
-     *
      */
 
     private void setWriteHorizontalData() {
@@ -292,19 +326,31 @@ public class ControlCenterv2 extends AppCompatActivity
      * 기록하기 Horizontal RecyclerView 객체와 Adapter를 생성합니다.
      * 인터넷 연결이 되어있는지 없는지에 따라 예외처리를 하기위해
      * 네트워크 상태를 Boolean 형의 파라미터로 입력 받습니다.
-     *
+     * <p>
      * 인터넷 연결이 있으면 true
      * 인터넷 연결이 없으면 false
      *
      * @param networkState
      * @author : 박제창(Dreamwalker)
-     *
      */
     private void initWriteRecyclerView(Boolean networkState) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         writeRecyclerView.setLayoutManager(layoutManager);
         WriteHorizontalAdapter adapter = new WriteHorizontalAdapter(this, titleList, url, networkState);
         writeRecyclerView.setAdapter(adapter);
+    }
+
+    /**
+     * 주변의 스캔된 비콘의 객체를 표시하기 위한 리사이클러 뷰 객체의 생성과
+     * 리스트 구조의 초기화를 진행하는 메소드
+     *
+     * @author : 박제창(Dreamwalker)
+     */
+    private void initScanBeacon() {
+        beaconRecyclerView.setHasFixedSize(true);
+        beaconRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        beaconArrayList = new ArrayList<>();
+
     }
 
     @Override
@@ -347,12 +393,13 @@ public class ControlCenterv2 extends AppCompatActivity
             }
         }
 
+        // TODO: 2018-07-02 Firebase 토큰 생성
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e(TAG, "onCreate: " + token);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fabMenu = findViewById(R.id.fabMenu);
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.e(TAG, "onCreate: " + token);
         try {
             if (fab != null && fabMenu != null) {
                 //setFabMenu(fabMenu);
@@ -377,7 +424,7 @@ public class ControlCenterv2 extends AppCompatActivity
 //                launchDiscoveryActivity();
 //            }
 //        });
-
+        // TODO: 2018-07-02 네비케이션 드로우 뷰 및 객체 생성
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.controlcenter_navigation_drawer_open, R.string.controlcenter_navigation_drawer_close);
@@ -464,6 +511,18 @@ public class ControlCenterv2 extends AppCompatActivity
 
         refreshPairedDevices();
 
+
+        // TODO: 2018-07-02 비콘스캔을 위한 권한 체크 및 어댑터 얻기 - 박제창
+        initScanBeacon();
+        checkScanPermission();
+        getBluetoothAdapter();
+        checkBluetoothAdapter(bluetoothAdapter);
+        setBeaconManager("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25");
+        backgroundPowerSaver = new BackgroundPowerSaver(this);
+        bindBeaconService(this);
+
+
+
         /*
          * Ask for permission to intercept notifications on first run.
          */
@@ -507,6 +566,103 @@ public class ControlCenterv2 extends AppCompatActivity
         printKeyHash();
 
     }
+
+
+    /**
+     * bluetoothAdapter 객체를 얻어온다.
+     *
+     * @author : 박제창(Dreamwalker)
+     */
+    private void getBluetoothAdapter() {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
+    /**
+     * 블루투스가 핸드폰에서 가능한지 확인하는 메소드 .
+     * 블르투스 Adapter를 얻어와서 사용할 수 없다면 블루투스 활성화로 진행하고
+     * 즉 비활성화 되어있다면 활성화로 진행한다.
+     *
+     * @author : 박제창(Dreamwalker)
+     */
+    private void checkBluetoothAdapter(BluetoothAdapter adapter) {
+        if (!adapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        } else {
+            Log.e(TAG, "onCreate: getInstanceForApplication");
+            //setBeaconManager("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25");
+            // BEACON_PARSER 는 문자열인데요. iBeacon 이냐 EddyStone 이냐에 따라 다른 문자열을 필요로합니다.
+            //BeaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
+        }
+    }
+
+    /**
+     * 처음 권한을 요구했는데도 불구하고 블루투스 스캔을 위한 권한인
+     * ACCESS_COARSE_LOCATION 를 거부했다면 다시 요청을 진행한다.
+     * ACCESS_COARSE_LOCATION권한이 없다면 마시멜로우 이상부터는 BLE Scan이 불가능하다.
+     *
+     * @author : 박제창(Dreamwalker)
+     */
+    private void checkScanPermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+                builder.setTitle("This app needs location access");
+                builder.setMessage("Please grant location access so this app can detect beacons in the background.");
+                builder.setPositiveButton("OK", null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                    @TargetApi(23)
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                    }
+
+                });
+                builder.show();
+            }
+        }
+    }
+
+    /**
+     * 비콘 스캔을 위한 메니저 객체 생성과
+     * 비콘 스캔을 위한 필터를 설정한다.
+     *
+     * @param beaconFilter
+     * @author : 박제창(Dreamwalker)
+     */
+    private void setBeaconManager(String beaconFilter) {
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconFilter));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(ALTBEACON_LAYOUT));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(EDDYSTON_BEACON_PARSER));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(EDDYSTONE_TLM_LAYOUT));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(EDDYSTONE_UID_LAYOUT));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(EDDYSTONE_URL_LAYOUT));
+    }
+
+    /**
+     * 비콘 서비스를 활성화 한다.
+     * Bind는 서비스 에서 사용되는 메소드중 하나이다.
+     *
+     * @param beaconConsumer
+     * @author : 박제창(Dreamwalker)
+     */
+    private void bindBeaconService(BeaconConsumer beaconConsumer) {
+        beaconManager.bind(beaconConsumer);
+    }
+
+    /**
+     * 비콘 서비스를 비 활성화 한
+     *
+     * @author : 박제창(Dreamwalker)
+     */
+    private void unbindBeaconService() {
+        beaconManager.unbind(this);
+    }
+
 
     /**
      * これなら、簡単にSHA取得でしる。
@@ -696,6 +852,7 @@ public class ControlCenterv2 extends AppCompatActivity
     protected void onDestroy() {
         unregisterForContextMenu(deviceListView);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        beaconManager.unbind(this);
         super.onDestroy();
     }
 
@@ -833,6 +990,9 @@ public class ControlCenterv2 extends AppCompatActivity
             createDir();
         }
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED)
+            wantedPermissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
             wantedPermissions.add(Manifest.permission.CAMERA);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_DENIED)
@@ -876,6 +1036,7 @@ public class ControlCenterv2 extends AppCompatActivity
 
     /**
      * fab 클릭시 이밴트 처리
+     *
      * @param view
      * @param id
      */
@@ -888,7 +1049,7 @@ public class ControlCenterv2 extends AppCompatActivity
             startActivity(new Intent(this, WriteMealSelectActivity.class));
         }
 
-        // TODO: 2018-06-26 식사 쓰기와 수면 쓰기를 잠시 삭제 해봅니다. -박제창 (Dreamwalker)
+        // TODO: 2018-06-26 식사 쓰기와 수면 쓰기를 잠시 삭제 해봅니다. - 박제창 (Dreamwalker)
 //        else if (id == R.id.menu_write_meal) {
 //            startActivity(new Intent(this, WriteMealActivity.class));
 //            //Toast.makeText(this, " ", Toast.LENGTH_SHORT).show();
@@ -986,5 +1147,124 @@ public class ControlCenterv2 extends AppCompatActivity
     @Override
     public void onNeutralButtonClicked() {
         Snackbar.make(getWindow().getDecorView().getRootView(), "다음에는 꼭 평가 부탁드려요", Snackbar.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * 비콘 스캔을 위한 implement 메소드
+     */
+    @Override
+    public void onBeaconServiceConnect() {
+        beaconManager.addRangeNotifier((beacons, region) -> {
+
+
+            if (beaconArrayList.size() != 0) {
+                runOnUiThread(() -> {
+                    beaconRecyclerView.setVisibility(View.GONE);
+                    animationView.setVisibility(View.VISIBLE);
+                    animationView.playAnimation();
+                });
+
+                beaconArrayList.clear();
+            }
+            if (beacons.size() > 0) {
+                runOnUiThread(()->{
+                    beaconRecyclerView.setVisibility(View.VISIBLE);
+                    animationView.setVisibility(View.GONE);
+                    animationView.cancelAnimation();
+                });
+
+                Iterator<Beacon> iterator = beacons.iterator();
+
+                while (iterator.hasNext()) {
+                    // beaconArrayList = new ArrayList<>();
+                    Beacon beacon = iterator.next();
+                    String address = beacon.getBluetoothAddress();
+                    Log.e(TAG, "getBluetoothAddress: " + address);
+                    double rssi = beacon.getRssi();
+                    int txPower = beacon.getTxPower();
+                    double distance = Double.parseDouble(decimalFormat.format(beacon.getDistance()));
+//                        int major = beacon.getId2().toInt();
+//                        int minor = beacon.getId3().toInt();
+                    String major = beacon.getId2().toString();
+                    String minor = beacon.getId3().toString();
+                    String uuid = String.valueOf(beacon.getId1()).toUpperCase();
+                    beaconArrayList.add(new KNUBeacon(beacon.getBluetoothName(), address, uuid, major, minor, String.format("%s m", String.valueOf(distance))));
+                }
+                runOnUiThread(() -> {
+                    BeaconAdapter = new BeaconDeviceAdapter(getApplicationContext(), beaconArrayList);
+                    beaconRecyclerView.setAdapter(BeaconAdapter);
+                    BeaconAdapter.notifyDataSetChanged();
+                });
+            }
+        });
+
+        try {
+            beaconManager.startRangingBeaconsInRegion(new Region("myMoniter", null, null, null));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+            @Override
+            public void didEnterRegion(Region region) {
+                //Log.e(TAG, "didEnterRegion: " + region.getBluetoothAddress());
+                Log.e(TAG, "I just saw an beacon for the first time!");
+                // TODO: 2018-07-02 UI의 변화가 생길때는 새로운 Thread에서 처리하는게 맞다. - 박제창 (Dreamwalker)
+                runOnUiThread(() -> {
+                    beaconRecyclerView.setVisibility(View.VISIBLE);
+                    animationView.setVisibility(View.GONE);
+                    animationView.cancelAnimation();
+                });
+            }
+
+            @Override
+            public void didExitRegion(Region region) {
+                //Log.e(TAG, "didEnterRegion: " + region.getBluetoothAddress());
+                Log.e(TAG, "I no longer see an beacon");
+                runOnUiThread(() -> {
+                    beaconRecyclerView.setVisibility(View.GONE);
+                    animationView.setVisibility(View.VISIBLE);
+                });
+                //animationView.playAnimation();
+            }
+
+            @Override
+            public void didDetermineStateForRegion(int i, Region region) {
+                Log.e(TAG, "I have just switched from seeing/not seeing beacons: " + i);
+                //Log.e(TAG, "didEnterRegion: " + region.getBluetoothAddress());
+                runOnUiThread(() -> {
+                    beaconRecyclerView.setVisibility(View.GONE);
+                    animationView.setVisibility(View.VISIBLE);
+                    animationView.playAnimation();
+                });
+                //
+            }
+        });
+
+        try {
+            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e(TAG, "coarse location permission granted");
+                } else {
+                    final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to discover beacons when in the background.");
+                    builder.setPositiveButton("OK", null);
+                    builder.setOnDismissListener(dialog -> ActivityCompat.requestPermissions(ControlCenterv2.this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION));
+                    builder.show();
+                }
+            }
+        }
     }
 }
