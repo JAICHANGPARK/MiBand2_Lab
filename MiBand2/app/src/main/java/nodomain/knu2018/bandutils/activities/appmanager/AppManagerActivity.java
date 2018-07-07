@@ -48,6 +48,9 @@ import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.util.FileUtils;
 
 
+/**
+ * The type App manager activity.
+ */
 public class AppManagerActivity extends AbstractGBFragmentActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractAppManagerFragment.class);
@@ -55,6 +58,11 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
 
     private GBDevice mGBDevice = null;
 
+    /**
+     * Gets gb device.
+     *
+     * @return the gb device
+     */
     public GBDevice getGBDevice() {
         return mGBDevice;
     }
@@ -98,14 +106,28 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         return new SectionsPagerAdapter(fragmentManager);
     }
 
+    /**
+     * Delete from app order file.
+     *
+     * @param filename the filename
+     * @param uuid     the uuid
+     */
     public static synchronized void deleteFromAppOrderFile(String filename, UUID uuid) {
         ArrayList<UUID> uuids = getUuidsFromFile(filename);
         uuids.remove(uuid);
         rewriteAppOrderFile(filename, uuids);
     }
 
+    /**
+     * The type Sections pager adapter.
+     */
     public class SectionsPagerAdapter extends AbstractFragmentPagerAdapter {
 
+        /**
+         * Instantiates a new Sections pager adapter.
+         *
+         * @param fm the fm
+         */
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -155,6 +177,12 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
     }
 
 
+    /**
+     * Rewrite app order file.
+     *
+     * @param filename the filename
+     * @param uuids    the uuids
+     */
     static synchronized void rewriteAppOrderFile(String filename, List<UUID> uuids) {
         try (BufferedWriter out = new BufferedWriter(new FileWriter(FileUtils.getExternalFilesDir() + "/" + filename))) {
             for (UUID uuid : uuids) {
@@ -166,6 +194,12 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         }
     }
 
+    /**
+     * Add to app order file.
+     *
+     * @param filename the filename
+     * @param uuid     the uuid
+     */
     synchronized public static void addToAppOrderFile(String filename, UUID uuid) {
         ArrayList<UUID> uuids = getUuidsFromFile(filename);
         if (!uuids.contains(uuid)) {
@@ -174,6 +208,12 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         }
     }
 
+    /**
+     * Gets uuids from file.
+     *
+     * @param filename the filename
+     * @return the uuids from file
+     */
     static synchronized ArrayList<UUID> getUuidsFromFile(String filename) {
         ArrayList<UUID> uuids = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(FileUtils.getExternalFilesDir() + "/" + filename))) {

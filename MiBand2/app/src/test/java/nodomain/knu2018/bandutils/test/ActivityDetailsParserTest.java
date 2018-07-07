@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
-import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.devices.amazfitbip.BipActivitySummary;
 import nodomain.knu2018.bandutils.entities.Device;
 import nodomain.knu2018.bandutils.entities.User;
@@ -18,7 +17,7 @@ import nodomain.knu2018.bandutils.export.GPXExporter;
 import nodomain.knu2018.bandutils.model.ActivityPoint;
 import nodomain.knu2018.bandutils.model.ActivityTrack;
 import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
-import nodomain.knu2018.bandutils.service.devices.amazfitbip.ActivityDetailsParser;
+import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.ActivityDetailsParser;
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 import nodomain.knu2018.bandutils.util.FileUtils;
 

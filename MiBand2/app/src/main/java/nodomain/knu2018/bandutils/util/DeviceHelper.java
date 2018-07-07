@@ -47,6 +47,7 @@ import nodomain.knu2018.bandutils.devices.huami.amazfitbip.AmazfitBipCoordinator
 import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorCoordinator;
 import nodomain.knu2018.bandutils.devices.huami.miband2.MiBand2Coordinator;
 import nodomain.knu2018.bandutils.devices.huami.miband2.MiBand2HRXCoordinator;
+import nodomain.knu2018.bandutils.devices.huami.miband3.MiBand3Coordinator;
 import nodomain.knu2018.bandutils.devices.jyou.TeclastH30Coordinator;
 import nodomain.knu2018.bandutils.devices.liveview.LiveviewCoordinator;
 import nodomain.knu2018.bandutils.devices.miband.MiBandConst;
@@ -194,6 +195,7 @@ public class DeviceHelper {
         List<DeviceCoordinator> result = new ArrayList<>();
         result.add(new AmazfitBipCoordinator()); // Note: must come before MiBand2 because detection is hacky, atm
         result.add(new AmazfitCorCoordinator()); // Note: must come before MiBand2 because detection is hacky, atm
+        result.add(new MiBand3Coordinator());  // Note: must come before MiBand2 because detection is hacky, atm
         result.add(new MiBand2HRXCoordinator()); // Note: must come before MiBand2 because detection is hacky, atm
         result.add(new MiBand2Coordinator()); // Note: MiBand2 must come before MiBand because detection is hacky, atm
         result.add(new MiBandCoordinator());

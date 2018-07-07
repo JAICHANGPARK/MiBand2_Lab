@@ -25,9 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.knu2018.bandutils.devices.InstallHandler;
+import nodomain.knu2018.bandutils.devices.huami.HuamiConst;
 import nodomain.knu2018.bandutils.devices.huami.HuamiCoordinator;
 import nodomain.knu2018.bandutils.devices.miband.MiBand2Service;
-import nodomain.knu2018.bandutils.devices.miband.MiBandConst;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.DeviceType;
@@ -52,7 +52,7 @@ public class MiBand2Coordinator extends HuamiCoordinator {
             BluetoothDevice device = candidate.getDevice();
 //            if (isHealthWearable(device)) {
             String name = device.getName();
-            if (name != null && name.equalsIgnoreCase(MiBandConst.MI_BAND2_NAME)) {
+            if (name != null && name.equalsIgnoreCase(HuamiConst.MI_BAND2_NAME)) {
                 return DeviceType.MIBAND2;
             }
 //            }

@@ -53,6 +53,11 @@ public abstract class AbstractGBFragmentActivity extends AbstractGBActivity {
         mSectionsPagerAdapter = createFragmentPagerAdapter(getSupportFragmentManager());
     }
 
+    /**
+     * Gets pager adapter.
+     *
+     * @return the pager adapter
+     */
     public AbstractFragmentPagerAdapter getPagerAdapter() {
         return mSectionsPagerAdapter;
     }
@@ -61,8 +66,8 @@ public abstract class AbstractGBFragmentActivity extends AbstractGBActivity {
      * Creates a PagerAdapter that will create the fragments to be used with this
      * activity. The fragments should typically extend AbstractGBFragment
      *
-     * @param fragmentManager
-     * @return
+     * @param fragmentManager the fragment manager
+     * @return abstract fragment pager adapter
      */
     protected abstract AbstractFragmentPagerAdapter createFragmentPagerAdapter(FragmentManager fragmentManager);
 }

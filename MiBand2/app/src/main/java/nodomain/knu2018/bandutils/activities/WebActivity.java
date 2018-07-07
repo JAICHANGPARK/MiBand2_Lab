@@ -13,10 +13,19 @@ import dmax.dialog.SpotsDialog;
 import nodomain.knu2018.bandutils.Const.IntentConst;
 import nodomain.knu2018.bandutils.R;
 
+/**
+ * The type Web activity.
+ */
 public class WebActivity extends AppCompatActivity {
 
+    /**
+     * The Web view.
+     */
     @BindView(R.id.web_view)
     WebView webView;
+    /**
+     * The Alert dialog.
+     */
     AlertDialog alertDialog;
 
     @Override

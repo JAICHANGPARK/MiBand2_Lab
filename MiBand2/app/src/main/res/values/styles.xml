@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="GadgetbridgeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="textColorPrimary">@color/primarytext_light</item>
@@ -21,6 +21,14 @@
     <style name="GadgetbridgeTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="alertDialogStyle">@style/MyAlertDialogStyle</item>
+    </style>
+
+    <style name="GadgetbridgeTheme.NoActionBar2">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
     </style>
 
     <!-- dark theme -->
@@ -74,6 +82,67 @@
         <item name="colorControlActivated">#ffffff</item>
         <item name="colorControlHighlight">#ffffff</item>
     </style>
+
+
+    <!-- Dialog -->
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/MyAlertDialogButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MyAlertDialogButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/MyAlertDialogButtonStyle</item>
+    </style>
+
+    <style name="MyAlertDialogButtonStyle" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="MyDialogSlideHorizontalAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_right</item>
+    </style>
+
+    <style name="MyDialogSlideVerticalAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="MyDialogFadeAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">#212121</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
+
+    <!--<style name="spinner_style" parent="Widget.AppCompat.Spinner">-->
+        <!--<item name="android:dropDownVerticalOffset">40dip</item>-->
+        <!--&lt;!&ndash;<item name="android:dropDownHorizontalOffset">0dip</item>&ndash;&gt;-->
+        <!--<item name="overlapAnchor">false</item>-->
+    <!--</style>-->
+
+    <!--<style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">-->
+        <!--<item name="android:textColor">@color/black</item>-->
+        <!--<item name="android:background">@color/white</item>-->
+    <!--</style>-->
+
+
+
 
 
 </resources>

@@ -18,15 +18,41 @@ package nodomain.knu2018.bandutils.activities;
 
 import nodomain.knu2018.bandutils.model.ItemWithDetails;
 
+/**
+ * The interface Install activity.
+ */
 public interface InstallActivity {
+    /**
+     * Gets info text.
+     *
+     * @return the info text
+     */
     CharSequence getInfoText();
 
+    /**
+     * Sets info text.
+     *
+     * @param text the text
+     */
     void setInfoText(String text);
 
+    /**
+     * Sets install enabled.
+     *
+     * @param enable the enable
+     */
     void setInstallEnabled(boolean enable);
 
+    /**
+     * Clear install items.
+     */
     void clearInstallItems();
 
+    /**
+     * Sets install item.
+     *
+     * @param item the item
+     */
     void setInstallItem(ItemWithDetails item);
 
 }

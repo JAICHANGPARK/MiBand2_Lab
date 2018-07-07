@@ -33,18 +33,41 @@ public class CustomBarChart extends BarChart {
     private Entry entry = null;
     private SingleEntryValueAnimator singleEntryAnimator;
 
+    /**
+     * Instantiates a new Custom bar chart.
+     *
+     * @param context the context
+     */
     public CustomBarChart(Context context) {
         super(context);
     }
 
+    /**
+     * Instantiates a new Custom bar chart.
+     *
+     * @param context the context
+     * @param attrs   the attrs
+     */
     public CustomBarChart(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
+    /**
+     * Instantiates a new Custom bar chart.
+     *
+     * @param context  the context
+     * @param attrs    the attrs
+     * @param defStyle the def style
+     */
     public CustomBarChart(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
+    /**
+     * Sets singl animation entry.
+     *
+     * @param entry the entry
+     */
     public void setSinglAnimationEntry(Entry entry) {
         this.entry = entry;
 
@@ -66,7 +89,7 @@ public class CustomBarChart extends BarChart {
      * Call this to set the next value for the Entry to be animated.
      * Call animateY() when ready to do that.
      *
-     * @param nextValue
+     * @param nextValue the next value
      */
     public void setSingleEntryYValue(float nextValue) {
         if (singleEntryAnimator != null) {

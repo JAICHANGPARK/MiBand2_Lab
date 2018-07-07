@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.selectdevice.DrugDeviceActivity">
+
+    <com.intrusoft.library.FrissonView
+        android:id="@+id/wave_head"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:transitionName="category_third"
+        app:alphaValue="20"
+        app:gradientType="linear"
+        app:gradient_endColor="#00BDBDBD"
+        app:gradient_startColor="#00000000"
+        app:scaleType="centerCrop"
+        app:src="@drawable/category_third_2"
+        app:tideCount="3"
+        app:tideHeight="50dp"
+        app:tintColor="#000000" />
+
+    <TextView
+        android:id="@+id/category_third_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="11dp"
+        android:fontFamily="@font/bmjua"
+        android:gravity="center"
+        android:text="@string/category_third_image"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:transitionName="category_third_text"
+        app:layout_constraintBottom_toBottomOf="@+id/wave_head"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.477" />
+
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="11dp"
+        android:fontFamily="@font/bmjua"
+        android:gravity="end"
+        android:text="@string/category_select_text"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="@+id/wave_head"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_third_text_view"
+        app:layout_constraintVertical_bias="0.015" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--인슐린 투약기  -->
+            <LinearLayout
+                android:layout_width="368dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/bmjua"
+                    android:text="인슐린"
+                    android:textColor="@color/colorPrimaryReallyDark" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+            <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/list_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_0"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_syringe"
+                    app:civ_border_color="@color/primary_custom_light"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO I0(RAI/노보래피드)"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/list_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_syringe"
+                    app:civ_border_color="@color/primary_custom_light"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO I0(RAI/휴마로그)"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/list_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_syringe"
+                    app:civ_border_color="@color/primary_custom_light"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO I0(IAI/휴물린)"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/list_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_syringe"
+                    app:civ_border_color="@color/primary_custom_light"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO I0(지속형/투제오)"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/list_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_syringe"
+                    app:civ_border_color="@color/primary_custom_light"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO I0(혼합형/노보믹스)"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/list_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_syringe"
+                    app:civ_border_color="@color/primary_custom_light"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO I1(혼합형/노보믹스)"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--인슐린 투약기 종료 -->
+
+            <!--스마트 약통 뷰 -->
+            <LinearLayout
+                android:layout_width="368dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/bmjua"
+                    android:text="스마트 약통"
+                    android:textColor="@color/colorPrimaryReallyDark" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_6"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_pills"
+                    app:civ_border_color="@color/accent_custom"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO C0"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wave_head">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+
+                    android:id="@+id/circularImageView_7"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/device_pills"
+                    app:civ_border_color="@color/accent_custom"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/top_diagonal"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="KNU AUTO C1"
+                        android:textColor="@color/colorPrimaryReallyDark" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:paddingLeft="6dp"
+                        android:text="Kangwon National University"
+                        android:textColor="@color/secondarytext" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--스마트 약통 뷰 종료 -->
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

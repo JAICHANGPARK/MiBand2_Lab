@@ -59,25 +59,60 @@ import nodomain.knu2018.bandutils.util.FileUtils;
 import nodomain.knu2018.bandutils.util.PebbleUtils;
 
 
+/**
+ * The type Abstract app manager fragment.
+ */
 public abstract class AbstractAppManagerFragment extends Fragment {
+    /**
+     * The constant ACTION_REFRESH_APPLIST.
+     */
     public static final String ACTION_REFRESH_APPLIST
             = "nodomain.knu2018.gadgetbridge.appmanager.action.refresh_applist";
     private static final Logger LOG = LoggerFactory.getLogger(AbstractAppManagerFragment.class);
 
     private ItemTouchHelper appManagementTouchHelper;
 
+    /**
+     * Gets system apps in category.
+     *
+     * @return the system apps in category
+     */
     protected abstract List<GBDeviceApp> getSystemAppsInCategory();
 
+    /**
+     * Gets sort filename.
+     *
+     * @return the sort filename
+     */
     protected abstract String getSortFilename();
 
+    /**
+     * Is cache manager boolean.
+     *
+     * @return the boolean
+     */
     protected abstract boolean isCacheManager();
 
+    /**
+     * Filter app boolean.
+     *
+     * @param gbDeviceApp the gb device app
+     * @return the boolean
+     */
     protected abstract boolean filterApp(GBDeviceApp gbDeviceApp);
 
+    /**
+     * Start dragging.
+     *
+     * @param viewHolder the view holder
+     */
     public void startDragging(RecyclerView.ViewHolder viewHolder) {
         appManagementTouchHelper.startDrag(viewHolder);
     }
 
+    /**
+     * On changed app order.
+     */
     protected void onChangedAppOrder() {
         List<UUID> uuidList = new ArrayList<>();
         for (GBDeviceApp gbDeviceApp : mGBDeviceAppAdapter.getAppList()) {
@@ -86,6 +121,9 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         AppManagerActivity.rewriteAppOrderFile(getSortFilename(), uuidList);
     }
 
+    /**
+     * Refresh list.
+     */
     protected void refreshList() {
         appList.clear();
         ArrayList uuids = AppManagerActivity.getUuidsFromFile(getSortFilename());
@@ -139,10 +177,22 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         }
     };
 
+    /**
+     * The App list.
+     */
     protected final List<GBDeviceApp> appList = new ArrayList<>();
     private GBDeviceAppAdapter mGBDeviceAppAdapter;
+    /**
+     * The M gb device.
+     */
     protected GBDevice mGBDevice = null;
 
+    /**
+     * Gets cached apps.
+     *
+     * @param uuids the uuids
+     * @return the cached apps
+     */
     protected List<GBDeviceApp> getCachedApps(List<UUID> uuids) {
         List<GBDeviceApp> cachedAppList = new ArrayList<>();
         File cachePath;
@@ -286,6 +336,11 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Send order to device.
+     *
+     * @param concatFilename the concat filename
+     */
     protected void sendOrderToDevice(String concatFilename) {
         ArrayList<UUID> uuids = new ArrayList<>();
         for (GBDeviceApp gbDeviceApp : mGBDeviceAppAdapter.getAppList()) {
@@ -298,6 +353,13 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         GBApplication.deviceService().onAppReorder(uuids.toArray(new UUID[uuids.size()]));
     }
 
+    /**
+     * Open popup menu boolean.
+     *
+     * @param view      the view
+     * @param deviceApp the device app
+     * @return the boolean
+     */
     public boolean openPopupMenu(View view, GBDeviceApp deviceApp) {
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
         popupMenu.getMenuInflater().inflate(R.menu.appmanager_context, popupMenu.getMenu());
@@ -444,10 +506,18 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         super.onDestroy();
     }
 
+    /**
+     * The type App item touch helper callback.
+     */
     public class AppItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
         private final GBDeviceAppAdapter gbDeviceAppAdapter;
 
+        /**
+         * Instantiates a new App item touch helper callback.
+         *
+         * @param gbDeviceAppAdapter the gb device app adapter
+         */
         public AppItemTouchHelperCallback(GBDeviceAppAdapter gbDeviceAppAdapter) {
             this.gbDeviceAppAdapter = gbDeviceAppAdapter;
         }

@@ -15,21 +15,51 @@ import com.nightonke.wowoviewpager.WoWoViewPagerAdapter;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.util.WoWoUtil;
 
+/**
+ * The type Wo wo activity.
+ */
 public abstract class WoWoActivity extends AppCompatActivity {
 
+    /**
+     * The Wowo.
+     */
     protected WoWoViewPager wowo;
 
+    /**
+     * The Ease.
+     */
     protected int ease = Ease.Linear;
+    /**
+     * The Use same ease type back.
+     */
     protected boolean useSameEaseTypeBack = true;
 
+    /**
+     * The Page number.
+     */
     protected TextView pageNumber;
 
+    /**
+     * Content view res int.
+     *
+     * @return the int
+     */
     protected abstract int contentViewRes();
 
+    /**
+     * Fragment number int.
+     *
+     * @return the int
+     */
     protected int fragmentNumber() {
         return 5;
     }
 
+    /**
+     * Fragment colors res integer [ ].
+     *
+     * @return the integer [ ]
+     */
     protected Integer[] fragmentColorsRes() {
         return new Integer[]{
                 R.color.blue_1,
@@ -40,7 +70,13 @@ public abstract class WoWoActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * The Screen w.
+     */
     protected int screenW;
+    /**
+     * The Screen h.
+     */
     protected int screenH;
 
     @Override
@@ -68,6 +104,12 @@ public abstract class WoWoActivity extends AppCompatActivity {
         screenH = WoWoUtil.getScreenHeight(this);
     }
 
+    /**
+     * Color int.
+     *
+     * @param colorRes the color res
+     * @return the int
+     */
     protected int color(int colorRes) {
         return ContextCompat.getColor(this, colorRes);
     }
@@ -120,10 +162,22 @@ public abstract class WoWoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Dp 2 px int.
+     *
+     * @param dp the dp
+     * @return the int
+     */
     protected int dp2px(float dp) {
         return WoWoUtil.dp2px((int) dp, this);
     }
 
+    /**
+     * Dp 2 px int.
+     *
+     * @param dp the dp
+     * @return the int
+     */
     protected int dp2px(double dp) {
         return WoWoUtil.dp2px((int) dp, this);
     }

@@ -7,6 +7,16 @@
     <string name="action_debug">Debug</string>
     <string name="action_quit">Quit</string>
     <string name="action_donate">Donate</string>
+    <string name="action_licenses">Licenses</string>
+    <string name="action_about">About</string>
+    <string name="action_check_db">Pattern Data</string>
+    <string name="food_check_db">Food Search</string>
+    <string name="sub_header">Management</string>
+    <string name="action_storage">Database Management</string>
+    <string name="footer_header">Information</string>
+    <string name="action_user_information">My Information</string>
+
+
     <string name="controlcenter_fetch_activity_data">Synchronize</string>
     <string name="controlcenter_find_device">Find lost Device</string>
     <string name="controlcenter_take_screenshot">Take Screenshot</string>
@@ -54,7 +64,8 @@
     <string name="title_activity_fw_app_insaller">FW/App installer</string>
     <string name="fw_upgrade_notice">You are about to install firmware %s instead of the one currently on your Mi Band.</string>
     <string name="fw_upgrade_notice_amazfitbip">You are about to install the %s firmware on your Amazfit Bip.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
-    <string name="fw_upgrade_notice_amazfitcor">You are about to install the %s firmware on your Amazfit Cor.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nUNTESTED, MAY BRICK YOUR DEVICE, PROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_amazfitcor">You are about to install the %s firmware on your Amazfit Cor.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_miband3">You are about to install the %s firmware on your Mi Band 3.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nUNTESTED, MAY BRICK YOUR DEVICE, PROCEED AT YOUR OWN RISK!</string>
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
     <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with BandUtil.</string>
     <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with BandUtil.\n\nYou are DISCOURAGED from flashing it onto your Mi Band!"</string>
@@ -545,6 +556,7 @@
     <string name="devicetype_pebble">Pebble</string>
     <string name="devicetype_miband">Mi Band</string>
     <string name="devicetype_miband2">Mi Band 2</string>
+    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="devicetype_amazfit_bip">Amazfit Bip</string>
     <string name="devicetype_amazfit_cor">Amazfit Cor</string>
     <string name="devicetype_vibratissimo">Vibratissimo</string>
@@ -560,6 +572,8 @@
     <string name="notification_channel_name">BandUtil notifications</string>
 
     <!-- Menus on the smart device -->
+    <string name="menuitem_shortcut_alipay">Alipay (Shortcut)</string>
+    <string name="menuitem_shortcut_weather">Weather (Shortcut)</string>
     <string name="menuitem_status">Status</string>
     <string name="menuitem_activity">Activity</string>
     <string name="menuitem_weather">Weather</string>
@@ -608,4 +622,194 @@
         It should describe the category of notifications that will be sent through this channel
      -->
     <string name="default_notification_channel_name" translatable="true">News</string>
+
+
+    <string name="home_tap_target_title">Touch &amp; Write</string>
+    <string name="home_tap_target_description">You can register device and write life pattern</string>
+
+    <string name="app_update_title">New version available</string>
+    <string name="app_update_message">Please, update app to new version</string>
+    <string name="app_update_positive">Update</string>
+    <string name="app_update_negative">No, thanks</string>
+
+    <string name="user_information_name">NAME</string>
+    <string name="user_information_uuid">UUID</string>
+    <string name="user_information_aim">AIM INTERVAL</string>
+    <string name="user_information_gender">GENDER</string>
+    <string name="user_information_age">AGE</string>
+    <string name="user_information_birth">BIRTH</string>
+    <string name="user_information_email">EMAIL</string>
+    <string name="user_information_phone">PHONE NUMBER</string>
+    <string name="user_information_svae">SAVE</string>
+
+    <string name="user_information_bs_min">AIM (MIN)</string>
+    <string name="user_information_bs_max">AIM (MAX)</string>
+
+    <string name="FACEBOOK_APP_ID">169563493885122</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">baf822a230081139aad0b6dee673a649</string>
+
+    <string name="app_rating_title">Rate this application</string>
+    <string name="app_rating_description">Please select some stars and give your feedback</string>
+    <string name="app_rating_hint">Please write your comment here ...</string>
+    <string name="app_rating_positive_button">Submit</string>
+    <string name="app_rating_negative_button">Cancle</string>
+    <string name="app_rating_neutral_button">Later</string>
+
+    <string name="category_toolbar">CATEGORY</string>
+    <string name="category_first_image">Fitness Device</string>
+    <string name="category_second_image">Intake Device</string>
+    <string name="category_third_image">Drug Device</string>
+    <string name="category_fourth_image">GSM Device</string>
+    <string name="category_bottom_image">Select Category</string>
+    <string name="category_select_text">Choose your Device</string>
+
+    <string name="nav_header_text_name">Diabetes Grue-BandUtils</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="image">image</string>
+    <string name="desc">Being the savage\'s bowsman, that is, the person who pulled the
+    bow-oar in his boat. Dolor sit amet.</string>
+
+    <string name="profile_edit_photo">PHOTO</string>
+    <string name="profile_edit_user_info">EDIT INFO</string>
+    <string name="profile_edit_user_drug">EDIT DRUG</string>
+
+    <string name="profile_duplicate">DUPLICATE</string>
+    <string name="profile_schedule">SCHEDULE</string>
+    <string name="profile_delete">DELETE</string>
+    <string name="profile_network_exception_message">PLEASE CONNECT NETWORK. READ CACHE DATA</string>
+
+
+    <string name="rapid">초속효성</string>
+    <string name="rapid2">속효성</string>
+    <string name="netural">중간형</string>
+    <string name="longtime">지속형</string>
+    <string name="mixed">혼합형</string>
+
+    <string name="select_drug_title">Select Insulin</string>
+    <string name="select_drug_unit">Select Unit</string>
+    <string name="select_drug_none">선택된 약물 없음</string>
+    <string name="select_drug_dialog_title">ERROR</string>
+    <string name="select_drug_dialog_message">PLEASE CHOOSE YOUR INSULIN!</string>
+    <string name="select_drug_dialog_positive">OK</string>
+
+
+    <string name="home_horizontal_write_title">Write</string>
+    <string name="home_horizontal_device_title">Accessory</string>
+    <string name="home_horizontal_beacon_title">Near By Accessories</string>
+
+    <string name="home_horizontal_blood_sugar">Blood Sugar</string>
+    <string name="home_horizontal_fitness">Workout</string>
+    <string name="home_horizontal_drug">Insulin</string>
+    <string name="home_horizontal_meal">Meal</string>
+    <string name="home_horizontal_meal_photo">촬영</string>
+    <string name="home_horizontal_sleep">Sleep</string>
+
+    <string name="search_food_activity_title">Search Food Data</string>
+    <string name="search_food_activity_search_bar_hint">Search</string>
+
+
+    <string name="detail_food_activity_title">Detail Information</string>
+    <string name="food_detail_Number">Number</string>
+    <string name="food_detail_name">Name</string>
+    <string name="food_detail_group">Group</string>
+    <string name="food_detail_amount">Amount</string>
+    <string name="food_detail_kcal">KCal</string>
+    <string name="food_detail_carbo">Carbohydrate</string>
+    <string name="food_detail_protein">Protein</string>
+    <string name="food_detail_fat">Fat</string>
+
+    <string name="food_detail_sugar">Sugar</string>
+    <string name="food_detail_natrium">Natrium</string>
+    <string name="food_detail_cholesterol">Cholesterol</string>
+    <string name="food_detail_fatty">Saturated Fatty</string>
+    <string name="food_detail_trans_fat">Trans Fat</string>
+
+    <!--약물 샘플 -->
+    <!--초속효성-->
+    <array name="names_RRapid">
+        <item>노보래피드</item>
+        <item>애피드라</item>
+        <item>휴마로그</item>
+    </array>
+    <array name="description_RRapid">
+        <item>인슐린아스파트 100U/mL</item>
+        <item>인슐린글루리신(유전자재조합) 34.9mg</item>
+        <item>인슐린리스프로 1000단위/10mL</item>
+    </array>
+    <!--속효성-->
+    <array name="names_Rapid">
+        <item>휴물린R</item>
+        <item>노보린R</item>
+        <item>노보렛R</item>
+    </array>
+    <array name="description_Rapid">
+        <item>휴먼인슐린 1000IU/10mL</item>
+        <item>휴먼인슐린 300</item>
+        <item>휴먼인슐린 300</item>
+    </array>
+
+    <!--중간형-->
+    <array name="names_netural">
+        <item>인슈라타드</item>
+        <item>휴물린N</item>
+        <item>노보린N</item>
+        <item>노보렛N</item>
+    </array>
+    <array name="description_netural">
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+    </array>
+
+    <!--지속형-->
+    <array name="names_longtime">
+        <item>란투스</item>
+        <item>레버미어</item>
+        <item>투제오</item>
+        <item>트레시바</item>
+    </array>
+    <array name="description_longtime">
+        <item>인슐린글라진</item>
+        <item>인슐린디터머</item>
+        <item>인슐린글라진</item>
+        <item>인슐린데글루덱</item>
+    </array>
+
+    <array name="names_mixed">
+        <item>노보믹스30</item>
+        <item>노보믹스50</item>
+        <item>노보믹스70</item>
+        <item>믹스타드30</item>
+        <item>휴마로그믹스25</item>
+        <item>휴마로그믹스50</item>
+        <item>휴물린70/30</item>
+    </array>
+    <array name="description_mixed">
+        <item>인슐린아스파트</item>
+        <item>인슐린아스파트</item>
+        <item>인슐린아스파트</item>
+        <item>인슐린리스프로</item>
+        <item>인슐린리스프로</item>
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+    </array>
+
+    <string-array name="photos">
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+    </string-array>
+
+
 </resources>

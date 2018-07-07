@@ -22,6 +22,9 @@ import java.util.UUID;
 
 import nodomain.knu2018.bandutils.impl.GBDeviceApp;
 
+/**
+ * The type App manager fragment installed watchfaces.
+ */
 public class AppManagerFragmentInstalledWatchfaces extends AbstractAppManagerFragment {
 
     @Override

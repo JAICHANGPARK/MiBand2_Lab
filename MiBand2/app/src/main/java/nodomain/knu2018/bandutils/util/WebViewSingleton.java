@@ -190,7 +190,8 @@ public class WebViewSingleton {
                     webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
                 }
             });
-            if (!internetHelperBound && !internetHelperInstalled) {
+            // TODO: 2018-07-07 update ! - 박제창
+            if (contextWrapper != null &&  !internetHelperBound && !internetHelperInstalled) {
                 String internetHelperPkg = "nodomain.knu2018.internethelper";
                 String internetHelperCls = internetHelperPkg + ".MyService";
                 try {

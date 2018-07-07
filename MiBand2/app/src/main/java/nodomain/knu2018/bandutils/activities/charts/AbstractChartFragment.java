@@ -27,6 +27,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -70,8 +71,6 @@ import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 import nodomain.knu2018.bandutils.util.DeviceHelper;
 
-import static nodomain.knu2018.bandutils.activities.HeartRateUtils.isValidHeartRateValue;
-
 /**
  * A base class fragment to be used with ChartsActivity. The fragment can supply
  * a title to be displayed in the activity by returning non-null in #getTitle()
@@ -91,7 +90,12 @@ import static nodomain.knu2018.bandutils.activities.HeartRateUtils.isValidHeartR
  * shift the date by one day.
  */
 public abstract class AbstractChartFragment extends AbstractGBFragment {
-    protected final int ANIM_TIME = 250;
+
+    private static final String TAG = "AbstractChartFragment";
+    /**
+     * The Anim time.
+     */
+    protected final int ANIM_TIME = 350;
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractChartFragment.class);
 
@@ -105,6 +109,11 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
     private boolean mChartDirty = true;
     private AsyncTask refreshTask;
 
+    /**
+     * Is chart dirty boolean.
+     *
+     * @return the boolean
+     */
     public boolean isChartDirty() {
         return mChartDirty;
     }
@@ -112,16 +121,41 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
     @Override
     public abstract String getTitle();
 
+    /**
+     * Supports heartrate boolean.
+     *
+     * @param device the device
+     * @return the boolean
+     */
     public boolean supportsHeartrate(GBDevice device) {
         DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(device);
         return coordinator != null && coordinator.supportsHeartRateMeasurement(device);
     }
 
+    /**
+     * The type Activity config.
+     */
     protected static final class ActivityConfig {
+        /**
+         * The Type.
+         */
         public final int type;
+        /**
+         * The Label.
+         */
         public final String label;
+        /**
+         * The Color.
+         */
         public final Integer color;
 
+        /**
+         * Instantiates a new Activity config.
+         *
+         * @param kind  the kind
+         * @param label the label
+         * @param color the color
+         */
         public ActivityConfig(int kind, String label, Integer color) {
             this.type = kind;
             this.label = label;
@@ -129,25 +163,75 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         }
     }
 
+    /**
+     * The Ak activity.
+     */
     protected ActivityConfig akActivity;
+    /**
+     * The Ak light sleep.
+     */
     protected ActivityConfig akLightSleep;
+    /**
+     * The Ak deep sleep.
+     */
     protected ActivityConfig akDeepSleep;
+    /**
+     * The Ak not worn.
+     */
     protected ActivityConfig akNotWorn;
 
 
+    /**
+     * The Background color.
+     */
     protected int BACKGROUND_COLOR;
+    /**
+     * The Description color.
+     */
     protected int DESCRIPTION_COLOR;
+    /**
+     * The Chart text color.
+     */
     protected int CHART_TEXT_COLOR;
+    /**
+     * The Legend text color.
+     */
     protected int LEGEND_TEXT_COLOR;
+    /**
+     * The Heartrate color.
+     */
     protected int HEARTRATE_COLOR;
+    /**
+     * The Heartrate fill color.
+     */
     protected int HEARTRATE_FILL_COLOR;
+    /**
+     * The Ak activity color.
+     */
     protected int AK_ACTIVITY_COLOR;
+    /**
+     * The Ak deep sleep color.
+     */
     protected int AK_DEEP_SLEEP_COLOR;
+    /**
+     * The Ak light sleep color.
+     */
     protected int AK_LIGHT_SLEEP_COLOR;
+    /**
+     * The Ak not worn color.
+     */
     protected int AK_NOT_WORN_COLOR;
 
+    /**
+     * The Heartrate label.
+     */
     protected String HEARTRATE_LABEL;
 
+    /**
+     * Instantiates a new Abstract chart fragment.
+     *
+     * @param intentFilterActions the intent filter actions
+     */
     protected AbstractChartFragment(String... intentFilterActions) {
         mIntentFilterActions = new HashSet<>();
         if (intentFilterActions != null) {
@@ -171,6 +255,9 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, filter);
     }
 
+    /**
+     * Init.
+     */
     protected void init() {
         TypedValue runningColor = new TypedValue();
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(getContext());
@@ -193,12 +280,18 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         akLightSleep = new ActivityConfig(ActivityKind.TYPE_LIGHT_SLEEP, getString(R.string.abstract_chart_fragment_kind_light_sleep), AK_LIGHT_SLEEP_COLOR);
         akDeepSleep = new ActivityConfig(ActivityKind.TYPE_DEEP_SLEEP, getString(R.string.abstract_chart_fragment_kind_deep_sleep), AK_DEEP_SLEEP_COLOR);
         akNotWorn = new ActivityConfig(ActivityKind.TYPE_NOT_WORN, getString(R.string.abstract_chart_fragment_kind_not_worn), AK_NOT_WORN_COLOR);
+
     }
 
     private void setStartDate(Date date) {
         getChartsHost().setStartDate(date);
     }
 
+    /**
+     * Gets charts host.
+     *
+     * @return the charts host
+     */
     @Nullable
     protected ChartsHost getChartsHost() {
         return (ChartsHost) getActivity();
@@ -208,10 +301,20 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         getChartsHost().setEndDate(date);
     }
 
+    /**
+     * Gets start date.
+     *
+     * @return the start date
+     */
     public Date getStartDate() {
         return getChartsHost().getStartDate();
     }
 
+    /**
+     * Gets end date.
+     *
+     * @return the end date
+     */
     public Date getEndDate() {
         return getChartsHost().getEndDate();
     }
@@ -231,6 +334,11 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         }
     }
 
+    /**
+     * Show date bar.
+     *
+     * @param show the show
+     */
     protected void showDateBar(boolean show) {
         getChartsHost().getDateBar().setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
@@ -241,6 +349,12 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
     }
 
+    /**
+     * On receive.
+     *
+     * @param context the context
+     * @param intent  the intent
+     */
     protected void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (ChartsHost.REFRESH.equals(action)) {
@@ -256,8 +370,8 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      * Default implementation shifts the dates by one day, if visible
      * and calls #refreshIfVisible().
      *
-     * @param startDate
-     * @param endDate
+     * @param startDate the start date
+     * @param endDate   the end date
      */
     protected void handleDatePrev(Date startDate, Date endDate) {
         if (isVisibleInActivity()) {
@@ -272,8 +386,8 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      * Default implementation shifts the dates by one day, if visible
      * and calls #refreshIfVisible().
      *
-     * @param startDate
-     * @param endDate
+     * @param startDate the start date
+     * @param endDate   the end date
      */
     protected void handleDateNext(Date startDate, Date endDate) {
         if (isVisibleInActivity()) {
@@ -284,6 +398,9 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         refreshIfVisible();
     }
 
+    /**
+     * Refresh if visible.
+     */
     protected void refreshIfVisible() {
         if (isVisibleInActivity()) {
             refresh();
@@ -295,8 +412,8 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
     /**
      * Shifts the given dates by offset days. offset may be positive or negative.
      *
-     * @param startDate
-     * @param endDate
+     * @param startDate the start date
+     * @param endDate   the end date
      * @param offset    a positive or negative number of days to shift the dates
      * @return true if the shift was successful and false otherwise
      */
@@ -307,6 +424,12 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return setDateRange(newStart, newEnd);
     }
 
+    /**
+     * Gets color for.
+     *
+     * @param activityKind the activity kind
+     * @return the color for
+     */
     protected Integer getColorFor(int activityKind) {
         switch (activityKind) {
             case ActivityKind.TYPE_DEEP_SLEEP:
@@ -319,6 +442,13 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return akActivity.color;
     }
 
+    /**
+     * Gets provider.
+     *
+     * @param db     the db
+     * @param device the device
+     * @return the provider
+     */
     protected SampleProvider<? extends AbstractActivitySample> getProvider(DBHandler db, GBDevice device) {
         DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(device);
         return coordinator.getSampleProvider(device, db.getDaoSession());
@@ -328,26 +458,51 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      * Returns all kinds of samples for the given device.
      * To be called from a background thread.
      *
-     * @param device
-     * @param tsFrom
-     * @param tsTo
+     * @param db     the db
+     * @param device the device
+     * @param tsFrom the ts from
+     * @param tsTo   the ts to
+     * @return the all samples
      */
     protected List<? extends ActivitySample> getAllSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
         return provider.getAllActivitySamples(tsFrom, tsTo);
     }
 
+    /**
+     * Gets activity samples.
+     *
+     * @param db     the db
+     * @param device the device
+     * @param tsFrom the ts from
+     * @param tsTo   the ts to
+     * @return the activity samples
+     */
     protected List<? extends AbstractActivitySample> getActivitySamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends AbstractActivitySample> provider = getProvider(db, device);
         return provider.getActivitySamples(tsFrom, tsTo);
     }
 
 
+    /**
+     * Gets sleep samples.
+     *
+     * @param db     the db
+     * @param device the device
+     * @param tsFrom the ts from
+     * @param tsTo   the ts to
+     * @return the sleep samples
+     */
     protected List<? extends ActivitySample> getSleepSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
         return provider.getSleepSamples(tsFrom, tsTo);
     }
 
+    /**
+     * Configure chart defaults.
+     *
+     * @param chart the chart
+     */
     protected void configureChartDefaults(Chart<?> chart) {
         chart.getXAxis().setValueFormatter(new TimestampValueFormatter());
         chart.getDescription().setText("");
@@ -369,6 +524,11 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         setupLegend(chart);
     }
 
+    /**
+     * Configure bar line chart defaults.
+     *
+     * @param chart the chart
+     */
     protected void configureBarLineChartDefaults(BarLineChartBase<?> chart) {
         configureChartDefaults(chart);
         if (chart instanceof BarChart) {
@@ -408,6 +568,11 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      * This method reads the data from the database, analyzes and prepares it for
      * the charts. This will be called from a background task, so there must not be
      * any UI access. #updateChartsInUIThread and #renderCharts will be automatically called after this method.
+     *
+     * @param chartsHost the charts host
+     * @param db         the db
+     * @param device     the device
+     * @return the charts data
      */
     protected abstract ChartsData refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device);
 
@@ -417,17 +582,26 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      */
     protected abstract void renderCharts();
 
+    /**
+     * Refresh default charts data.
+     *
+     * @param gbDevice the gb device
+     * @param samples  the samples
+     * @return the default charts data
+     */
     protected DefaultChartsData<LineData> refresh(GBDevice gbDevice, List<? extends ActivitySample> samples) {
 //        Calendar cal = GregorianCalendar.getInstance();
 //        cal.clear();
-        TimestampTranslation tsTranslation = new TimestampTranslation();
 //        Date date;
 //        String dateStringFrom = "";
 //        String dateStringTo = "";
 //        ArrayList<String> xLabels = null;
 
+        TimestampTranslation tsTranslation = new TimestampTranslation();
+        Log.e(TAG, "refresh  tsTranslation  : " + tsTranslation);
         LOG.info("" + getTitle() + ": number of samples:" + samples.size());
         LineData lineData;
+
         if (samples.size() > 1) {
             boolean annotate = true;
             boolean use_steps_as_movement;
@@ -448,6 +622,7 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
                 ActivitySample sample = samples.get(i);
                 int type = sample.getKind();
                 int ts = tsTranslation.shorten(sample.getTimestamp());
+                Log.e(TAG, "refresh: " +  type + ", " + ts);
 
 //                System.out.println(ts);
 //                ts = i;
@@ -465,11 +640,11 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
                 float movement = sample.getIntensity();
 
                 float value = movement;
+
                 switch (type) {
                     case ActivityKind.TYPE_DEEP_SLEEP:
                         if (last_type != type) { //FIXME: this is ugly but it works (repeated in each case)
                             deepSleepEntries.add(createLineEntry(0, ts - 1));
-
                             lightSleepEntries.add(createLineEntry(0, ts));
                             notWornEntries.add(createLineEntry(0, ts));
                             activityEntries.add(createLineEntry(0, ts));
@@ -479,7 +654,6 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
                     case ActivityKind.TYPE_LIGHT_SLEEP:
                         if (last_type != type) {
                             lightSleepEntries.add(createLineEntry(0, ts - 1));
-
                             deepSleepEntries.add(createLineEntry(0, ts));
                             notWornEntries.add(createLineEntry(0, ts));
                             activityEntries.add(createLineEntry(0, ts));
@@ -513,7 +687,7 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
                         activityEntries.add(createLineEntry(value, ts));
                 }
                 if (hr && sample.getKind() != ActivityKind.TYPE_NOT_WORN && HeartRateUtils.isValidHeartRateValue(sample.getHeartRate())) {
-                    if (lastHrSampleIndex > -1 && ts - lastHrSampleIndex > 1800*HeartRateUtils.MAX_HR_MEASUREMENTS_GAP_MINUTES) {
+                    if (lastHrSampleIndex > -1 && ts - lastHrSampleIndex > 1800 * HeartRateUtils.MAX_HR_MEASUREMENTS_GAP_MINUTES) {
                         heartrateEntries.add(createLineEntry(0, lastHrSampleIndex + 1));
                         heartrateEntries.add(createLineEntry(0, ts - 1));
                     }
@@ -562,7 +736,6 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
 
             if (hr && heartrateEntries.size() > 0) {
                 LineDataSet heartrateSet = createHeartrateSet(heartrateEntries, "Heart Rate");
-
                 lineDataSets.add(heartrateSet);
             }
             lineData = new LineData(lineDataSets);
@@ -580,20 +753,40 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
     /**
      * Implement this to supply the samples to be displayed.
      *
-     * @param db
-     * @param device
-     * @param tsFrom
-     * @param tsTo
-     * @return
+     * @param db     the db
+     * @param device the device
+     * @param tsFrom the ts from
+     * @param tsTo   the ts to
+     * @return samples
      */
     protected abstract List<? extends ActivitySample> getSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo);
 
+    /**
+     * Sets legend.
+     *
+     * @param chart the chart
+     */
     protected abstract void setupLegend(Chart chart);
 
+    /**
+     * Create line entry entry.
+     *
+     * @param value  the value
+     * @param xValue the x value
+     * @return the entry
+     */
     protected Entry createLineEntry(float value, int xValue) {
         return new Entry(xValue, value);
     }
 
+    /**
+     * Create data set line data set.
+     *
+     * @param values the values
+     * @param color  the color
+     * @param label  the label
+     * @return the line data set
+     */
     protected LineDataSet createDataSet(List<Entry> values, Integer color, String label) {
         LineDataSet set1 = new LineDataSet(values, label);
         set1.setColor(color);
@@ -613,6 +806,13 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return set1;
     }
 
+    /**
+     * Create heartrate set line data set.
+     *
+     * @param values the values
+     * @param label  the label
+     * @return the line data set
+     */
     protected LineDataSet createHeartrateSet(List<Entry> values, String label) {
         LineDataSet set1 = new LineDataSet(values, label);
         set1.setLineWidth(2.2f);
@@ -634,13 +834,29 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return set1;
     }
 
+    /**
+     * Create refresh task refresh task.
+     *
+     * @param task    the task
+     * @param context the context
+     * @return the refresh task
+     */
     protected RefreshTask createRefreshTask(String task, Context context) {
         return new RefreshTask(task, context);
     }
 
+    /**
+     * The type Refresh task.
+     */
     public class RefreshTask extends DBAccess {
         private ChartsData chartsData;
 
+        /**
+         * Instantiates a new Refresh task.
+         *
+         * @param task    the task
+         * @param context the context
+         */
         public RefreshTask(String task, Context context) {
             super(task, context);
         }
@@ -668,14 +884,20 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         }
     }
 
+    /**
+     * Update chartsn ui thread.
+     *
+     * @param chartsData the charts data
+     */
     protected abstract void updateChartsnUIThread(ChartsData chartsData);
 
     /**
      * Returns true if the date was successfully shifted, and false if the shift
      * was ignored, e.g. when the to-value is in the future.
      *
-     * @param from
-     * @param to
+     * @param from the from
+     * @param to   the to
+     * @return the date range
      */
     public boolean setDateRange(Date from, Date to) {
         if (from.compareTo(to) > 0) {
@@ -690,6 +912,12 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return true;
     }
 
+    /**
+     * Update date info.
+     *
+     * @param from the from
+     * @param to   the to
+     */
     protected void updateDateInfo(Date from, Date to) {
         if (from.equals(to)) {
             getChartsHost().setDateInfo(DateTimeUtils.formatDate(from));
@@ -698,10 +926,24 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         }
     }
 
+    /**
+     * Gets samples.
+     *
+     * @param db     the db
+     * @param device the device
+     * @return the samples
+     */
     protected List<? extends ActivitySample> getSamples(DBHandler db, GBDevice device) {
         int tsStart = getTSStart();
         int tsEnd = getTSEnd();
+
+       // Log.e(TAG, "tsStart & tsEnd : " + tsStart + ", " + tsEnd);
+
         List<ActivitySample> samples = (List<ActivitySample>) getSamples(db, device, tsStart, tsEnd);
+
+//        for (ActivitySample sample : samples) {
+//            Log.e(TAG, "getSamples: " + sample.getKind() );
+//        }
         ensureStartAndEndSamples(samples, tsStart, tsEnd);
 //        List<ActivitySample> samples2 = new ArrayList<>();
 //        int min = Math.min(samples.size(), 10);
@@ -713,6 +955,13 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return samples;
     }
 
+    /**
+     * Ensure start and end samples.
+     *
+     * @param samples the samples
+     * @param tsStart the ts start
+     * @param tsEnd   the ts end
+     */
     protected void ensureStartAndEndSamples(List<ActivitySample> samples, int tsStart, int tsEnd) {
         if (samples == null || samples.isEmpty()) {
             return;
@@ -752,34 +1001,70 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return (int) ((date.getTime() / 1000));
     }
 
+    /**
+     * The type Default charts data.
+     *
+     * @param <T> the type parameter
+     */
     public static class DefaultChartsData<T extends ChartData<?>> extends ChartsData {
         private final T data;
         private IAxisValueFormatter xValueFormatter;
 
+        /**
+         * Instantiates a new Default charts data.
+         *
+         * @param data            the data
+         * @param xValueFormatter the x value formatter
+         */
         public DefaultChartsData(T data, IAxisValueFormatter xValueFormatter) {
             this.xValueFormatter = xValueFormatter;
             this.data = data;
         }
 
+        /**
+         * Gets x value formatter.
+         *
+         * @return the x value formatter
+         */
         public IAxisValueFormatter getXValueFormatter() {
             return xValueFormatter;
         }
 
+        /**
+         * Gets data.
+         *
+         * @return the data
+         */
         public T getData() {
             return data;
         }
     }
 
+    /**
+     * The type Sample x label formatter.
+     */
     protected static class SampleXLabelFormatter implements IAxisValueFormatter {
         private final TimestampTranslation tsTranslation;
+        /**
+         * The Annotation date format.
+         */
         SimpleDateFormat annotationDateFormat = new SimpleDateFormat("HH:mm");
+        /**
+         * The Cal.
+         */
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         Calendar cal = GregorianCalendar.getInstance();
 
+        /**
+         * Instantiates a new Sample x label formatter.
+         *
+         * @param tsTranslation the ts translation
+         */
         public SampleXLabelFormatter(TimestampTranslation tsTranslation) {
             this.tsTranslation = tsTranslation;
 
         }
+
         // TODO: this does not work. Cannot use precomputed labels
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
@@ -792,13 +1077,22 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         }
     }
 
+    /**
+     * The type Preformatted x index label formatter.
+     */
     protected static class PreformattedXIndexLabelFormatter implements IAxisValueFormatter {
         private ArrayList<String> xLabels;
 
+        /**
+         * Instantiates a new Preformatted x index label formatter.
+         *
+         * @param xLabels the x labels
+         */
         public PreformattedXIndexLabelFormatter(ArrayList<String> xLabels) {
             this.xLabels = xLabels;
 
         }
+
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             int index = (int) value;
@@ -813,21 +1107,36 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      * Awkward class that helps in translating long timestamp
      * values to float (sic!) values. It basically rebases all
      * timestamps to a base (the very first) timestamp value.
-     *
+     * <p>
      * It does this so that the large timestamp values can be used
      * floating point values, where the mantissa is just 24 bits.
      */
     protected static class TimestampTranslation {
         private int tsOffset = -1;
 
+        /**
+         * Shorten int.
+         *
+         * @param timestamp the timestamp
+         * @return the int
+         */
         public int shorten(int timestamp) {
+            Log.e(TAG, "shorten: timestamp -- > " + timestamp );
             if (tsOffset == -1) {
                 tsOffset = timestamp;
+                Log.e(TAG, "shorten: tsOffset == -1 -- > " + tsOffset );
                 return 0;
             }
+            Log.e(TAG, "shorten: return value  -- > " + (timestamp - tsOffset) );
             return timestamp - tsOffset;
         }
 
+        /**
+         * To original value int.
+         *
+         * @param timestamp the timestamp
+         * @return the int
+         */
         public int toOriginalValue(int timestamp) {
             if (tsOffset == -1) {
                 return timestamp;

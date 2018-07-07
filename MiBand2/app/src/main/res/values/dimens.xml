@@ -13,4 +13,24 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="nav_header_vertical_spacing">24dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="dimen_0dp">0dp</dimen>
+    <dimen name="dimen_1dp">1dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_14sp">14sp</dimen>
+    <dimen name="dimen_16sp">16sp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
+    <dimen name="dimen_32dp">32dp</dimen>
+    <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="dimen_56dp">56dp</dimen>
+
+    <!--넘버 픽커를위한 것 -->
+    <dimen name="text_size">30dp</dimen>
+    <dimen name="selected_text_size">35dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
 </resources>

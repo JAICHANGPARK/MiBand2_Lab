@@ -156,6 +156,7 @@ import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_VIBRATION_INT
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_WEATHER;
 
 public class DeviceCommunicationService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     private static final Logger LOG = LoggerFactory.getLogger(DeviceCommunicationService.class);
     @SuppressLint("StaticFieldLeak") // only used for test cases
     private static DeviceSupportFactory DEVICE_SUPPORT_FACTORY = null;

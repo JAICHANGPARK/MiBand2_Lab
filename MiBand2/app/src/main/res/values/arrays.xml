@@ -11,6 +11,11 @@
     <string name="pref_theme_value_light" translatable="false">light</string>
     <string name="pref_theme_value_dark" translatable="false">dark</string>
 
+    <string-array name="data_select_option">
+        <item name="default">내림차순</item>
+        <item name="default2">오름차순</item>
+    </string-array>
+
     <string-array name="pref_language_options">
         <item name="default">System Default</item>
         <item name="cz">Čeština</item>
@@ -281,4 +286,7 @@
         <item>1800</item>
         <item>3600</item>
     </string-array>
+
+
+
 </resources>

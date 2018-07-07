@@ -18,8 +18,23 @@ package nodomain.knu2018.bandutils.activities;
 
 import java.util.Locale;
 
+/**
+ * The interface Gb activity.
+ */
 public interface GBActivity {
+    /**
+     * Sets language.
+     *
+     * @param language           the language
+     * @param invalidateLanguage the invalidate language
+     */
     void setLanguage(Locale language, boolean invalidateLanguage);
+
+    /**
+     * Sets theme.
+     *
+     * @param themeId the theme id
+     */
     void setTheme(int themeId);
 
 }

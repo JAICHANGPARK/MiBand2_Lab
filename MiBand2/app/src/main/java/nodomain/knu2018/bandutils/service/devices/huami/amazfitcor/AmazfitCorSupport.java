@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
 import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorFWHelper;
-import nodomain.knu2018.bandutils.service.devices.amazfitbip.AmazfitBipSupport;
+import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipSupport;
 
 public class AmazfitCorSupport extends AmazfitBipSupport {
 

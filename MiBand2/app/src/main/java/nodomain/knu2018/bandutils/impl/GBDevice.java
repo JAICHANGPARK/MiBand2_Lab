@@ -41,8 +41,7 @@ import nodomain.knu2018.bandutils.model.ItemWithDetails;
 
 
 public class GBDevice implements Parcelable {
-    public static final String ACTION_DEVICE_CHANGED
-            = "nodomain.knu2018.gadgetbridge.gbdevice.action.device_changed";
+    public static final String ACTION_DEVICE_CHANGED = "nodomain.knu2018.gadgetbridge.gbdevice.action.device_changed";
     public static final Creator<GBDevice> CREATOR = new Creator<GBDevice>() {
         @Override
         public GBDevice createFromParcel(Parcel source) {

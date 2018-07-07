@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.knu2018.bandutils.devices.InstallHandler;
+import nodomain.knu2018.bandutils.devices.huami.HuamiConst;
 import nodomain.knu2018.bandutils.devices.huami.HuamiCoordinator;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
@@ -44,7 +45,7 @@ public class MiBand2HRXCoordinator extends HuamiCoordinator {
         try {
             BluetoothDevice device = candidate.getDevice();
             String name = device.getName();
-            if (name != null && (name.equalsIgnoreCase("Mi Band HRX") || name.equalsIgnoreCase("Mi Band 2i"))) {
+            if (name != null && (name.equalsIgnoreCase(HuamiConst.MI_BAND2_NAME_HRX) || name.equalsIgnoreCase("Mi Band 2i"))) {
                 return DeviceType.MIBAND2;
             }
         } catch (Exception ex) {

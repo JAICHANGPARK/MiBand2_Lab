@@ -21,6 +21,9 @@ import java.util.List;
 import nodomain.knu2018.bandutils.impl.GBDeviceApp;
 
 
+/**
+ * The type App manager fragment cache.
+ */
 public class AppManagerFragmentCache extends AbstractAppManagerFragment {
     @Override
     public void refreshList() {

@@ -1,8 +1,15 @@
 package nodomain.knu2018.bandutils.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
+
+import nodomain.knu2018.bandutils.model.analysis.MyWriteCount;
+import nodomain.knu2018.bandutils.model.pattern.PatternGlobal;
 
 public class WriteBSDBHelper extends SQLiteOpenHelper {
 
@@ -73,6 +80,13 @@ public class WriteBSDBHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_MEAL_ENTRIES = "DROP TABLE IF EXISTS " + WriteEntry.MealEntry.TABLE_NAME;
     private static final String SQL_DELETE_SLEEP_ENTRIES = "DROP TABLE IF EXISTS " + WriteEntry.SleepEntry.TABLE_NAME;
 
+    // TODO: 2018-05-28 SQLITE3는 TRUNCATE 명령어가 없다. 따라서 Delete 명령어를 사용했다. - 박제창
+    private static final String SQL_TRUNCATE_BS_ENTRIES = "DELETE FROM " + WriteEntry.BloodSugarEntry.TABLE_NAME;
+    private static final String SQL_TRUNCATE_FITNESS_ENTRIES = "DELETE FROM " + WriteEntry.FitnessEntry.TABLE_NAME;
+    private static final String SQL_TRUNCATE_DRUG_ENTRIES = "DELETE FROM " + WriteEntry.DrugEntry.TABLE_NAME;
+    private static final String SQL_TRUNCATE_MEAL_ENTRIES = "DELETE FROM " + WriteEntry.MealEntry.TABLE_NAME;
+    private static final String SQL_TRUNCATE_SLEEP_ENTRIES = "DELETE FROM " + WriteEntry.SleepEntry.TABLE_NAME;
+
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "lifedata.db";
 
@@ -104,4 +118,258 @@ public class WriteBSDBHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
+
+    public void onTruncate() {
+        SQLiteDatabase db = getWritableDatabase();
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(" TRUNCATE foodName, foodGroup FROM mealdb");
+//        sb.append(" LIMIT 20");
+
+        db.execSQL(SQL_TRUNCATE_BS_ENTRIES);
+        db.execSQL(SQL_TRUNCATE_FITNESS_ENTRIES);
+        db.execSQL(SQL_TRUNCATE_DRUG_ENTRIES);
+        db.execSQL(SQL_TRUNCATE_MEAL_ENTRIES);
+        db.execSQL(SQL_TRUNCATE_SLEEP_ENTRIES);
+
+//        String query = sb.toString();
+//        db.execSQL(query, null);
+//        db.rawQuery(sb.toString(), null);
+
+    }
+
+    public ArrayList<PatternGlobal> onChooseDateRead(String[] date) {
+        ArrayList<PatternGlobal> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" SELECT date, time, type, value FROM bloodsugar");
+        sb.append(" WHERE");
+        sb.append(" DATE BETWEEN '" + date[0] + "'");
+        sb.append(" AND'" + date[1] + "'");
+        sb.append(" UNION");
+        sb.append(" select date, time, (type1 || '-' || type2) as type, value from drug ");
+        sb.append(" WHERE");
+        sb.append(" DATE BETWEEN '" + date[0] + "'");
+        sb.append(" AND'" + date[1] + "'");
+        sb.append(" UNION");
+        sb.append(" select date, time, type, value from fitness ");
+        sb.append(" WHERE");
+        sb.append(" DATE BETWEEN '" + date[0] + "'");
+        sb.append(" AND'" + date[1] + "'");
+        sb.append(" UNION");
+        sb.append(" select date, time, type, exchange from meal ");
+        sb.append(" WHERE");
+        sb.append(" DATE BETWEEN '" + date[0] + "'");
+        sb.append(" AND'" + date[1] + "'");
+        sb.append(" UNION");
+        sb.append(" select date, time, type, duration from sleep ");
+        sb.append(" WHERE");
+        sb.append(" DATE BETWEEN '" + date[0] + "'");
+        sb.append(" AND'" + date[1] + "'");
+        sb.append(" ORDER BY ");
+        sb.append(" DATE ASC");
+        Cursor cursor = db.rawQuery(sb.toString(), null);
+
+        while (cursor.moveToNext()) {
+
+            result.add(new PatternGlobal(cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3)));
+        }
+
+        for (PatternGlobal i : result) {
+            //textView.append(i.getBsDate() + i.getBsTime() + i.getBsType() + i.getBsValue() + "\n");
+            Log.e("onChooseDateRead", "result: " + i.getDate() + i.getTime() + i.getType() + i.getValue());
+        }
+
+        return result;
+    }
+
+    public ArrayList<String> dbCount() {
+
+        int bsCount = 0;
+        int fitnessCount = 0;
+        int drugCount = 0;
+        int mealCount = 0;
+        int sleepCount = 0;
+        int totalCount = 0;
+
+        ArrayList<String> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        StringBuilder sb = new StringBuilder();
+        Cursor cursor = null;
+
+        sb.append(" SELECT date FROM bloodsugar");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            bsCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM fitness");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            fitnessCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM drug");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            drugCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM meal");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            mealCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM sleep");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            sleepCount += 1;
+            totalCount += 1;
+        }
+
+        result.add("1. 모든 기록 수 : " + String.valueOf(totalCount) + "개");
+        result.add("2. 혈당 기록 수 : " + String.valueOf(bsCount) + "개");
+        result.add("3. 운동 기록 수 : " + String.valueOf(fitnessCount) + "개");
+        result.add("4. 투약 기록 수 : " + String.valueOf(drugCount) + "개");
+        result.add("5. 식사 기록 수 : " + String.valueOf(mealCount) + "개");
+        result.add("6. 수면 기록 수 : " + String.valueOf(sleepCount) + "개");
+        return result;
+    }
+
+
+    public ArrayList<String> dbTotalCount() {
+
+        int bsCount = 0;
+        int fitnessCount = 0;
+        int drugCount = 0;
+        int mealCount = 0;
+        int sleepCount = 0;
+        int totalCount = 0;
+
+        ArrayList<String> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        StringBuilder sb = new StringBuilder();
+        Cursor cursor = null;
+
+        sb.append(" SELECT date FROM bloodsugar");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            bsCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM fitness");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            fitnessCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM drug");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            drugCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM meal");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            mealCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM sleep");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            sleepCount += 1;
+            totalCount += 1;
+        }
+
+        result.add(String.valueOf(totalCount));
+        return result;
+    }
+
+
+    public ArrayList<MyWriteCount> getCount() {
+
+        int bsCount = 0;
+        int fitnessCount = 0;
+        int drugCount = 0;
+        int mealCount = 0;
+        int sleepCount = 0;
+        int totalCount = 0;
+
+        ArrayList<MyWriteCount> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        StringBuilder sb = new StringBuilder();
+        Cursor cursor = null;
+
+        sb.append(" SELECT date FROM bloodsugar");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            bsCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM fitness");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            fitnessCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM drug");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            drugCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM meal");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            mealCount += 1;
+            totalCount += 1;
+        }
+
+        sb.setLength(0);
+        sb.append(" SELECT date FROM sleep");
+        cursor = db.rawQuery(sb.toString(), null);
+        while (cursor.moveToNext()) {
+            sleepCount += 1;
+            totalCount += 1;
+        }
+
+        result.add(new MyWriteCount("total", String.valueOf(totalCount)));
+        result.add(new MyWriteCount("blood_sugar", String.valueOf(bsCount)));
+        result.add(new MyWriteCount("fitness", String.valueOf(fitnessCount)));
+        result.add(new MyWriteCount("drug", String.valueOf(drugCount)));
+        result.add(new MyWriteCount("meal", String.valueOf(mealCount)));
+        result.add(new MyWriteCount("sleep", String.valueOf(sleepCount)));
+
+        return result;
+    }
+
+
 }

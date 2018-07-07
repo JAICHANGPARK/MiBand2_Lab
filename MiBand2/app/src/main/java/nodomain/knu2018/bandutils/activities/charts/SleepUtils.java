@@ -18,10 +18,25 @@ package nodomain.knu2018.bandutils.activities.charts;
 
 import nodomain.knu2018.bandutils.model.ActivityKind;
 
+/**
+ * The type Sleep utils.
+ */
 public class SleepUtils {
+    /**
+     * The constant Y_VALUE_DEEP_SLEEP.
+     */
     public static final float Y_VALUE_DEEP_SLEEP = 0.01f;
+    /**
+     * The constant Y_VALUE_LIGHT_SLEEP.
+     */
     public static final float Y_VALUE_LIGHT_SLEEP = 0.016f;
 
+    /**
+     * Is sleep boolean.
+     *
+     * @param type the type
+     * @return the boolean
+     */
     public static boolean isSleep(byte type) {
         return type == ActivityKind.TYPE_DEEP_SLEEP || type == ActivityKind.TYPE_LIGHT_SLEEP;
     }

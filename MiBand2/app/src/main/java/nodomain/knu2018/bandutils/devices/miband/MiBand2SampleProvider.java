@@ -20,12 +20,15 @@ package nodomain.knu2018.bandutils.devices.miband;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
-import nodomain.knu2018.bandutils.devices.miband2.MiBand2Const;
+import nodomain.knu2018.bandutils.devices.huami.HuamiConst;
 import nodomain.knu2018.bandutils.entities.DaoSession;
 import nodomain.knu2018.bandutils.entities.MiBandActivitySample;
 import nodomain.knu2018.bandutils.entities.MiBandActivitySampleDao;
 import nodomain.knu2018.bandutils.impl.GBDevice;
-import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.*;
+
+import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.TYPE_IGNORE;
+import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.TYPE_NO_CHANGE;
+import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.TYPE_UNSET;
 
 public class MiBand2SampleProvider extends AbstractMiBandSampleProvider {
 
@@ -88,11 +91,11 @@ public class MiBand2SampleProvider extends AbstractMiBandSampleProvider {
 
     @Override
     public int normalizeType(int rawType) {
-        return MiBand2Const.toActivityKind(rawType);
+        return HuamiConst.toActivityKind(rawType);
     }
 
     @Override
     public int toRawActivityKind(int activityKind) {
-        return MiBand2Const.toRawActivityType(activityKind);
+        return HuamiConst.toRawActivityType(activityKind);
     }
 }

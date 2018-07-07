@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nodomain.knu2018.bandutils.model.foodmodel.Food;
 
@@ -64,6 +66,49 @@ public class DBHelper extends SQLiteOpenHelper {
         //Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
     }
 
+    public Map<String, String> fetchDetailFoodInfo(String foodName){
+
+        Map<String, String> foodMap = new HashMap<>();
+        SQLiteDatabase database  = getWritableDatabase();
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("SELECT foodNumber, foodGroup, foodName, " +
+                "foodAmount, foodKcal, foodCarbo, foodProtein," +
+                "foodFat, foodSugar, foodNatrium, foodCholest," +
+                "foodFatty,foodTransFatty FROM mealdb ");
+        stringBuilder.append("WHERE foodName = ");
+        stringBuilder.append("'");
+        stringBuilder.append(foodName);
+        stringBuilder.append("'");
+
+        Cursor cursor = database.rawQuery(stringBuilder.toString(), null);
+
+        while (cursor.moveToNext()){
+
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_NUMBER, cursor.getString(0));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_GROUP, cursor.getString(1));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_FOOD_NAME, cursor.getString(2));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_AMOUNT, cursor.getString(3));
+
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_KCAL, cursor.getString(4));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_CARBO, cursor.getString(5));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_PROTEIN, cursor.getString(6));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_FAT, cursor.getString(7));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_SUGAR, cursor.getString(8));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_NATRIUM, cursor.getString(9));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_CHOLEST, cursor.getString(10));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_FATTY, cursor.getString(11));
+            foodMap.put(Entry.FoodEntry.COLUNM_NAME_TRANS_FATTY, cursor.getString(12));
+
+        }
+
+        return foodMap;
+
+
+
+    }
+
     public ArrayList<String> readNameDate() {
         ArrayList<String> nameArrayList = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
@@ -73,9 +118,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = null;
-        // TODO: 2018-02-11 혈당 값 가져오기
+        // TODO: 2018-06-25 모든 데이터에서 음식 이름만 가져오기 - 박제창
         sb.append(" SELECT foodName FROM mealdb");
-        //sb.append(" LIMIT 20");
+        sb.append(" LIMIT 5");
 
         cursor = db.rawQuery(sb.toString(), null);
 
@@ -97,9 +142,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = null;
-        // TODO: 2018-02-11 혈당 값 가져오기
+        // TODO: 2018-06-25 모든 데이터에서 음식 이름, 식품군 가져오기 - 박제창
         sb.append(" SELECT foodName, foodGroup FROM mealdb");
-        sb.append(" LIMIT 20");
+        sb.append(" LIMIT 10");
 
         cursor = db.rawQuery(sb.toString(), null);
 
@@ -121,7 +166,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = null;
-        // TODO: 2018-02-11 혈당 값 가져오기
+        // TODO: 2018-06-25 검색되는 음식 이름, 식품군 가져오기 - 박제창
         sb.append(" SELECT foodName,foodGroup FROM mealdb ");
         sb.append(" WHERE foodName LIKE '%" + name + "%'");
         //sb.append(" LIMIT 20");

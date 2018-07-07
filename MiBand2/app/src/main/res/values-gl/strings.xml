@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Gadgetbridge</string>
+<resources>
+    <string name="app_name">BandUtils</string>
 
-    <string name="title_activity_controlcenter">Gadgetbridge</string>
+    <string name="title_activity_controlcenter">BandUtils</string>
     <string name="action_settings">Axustes</string>
     <string name="action_debug">Depuración</string>
     <string name="action_quit">Saír</string>

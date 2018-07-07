@@ -25,16 +25,27 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * The type Timestamp value formatter.
+ */
 public class TimestampValueFormatter implements IAxisValueFormatter {
     private final Calendar cal;
     //    private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     private DateFormat dateFormat;
 
+    /**
+     * Instantiates a new Timestamp value formatter.
+     */
     public TimestampValueFormatter() {
         this(new SimpleDateFormat("HH:mm"));
 
     }
 
+    /**
+     * Instantiates a new Timestamp value formatter.
+     *
+     * @param dateFormat the date format
+     */
     public TimestampValueFormatter(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
         cal = GregorianCalendar.getInstance();

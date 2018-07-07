@@ -25,6 +25,9 @@ import nodomain.knu2018.bandutils.service.devices.pebble.PebbleProtocol;
 import nodomain.knu2018.bandutils.util.PebbleUtils;
 
 
+/**
+ * The type App manager fragment installed apps.
+ */
 public class AppManagerFragmentInstalledApps extends AbstractAppManagerFragment {
 
     @Override

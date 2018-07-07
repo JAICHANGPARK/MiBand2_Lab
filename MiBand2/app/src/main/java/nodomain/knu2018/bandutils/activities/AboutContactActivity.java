@@ -12,18 +12,39 @@ import butterknife.OnClick;
 import nodomain.knu2018.bandutils.R;
 
 
+/**
+ * The type About contact activity.
+ */
 public class AboutContactActivity extends AppCompatActivity {
 
+    /**
+     * The Button contact 0.
+     */
     @BindView(R.id.buttonContact0)
     Button buttonContact0;
+    /**
+     * The Button contact 1.
+     */
     @BindView(R.id.buttonContact1)
     Button buttonContact1;
+    /**
+     * The Button contact 2.
+     */
     @BindView(R.id.buttonContact2)
     Button buttonContact2;
+    /**
+     * The Button contact 3.
+     */
     @BindView(R.id.buttonContact3)
     Button buttonContact3;
+    /**
+     * The Button service 0.
+     */
     @BindView(R.id.buttonService0)
     Button buttonService0;
+    /**
+     * The Button service 1.
+     */
     @BindView(R.id.buttonService1)
     Button buttonService1;
 
@@ -40,6 +61,11 @@ public class AboutContactActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * On button contact 0 licked.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.buttonContact0)
     public void onButtonContact0licked(View v) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -51,6 +77,11 @@ public class AboutContactActivity extends AppCompatActivity {
         startActivity(emailIntent);
     }
 
+    /**
+     * On button contact 1 licked.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.buttonContact1)
     public void onButtonContact1licked(View v) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -62,6 +93,11 @@ public class AboutContactActivity extends AppCompatActivity {
         startActivity(emailIntent);
     }
 
+    /**
+     * On button contact 2 licked.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.buttonContact2)
     public void onButtonContact2licked(View v) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -73,6 +109,11 @@ public class AboutContactActivity extends AppCompatActivity {
         startActivity(emailIntent);
     }
 
+    /**
+     * On button contact 3 licked.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.buttonContact3)
     public void onButtonContact3licked(View v) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
