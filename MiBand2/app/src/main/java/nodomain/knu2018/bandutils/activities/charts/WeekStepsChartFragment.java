@@ -17,6 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.activities.charts;
 
+import android.util.Log;
+
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
@@ -58,6 +60,7 @@ public class WeekStepsChartFragment extends AbstractWeekChartFragment {
         for (ActivityAmount amount : activityAmounts.getAmounts()) {
             totalSteps += amount.getTotalSteps();
             amount.getTotalSteps();
+            Log.e("Step", "getTotalsForActivityAmounts: "  + amount.getTotalSteps() );
         }
         return new float[]{totalSteps};
     }

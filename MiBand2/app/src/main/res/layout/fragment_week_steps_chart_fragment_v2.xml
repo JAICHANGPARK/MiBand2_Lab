@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.charts.WeekStepsChartFragmentV2">
+
+
+    <com.ruesga.timelinechart.TimelineChartView
+        xmlns:tlc="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/graph"
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        android:background="@color/colorPrimary"
+        tlc:layout_constraintEnd_toEndOf="parent"
+        tlc:layout_constraintStart_toStartOf="parent"
+        tlc:layout_constraintTop_toTopOf="parent"
+        tlc:tlcFooterBackground="@color/primary_light"
+        tlc:tlcGraphBackground="@color/colorPrimary"
+        tlc:tlcGraphMode="tlcBarsStack"
+        tlc:tlcShowFooter="true" />
+</android.support.constraint.ConstraintLayout>

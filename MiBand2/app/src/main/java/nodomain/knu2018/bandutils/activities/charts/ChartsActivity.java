@@ -224,11 +224,11 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
      * 인터페이스를 구현하여 사용한다.
      * 종료시간과 시작 시간을 받아온다.
      *
-     * @author  DREAMWALKER
+     * @author DREAMWALKER
      */
     protected void initDates() {
         setEndDate(new Date());
-        Log.e(TAG, "initDates: 종료시간 시작시간 구하는 것 ? " + DateTimeUtils.shiftByDays(getEndDate(), -1).getTime() );
+        Log.e(TAG, "initDates: 종료시간 시작시간 구하는 것 ? " + DateTimeUtils.shiftByDays(getEndDate(), -1).getTime());
         setStartDate(DateTimeUtils.shiftByDays(getEndDate(), -1));
     }
 
@@ -354,6 +354,10 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
                     return new WeekSleepChartFragment();
                 case 3:
                     return new WeekStepsChartFragment();
+
+                // TODO: 2018-07-08 차트 테스트
+                case 4:
+                    return new WeekStepsChartFragmentV2();
 //                case 4:
 //                    return new SpeedZonesFragment();
 //                case 5:
@@ -367,9 +371,9 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
             // Show 5 or 6 total pages.
             DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(mGBDevice);
             if (coordinator.supportsRealtimeData()) {
-                return 4;
+                return 5;
             }
-            return 4;
+            return 5;
         }
 
         @Override
@@ -383,6 +387,8 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
                     return getString(R.string.weeksleepchart_sleep_a_week);
                 case 3:
                     return getString(R.string.weekstepschart_steps_a_week);
+                case 4:
+                    return "Step Lab";
 //                case 4:
 //                    return getString(R.string.stats_title);
 //                case 5:

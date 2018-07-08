@@ -622,7 +622,8 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
                 ActivitySample sample = samples.get(i);
                 int type = sample.getKind();
                 int ts = tsTranslation.shorten(sample.getTimestamp());
-                Log.e(TAG, "refresh: " +  type + ", " + ts);
+                // TODO: 2018-07-08 주석 해제
+                //Log.e(TAG, "refresh: " +  type + ", " + ts);
 
 //                System.out.println(ts);
 //                ts = i;
@@ -1121,13 +1122,13 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
          * @return the int
          */
         public int shorten(int timestamp) {
-            Log.e(TAG, "shorten: timestamp -- > " + timestamp );
+            //Log.e(TAG, "shorten: timestamp -- > " + timestamp );
             if (tsOffset == -1) {
                 tsOffset = timestamp;
                 Log.e(TAG, "shorten: tsOffset == -1 -- > " + tsOffset );
                 return 0;
             }
-            Log.e(TAG, "shorten: return value  -- > " + (timestamp - tsOffset) );
+           // Log.e(TAG, "shorten: return value  -- > " + (timestamp - tsOffset) );
             return timestamp - tsOffset;
         }
 
