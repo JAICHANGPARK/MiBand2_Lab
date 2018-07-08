@@ -114,11 +114,11 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
         holder.deviceImageView.setImageResource(R.drawable.level_list_device);
         //level-list does not allow negative values, hence we always add 100 to the key.
-        Log.e(TAG, "getKey 1 - "  + device.getType().getKey());
-        Log.e(TAG, "getKey 2 - "  + device.getType().getKey() + 100);
-        Log.e(TAG, "isInitialized  - "  + device.isInitialized());
+        Log.e(TAG, "getKey 1 - " + device.getType().getKey());
+        Log.e(TAG, "getKey 2 - " + device.getType().getKey() + 100);
+        Log.e(TAG, "isInitialized  - " + device.isInitialized());
 
-        Log.e(TAG, "setImageLevel: "  + device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
+        Log.e(TAG, "setImageLevel: " + device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
 
         holder.deviceImageView.setImageLevel(device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
 
@@ -225,8 +225,7 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
         //show activity tracks
         holder.showActivityTracks.setVisibility(coordinator.supportsActivityTracks() ? View.VISIBLE : View.GONE);
-        holder.showActivityTracks.setOnClickListener(new View.OnClickListener()
-                                                     {
+        holder.showActivityTracks.setOnClickListener(new View.OnClickListener() {
                                                          @Override
                                                          public void onClick(View v) {
                                                              Intent startIntent;
