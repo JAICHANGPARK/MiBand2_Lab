@@ -21,4 +21,6 @@
         tlc:tlcGraphBackground="@color/colorPrimary"
         tlc:tlcGraphMode="tlcBarsStack"
         tlc:tlcShowFooter="true" />
+
+
 </android.support.constraint.ConstraintLayout>

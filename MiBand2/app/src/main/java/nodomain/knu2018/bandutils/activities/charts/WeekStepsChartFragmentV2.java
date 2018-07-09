@@ -1,14 +1,11 @@
 package nodomain.knu2018.bandutils.activities.charts;
 
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.ruesga.timelinechart.TimelineChartView;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
@@ -32,8 +29,6 @@ public class WeekStepsChartFragmentV2 extends AbstractWeekChartFragmentV2 {
 
     private OnFragmentInteractionListener mListener;
 
-    ActivityAmounts activityAmounts;
-    TimelineChartView mGraph;
 
     public WeekStepsChartFragmentV2() {
         // Required empty public constructor
@@ -106,8 +101,8 @@ public class WeekStepsChartFragmentV2 extends AbstractWeekChartFragmentV2 {
         int totalSteps = 0;
         for (ActivityAmount amount : activityAmounts.getAmounts()) {
             totalSteps += amount.getTotalSteps();
-            amount.getTotalSteps();
             Log.e("Step", "getTotalsForActivityAmounts: "  + amount.getTotalSteps() );
+
         }
         return new float[]{totalSteps};
     }
@@ -150,11 +145,11 @@ public class WeekStepsChartFragmentV2 extends AbstractWeekChartFragmentV2 {
 
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

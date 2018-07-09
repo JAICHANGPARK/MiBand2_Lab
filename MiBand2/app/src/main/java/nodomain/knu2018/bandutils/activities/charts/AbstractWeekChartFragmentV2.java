@@ -20,10 +20,12 @@ package nodomain.knu2018.bandutils.activities.charts;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -41,10 +43,14 @@ import com.ruesga.timelinechart.TimelineChartView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.database.DBHandler;
@@ -52,12 +58,14 @@ import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.ActivityAmounts;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.util.LimitedQueue;
+import nodomain.knu2018.bandutils.util.TimelineChartUtils.InMemoryCursor;
 
 
 /**
  * The type Abstract week chart fragment.
  */
 public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment {
+    private static final String TAG = "AbstractWeekChartFragme";
     /**
      * The constant LOG.
      */
@@ -73,6 +81,14 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
 
     TimelineChartView mGraph;
 
+    private final SimpleDateFormat DATETIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private final NumberFormat NUMBER_FORMATTER = new DecimalFormat("#0.00");
+
+    private Calendar mStart;
+    //데이터 인덱스
+    private final String[] COLUMN_NAMES = {"timestamp", "Serie 1"};
+    InMemoryCursor mCursor;
+
 
     @Override
     protected ChartsData refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device) {
@@ -80,9 +96,14 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
         day.setTime(chartsHost.getEndDate());
         //NB: we could have omitted the day, but this way we can move things to the past easily
         DayData dayData = refreshDayPie(db, day, device);
-        DefaultChartsData weekBeforeData = refreshWeekBeforeData(db, mWeekChart, day, device);
+        //DefaultChartsData weekBeforeData = refreshWeekBeforeData(db, mWeekChart, day, device);
 
-        return new MyChartsData(dayData, weekBeforeData);
+        mCursor = new InMemoryCursor(COLUMN_NAMES);
+        createRandomData(mCursor, db, day, device);
+        mGraph.observeData(mCursor);
+
+//        return new MyChartsData(dayData, weekBeforeData);
+        return null;
     }
 
     @Override
@@ -104,22 +125,79 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
         //mTodayPieChart.invalidate();
     }
 
+
+    // TODO: 2018-07-10 데이터 처리하는 함수 추가 - 박제창  
+    // TODO: 2018-07-10 아직 실험중 ...
+    private void createRandomData(InMemoryCursor cursor, DBHandler db, Calendar day, GBDevice device) {
+        day = (Calendar) day.clone(); // do not modify the caller's argument
+        day.add(Calendar.DATE, -7);
+        List<BarEntry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<String>();
+
+        List<Object[]> data = new ArrayList<>();
+        Calendar today = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+
+        float[] temp = new float[]{};
+
+        mStart = (Calendar) day.clone();
+
+        for (int counter = 0; counter < 7; counter++) {
+            ActivityAmounts amounts = getActivityAmountsForDay(db, day, device);
+            temp = getTotalsForActivityAmounts(amounts);
+            data.add(createItem(mStart.getTimeInMillis(), temp));
+           // entries.add(new BarEntry(counter, getTotalsForActivityAmounts(amounts)));
+            //labels.add(day.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, mLocale));
+            day.add(Calendar.DATE, 1);
+//            data.add(createItem(mStart.getTimeInMillis(), temp));
+            //Log.e(TAG, "createRandomData: temp.length" + temp.length );
+            //Log.e(TAG, "createRandomData: temp " + temp );
+
+            mStart.add(Calendar.DATE, 1);
+
+        }
+        
+//        for (int i = 0 ; i < 4 ; i++){
+//            data.add(createItem(mStart.getTimeInMillis(), 124));
+//            //Log.e("float Count", "refreshWeekBeforeData: " +  temp[i]);
+//            mStart.add(Calendar.DATE, 1);
+//        }
+
+        //mStart.add(Calendar.DATE, -1);
+////        mStart.add(Calendar.HOUR_OF_DAY, -1);
+        mCursor.addAll(data);
+    }
+
+
     private DefaultChartsData<BarData> refreshWeekBeforeData(DBHandler db, BarChart barChart, Calendar day, GBDevice device) {
         day = (Calendar) day.clone(); // do not modify the caller's argument
         day.add(Calendar.DATE, -7);
         List<BarEntry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<String>();
+
+        List<Object[]> data = new ArrayList<>();
+        Calendar today = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+
         float[] temp = new float[]{};
+
+        mStart = (Calendar) day.clone();
         for (int counter = 0; counter < 7; counter++) {
             ActivityAmounts amounts = getActivityAmountsForDay(db, day, device);
-             temp = getTotalsForActivityAmounts(amounts);
-
+            temp = getTotalsForActivityAmounts(amounts);
             //entries.add(new BarEntry(counter, getTotalsForActivityAmounts(amounts)));
             //labels.add(day.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, mLocale));
             day.add(Calendar.DATE, 1);
+            //data.add(createItem(mStart.getTimeInMillis()));
+            mStart.add(Calendar.HOUR_OF_DAY, 1);
         }
+
+
+
+        mStart.add(Calendar.HOUR_OF_DAY, -1);
+        mCursor.addAll(data);
+
         // TODO: 2018-07-09 테스트 로그 코드 - 박제창
         for (int i = 0 ; i < temp.length ; i++){
+            data.add(createItem(mStart.getTimeInMillis(), temp[i]));
             Log.e("float Count", "refreshWeekBeforeData: " +  temp[i]);
         }
 
@@ -138,6 +216,39 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
 //        return new DefaultChartsData(barData, new PreformattedXIndexLabelFormatter(labels));
         return null;
     }
+
+    private Object[] createItem(long timestamp, float data) {
+        Object[] item = new Object[COLUMN_NAMES.length];
+        item[0] = timestamp;
+        // TODO: 2018-07-08 데이터 개수에 대한 데이터 생성?
+        //item[1] = random(9999);
+
+        for (int i = 1; i < COLUMN_NAMES.length; i++) {
+            //item[i] = random(9999);
+            item[i] = (int) data;
+        }
+        return item;
+    }
+
+    private Object[] createItem(long timestamp, float[] data) {
+        Object[] item = new Object[COLUMN_NAMES.length];
+        item[0] = timestamp;
+        // TODO: 2018-07-08 데이터 개수에 대한 데이터 생성?
+        //item[1] = random(9999);.
+        item[1] = (int) data[0];
+//        for (int i = 1; i < data.length; i++) {
+//            //item[i] = random(9999);
+//            Log.e(TAG, "createItem: " + data[i]);
+//            item[i] = (int) data[i];
+//        }
+        return item;
+    }
+
+    private int random(int max) {
+        return (int) (Math.random() * (max + 1));
+    }
+
+
 
     private DayData refreshDayPie(DBHandler db, Calendar day, GBDevice device) {
 
@@ -207,6 +318,53 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
 
         return rootView;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //mCursor = createInMemoryCursor();
+        //mGraph.observeData(mCursor);
+
+        mGraph.addOnSelectedItemChangedListener(new TimelineChartView.OnSelectedItemChangedListener() {
+            @Override
+            public void onSelectedItemChanged(TimelineChartView.Item selectedItem, boolean fromUser) {
+//                textView.setText(String.valueOf(selectedItem.mSeries[0]));
+//                textView2.setText(String.valueOf(selectedItem.mSeries[1]));
+//                textView3.setText(String.valueOf(selectedItem.mSeries[2]));
+
+                for (int i = 0; i < selectedItem.mSeries.length; i++) {
+                    Log.e(TAG, "onSelectedItemChanged: " + selectedItem.mSeries[i] + ", " + selectedItem.mTimestamp);
+                    //mSeries[i].setText(NUMBER_FORMATTER.format(selectedItem.mSeries[i]));
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
+        mGraph.setOnClickItemListener(new TimelineChartView.OnClickItemListener() {
+            @Override
+            public void onClickItem(TimelineChartView.Item item, int serie) {
+                String timestamp = DATETIME_FORMATTER.format(item.mTimestamp);
+                Toast.makeText(getActivity(), "onClickItem => " + timestamp + ", serie: " + serie, Toast.LENGTH_SHORT).show();
+                mGraph.smoothScrollTo(item.mTimestamp);
+            }
+        });
+
+
+    }
+
+    InMemoryCursor createInMemoryCursor() {
+
+        InMemoryCursor cursor = new InMemoryCursor(COLUMN_NAMES);
+        //createRandomData(cursor);
+        return cursor;
+    }
+
 
     private void setupTodayPieChart() {
         mTodayPieChart.setBackgroundColor(BACKGROUND_COLOR);
