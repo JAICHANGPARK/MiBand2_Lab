@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -80,9 +81,12 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
     private int mOffsetHours = getOffsetHours();
 
     TimelineChartView mGraph;
+    TextView todayDataText;
+    TextView todayTextLabel;
 
     private final SimpleDateFormat DATETIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-    private final NumberFormat NUMBER_FORMATTER = new DecimalFormat("#0.00");
+    private final SimpleDateFormat DATETIME_FORMATTER_V2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private final NumberFormat NUMBER_FORMATTER = new DecimalFormat("#0 걸음");
 
     private Calendar mStart;
     //데이터 인덱스
@@ -145,12 +149,15 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
             ActivityAmounts amounts = getActivityAmountsForDay(db, day, device);
             temp = getTotalsForActivityAmounts(amounts);
             data.add(createItem(mStart.getTimeInMillis(), temp));
+
+            //data.add(createItem(day.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, mLocale), temp));
            // entries.add(new BarEntry(counter, getTotalsForActivityAmounts(amounts)));
             //labels.add(day.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, mLocale));
             day.add(Calendar.DATE, 1);
 //            data.add(createItem(mStart.getTimeInMillis(), temp));
             //Log.e(TAG, "createRandomData: temp.length" + temp.length );
             //Log.e(TAG, "createRandomData: temp " + temp );
+
 
             mStart.add(Calendar.DATE, 1);
 
@@ -230,6 +237,20 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
         return item;
     }
 
+    private Object[] createItem(String timestamp, float[] data) {
+        Object[] item = new Object[COLUMN_NAMES.length];
+        item[0] = timestamp;
+        // TODO: 2018-07-08 데이터 개수에 대한 데이터 생성?
+        //item[1] = random(9999);.
+        item[1] = (int) data[0];
+//        for (int i = 1; i < data.length; i++) {
+//            //item[i] = random(9999);
+//            Log.e(TAG, "createItem: " + data[i]);
+//            item[i] = (int) data[i];
+//        }
+        return item;
+    }
+
     private Object[] createItem(long timestamp, float[] data) {
         Object[] item = new Object[COLUMN_NAMES.length];
         item[0] = timestamp;
@@ -306,7 +327,9 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
         }
 
         mGraph = rootView.findViewById(R.id.graph);
-
+        todayDataText = rootView.findViewById(R.id.todayDataText);
+        todayTextLabel = rootView.findViewById(R.id.todayTextLabel);
+        //mGraph.setShowFooter(!mGraph.isShowFooter());
         //mTodayPieChart = (PieChart) rootView.findViewById(R.id.todaystepschart);
         //mWeekChart = (BarChart) rootView.findViewById(R.id.weekstepschart);
 
@@ -332,10 +355,12 @@ public abstract class AbstractWeekChartFragmentV2 extends AbstractChartFragment 
 //                textView.setText(String.valueOf(selectedItem.mSeries[0]));
 //                textView2.setText(String.valueOf(selectedItem.mSeries[1]));
 //                textView3.setText(String.valueOf(selectedItem.mSeries[2]));
-
+                String timestamp = DATETIME_FORMATTER_V2.format(selectedItem.mTimestamp);
+                todayTextLabel.setText(timestamp);
                 for (int i = 0; i < selectedItem.mSeries.length; i++) {
                     Log.e(TAG, "onSelectedItemChanged: " + selectedItem.mSeries[i] + ", " + selectedItem.mTimestamp);
                     //mSeries[i].setText(NUMBER_FORMATTER.format(selectedItem.mSeries[i]));
+                    todayDataText.setText(NUMBER_FORMATTER.format(selectedItem.mSeries[i]));
                 }
 
             }

@@ -174,4 +174,6 @@ public abstract class HuamiFirmwareInfo {
         return null;
     }
 
+
+
 }

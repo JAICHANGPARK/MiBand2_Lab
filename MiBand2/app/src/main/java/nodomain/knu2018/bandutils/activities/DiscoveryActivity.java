@@ -377,7 +377,7 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
             }
         }
         if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-            Log.e(TAG, "handleDeviceFound: " +  device.getName() + device.getAddress() +"이미 연결된 장비입니다. " );
+            Log.e(TAG, "handleDeviceFound: " + device.getName() + device.getAddress() + "이미 연결된 장비입니다. ");
             return; // ignore already bonded devices
         }
 
@@ -423,7 +423,7 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
             } else if (what == Scanning.SCANNING_NEW_BTLE) {
                 if (GB.supportsBluetoothLE()) {
                     startNEWBTLEDiscovery();
-                } else  {
+                } else {
                     discoveryFinished();
                 }
             }
@@ -458,6 +458,10 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
 
     private void stopBTLEDiscovery() {
         adapter.stopLeScan(leScanCallback);
+        // TODO: 2018-07-16 fix - edited 박제창(Dreamwalker)
+        if (adapter != null) {
+            adapter.stopLeScan(leScanCallback);
+        }
     }
 
     private void stopBTDiscovery() {
@@ -466,11 +470,24 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void stopNewBTLEDiscovery() {
+
+        if (adapter == null) {
+            return;
+        }
+
         BluetoothLeScanner bluetoothLeScanner = adapter.getBluetoothLeScanner();
+
         if (bluetoothLeScanner == null) {
             LOG.warn("could not get BluetoothLeScanner()!");
             return;
         }
+
+        // TODO: 2018-07-16 MiBand3 pairing fix
+        if (newLeScanCallback == null) {
+            LOG.warn("newLeScanCallback == null");
+            return;
+        }
+
         bluetoothLeScanner.stopScan(newLeScanCallback);
     }
 
@@ -540,10 +557,10 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void startNEWBTLEDiscovery() {
         // Only use new API when user uses Lollipop+ device
-            LOG.info("Start New BTLE Discovery");
-            handler.removeMessages(0, stopRunnable);
-            handler.sendMessageDelayed(getPostMessage(stopRunnable), SCAN_DURATION);
-            adapter.getBluetoothLeScanner().startScan(getScanFilters(), getScanSettings(), getScanCallback());
+        LOG.info("Start New BTLE Discovery");
+        handler.removeMessages(0, stopRunnable);
+        handler.sendMessageDelayed(getPostMessage(stopRunnable), SCAN_DURATION);
+        adapter.getBluetoothLeScanner().startScan(getScanFilters(), getScanSettings(), getScanCallback());
     }
 
 
@@ -553,7 +570,6 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
      * getAllCoordinators() 메소드를 확인하세요
      *
      * @return
-     *
      * @author : 박제창(Dreamwalker)
      */
     private List<ScanFilter> getScanFilters() {
@@ -657,7 +673,7 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         stopBTLEDiscovery();
         if (GB.supportsBluetoothLE()) {
             stopDiscovery();
-            Log.e(TAG, "onPause: " +  GB.supportsBluetoothLE() + " : 참 값" );
+            Log.e(TAG, "onPause: " + GB.supportsBluetoothLE() + " : 참 값");
             //stopNewBTLEDiscovery();
         }
     }
