@@ -224,8 +224,10 @@ public class AmazfitBipSupport extends MiBand2Support {
         } catch (Exception ex) {
             LOG.error("Error sending current weather", ex);
         }
-
-        if (gbDevice.getType() == DeviceType.AMAZFITBIP) {
+        // TODO: 2018-07-18  Mi Band 3: Also send AQI for weather to make current temperature appear -
+//        if (gbDevice.getType() == DeviceType.AMAZFITBIP)
+        if (gbDevice.getType() != DeviceType.AMAZFITCOR)
+        {
             try {
                 TransactionBuilder builder;
                 builder = performInitialized("Sending air quality index");
@@ -405,6 +407,11 @@ public class AmazfitBipSupport extends MiBand2Support {
                 command_old = AmazfitBipService.COMMAND_SET_LANGUAGE_SPANISH;
                 localeString = "es_ES";
                 break;
+            // TODO: 2018-07-18 Amazfit Russian Language Supports
+            case 4:
+                command_old = AmazfitBipService.COMMAND_SET_LANGUAGE_ENGLISH;
+                localeString = "ru_RU";
+                break;
             default:
                 switch (language) {
                     case "zh":
@@ -420,6 +427,10 @@ public class AmazfitBipSupport extends MiBand2Support {
                         command_old = AmazfitBipService.COMMAND_SET_LANGUAGE_SPANISH;
                         localeString = "es_ES";
                         break;
+                    case "ru":
+                        command_old = AmazfitBipService.COMMAND_SET_LANGUAGE_ENGLISH;
+                        localeString = "ru_RU";
+                        break;
                     default:
                         command_old = AmazfitBipService.COMMAND_SET_LANGUAGE_ENGLISH;
                         localeString = "en_US";
@@ -433,7 +444,9 @@ public class AmazfitBipSupport extends MiBand2Support {
             @Override
             protected byte[] checkCondition() {
                 if (gbDevice.getType() == DeviceType.MIBAND3 ||
-                        (gbDevice.getType() == DeviceType.AMAZFITBIP && new Version(gbDevice.getFirmwareVersion()).compareTo(new Version("0.1.0.77")) >= 0)) {
+                        (gbDevice.getType() == DeviceType.AMAZFITBIP && new Version(gbDevice.getFirmwareVersion()).compareTo(new Version("0.1.0.77")) >= 0)
+                        // TODO: 2018-07-18 Amazfit Cor: Support language switching on newer firmwares 
+                        || (gbDevice.getType() == DeviceType.AMAZFITCOR && new Version(gbDevice.getFirmwareVersion()).compareTo(new Version("1.0.7.23")) >= 0)) {
                     return command_new;
                 } else {
                     return command_old;

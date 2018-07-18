@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import nodomain.knu2018.bandutils.R;
 
 public class FoodDeviceActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class FoodDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_device);
+        bindView();
         setStatusBar();
 
         foodDeviceLayout0.setOnClickListener(v -> {
@@ -53,7 +55,12 @@ public class FoodDeviceActivity extends AppCompatActivity {
 
     }
 
-    private void setStatusBar(){
+    private void bindView() {
+        ButterKnife.bind(this);
+    }
+
+
+    private void setStatusBar() {
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 

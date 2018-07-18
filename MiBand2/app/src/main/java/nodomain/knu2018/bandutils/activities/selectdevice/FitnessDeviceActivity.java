@@ -41,11 +41,15 @@ public class FitnessDeviceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fitness_device);
-        ButterKnife.bind(this);
+        bindView();
 
         setImageColorFilter();
 
         setLayoutListener();
+    }
+
+    private void bindView(){
+        ButterKnife.bind(this);
     }
 
     private void setStatusBar() {

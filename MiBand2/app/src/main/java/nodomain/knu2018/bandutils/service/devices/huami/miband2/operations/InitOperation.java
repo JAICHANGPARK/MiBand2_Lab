@@ -50,10 +50,22 @@ public class InitOperation extends AbstractBTLEOperation<MiBand2Support> {
     private final TransactionBuilder builder;
     private final boolean needsAuth;
 
-    public InitOperation(boolean needsAuth, MiBand2Support support, TransactionBuilder builder) {
+    // TODO: 2018-07-18 인증 Flag 추가 - 박제창 Dreamwalker
+    private final byte authFlags;
+
+//    public InitOperation(boolean needsAuth, MiBand2Support support, TransactionBuilder builder) {
+//        super(support);
+//        this.needsAuth = needsAuth;
+//        this.builder = builder;
+//        builder.setGattCallback(this);
+//    }
+
+    // TODO: 2018-07-18 Flag 추가된 Constructer 로 수정 - Dreamwalker
+    public InitOperation(boolean needsAuth, byte authFlags, MiBand2Support support, TransactionBuilder builder) {
         super(support);
         this.needsAuth = needsAuth;
         this.builder = builder;
+        this.authFlags = authFlags;
         builder.setGattCallback(this);
     }
 
@@ -63,7 +75,9 @@ public class InitOperation extends AbstractBTLEOperation<MiBand2Support> {
         if (needsAuth) {
             builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
             // write key to miband2
-            byte[] sendKey = org.apache.commons.lang3.ArrayUtils.addAll(new byte[]{MiBand2Service.AUTH_SEND_KEY, MiBand2Service.AUTH_BYTE}, getSecretKey());
+//            byte[] sendKey = org.apache.commons.lang3.ArrayUtils.addAll(new byte[]{MiBand2Service.AUTH_SEND_KEY, MiBand2Service.AUTH_BYTE}, getSecretKey());
+            // TODO: 2018-07-18 수정
+            byte[] sendKey = org.apache.commons.lang3.ArrayUtils.addAll(new byte[]{MiBand2Service.AUTH_SEND_KEY, authFlags}, getSecretKey());
             builder.write(getCharacteristic(MiBand2Service.UUID_CHARACTERISTIC_AUTH), sendKey);
         } else {
             builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
@@ -73,7 +87,9 @@ public class InitOperation extends AbstractBTLEOperation<MiBand2Support> {
     }
 
     private byte[] requestAuthNumber() {
-        return new byte[]{MiBand2Service.AUTH_REQUEST_RANDOM_AUTH_NUMBER, MiBand2Service.AUTH_BYTE};
+//        return new byte[]{MiBand2Service.AUTH_REQUEST_RANDOM_AUTH_NUMBER, MiBand2Service.AUTH_BYTE};
+        // TODO: 2018-07-18 수정
+        return new byte[]{MiBand2Service.AUTH_REQUEST_RANDOM_AUTH_NUMBER, authFlags};
     }
 
     private byte[] getSecretKey() {
@@ -104,8 +120,12 @@ public class InitOperation extends AbstractBTLEOperation<MiBand2Support> {
                         value[2] == MiBand2Service.AUTH_SUCCESS) {
                     // md5??
                     byte[] eValue = handleAESAuth(value, getSecretKey());
+                    
+//                    byte[] responseValue = org.apache.commons.lang3.ArrayUtils.addAll(
+//                            new byte[]{MiBand2Service.AUTH_SEND_ENCRYPTED_AUTH_NUMBER, MiBand2Service.AUTH_BYTE}, eValue);
+                    // TODO: 2018-07-18 miband 2와 miband3 간 충동 방지를 위한 - 박제창 (Dreamwalker) 
                     byte[] responseValue = org.apache.commons.lang3.ArrayUtils.addAll(
-                            new byte[]{MiBand2Service.AUTH_SEND_ENCRYPTED_AUTH_NUMBER, MiBand2Service.AUTH_BYTE}, eValue);
+                            new byte[]{MiBand2Service.AUTH_SEND_ENCRYPTED_AUTH_NUMBER, authFlags}, eValue);
 
                     TransactionBuilder builder = createTransactionBuilder("Sending the encrypted random key to the band");
                     builder.write(characteristic, responseValue);

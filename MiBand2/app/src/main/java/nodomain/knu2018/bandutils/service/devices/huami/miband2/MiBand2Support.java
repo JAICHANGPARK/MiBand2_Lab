@@ -84,6 +84,7 @@ import nodomain.knu2018.bandutils.model.CalendarEvents;
 import nodomain.knu2018.bandutils.model.CallSpec;
 import nodomain.knu2018.bandutils.model.CannedMessagesSpec;
 import nodomain.knu2018.bandutils.model.DeviceService;
+import nodomain.knu2018.bandutils.model.DeviceType;
 import nodomain.knu2018.bandutils.model.MusicSpec;
 import nodomain.knu2018.bandutils.model.MusicStateSpec;
 import nodomain.knu2018.bandutils.model.NotificationSpec;
@@ -209,7 +210,19 @@ public class MiBand2Support extends AbstractBTLEDeviceSupport {
         try {
             boolean authenticate = needsAuth;
             needsAuth = false;
-            new InitOperation(authenticate, this, builder).perform();
+            // TODO: 2018-07-18 수정
+//            new InitOperation(authenticate, this, builder).perform();
+            
+            byte authFlags = MiBand2Service.AUTH_BYTE;
+
+            // 만약 미밴드 3라면 인증 플래그를 0x00으롤 넣는다
+            if (gbDevice.getType() == DeviceType.MIBAND3){
+                authFlags = 0x00;
+            }
+            
+            new InitOperation(authenticate, authFlags, this, builder).perform();
+            
+            
             characteristicHRControlPoint = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT);
         } catch (IOException e) {
             GB.toast(getContext(), "Initializing Mi Band 2 failed", Toast.LENGTH_SHORT, GB.ERROR, e);
