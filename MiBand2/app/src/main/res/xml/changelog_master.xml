@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.1.5" versioncode="66">
+        <change>Date : 2018-08-01</change>
+        <change>Blood Glucose Meter Support Today !</change>
+        <change>Support Device : CareSens N Premier Bluetooth</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.1.4" versioncode="65">
         <change>Date : 2018-07-18</change>
         <change>Accessories Scan Crash Fixed</change>

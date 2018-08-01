@@ -160,4 +160,8 @@ public class PebbleCoordinator extends AbstractDeviceCoordinator {
     public boolean supportsWeather() {
         return true;
     }
+    @Override
+    public boolean supportsFindDevice() {
+        return true;
+    }
 }

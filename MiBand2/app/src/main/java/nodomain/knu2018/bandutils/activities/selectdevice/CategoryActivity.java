@@ -144,8 +144,10 @@ public class CategoryActivity extends AppCompatActivity {
                         Pair.create(v, "category_first"),
                         Pair.create(categoryFirstText, "category_first_text"));
                 startActivity(sharedIntent, options.toBundle());
+                finish();
             } else {
                 startActivity(sharedIntent);
+                finish();
             }
         });
 
@@ -157,8 +159,10 @@ public class CategoryActivity extends AppCompatActivity {
                         Pair.create(v, "category_second"),
                         Pair.create(categorySecondText, "category_second_text"));
                 startActivity(sharedIntent, options.toBundle());
+                finish();
             } else {
                 startActivity(sharedIntent);
+                finish();
             }
 
         });
@@ -171,8 +175,10 @@ public class CategoryActivity extends AppCompatActivity {
                         Pair.create(v, "category_third"),
                         Pair.create(categoryThirdText, "category_third_text"));
                 startActivity(sharedIntent, options.toBundle());
+                finish();
             } else {
                 startActivity(sharedIntent);
+                finish();
             }
 
         });
@@ -185,8 +191,10 @@ public class CategoryActivity extends AppCompatActivity {
                         Pair.create(v, "category_fourth"),
                         Pair.create(categoryFourthText, "category_fourth_text"));
                 startActivity(sharedIntent, options.toBundle());
+                finish();
             } else {
                 startActivity(sharedIntent);
+                finish();
             }
 
         });

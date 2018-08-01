@@ -181,4 +181,10 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
     public boolean supportsWeather() {
         return false;
     }
+
+    @Override
+    public boolean supportsFindDevice() {
+        return false;
+    }
+
 }

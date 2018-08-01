@@ -41,6 +41,7 @@ import nodomain.knu2018.bandutils.service.devices.no1f1.No1F1Support;
 import nodomain.knu2018.bandutils.service.devices.pebble.PebbleSupport;
 import nodomain.knu2018.bandutils.service.devices.vibratissimo.VibratissimoSupport;
 import nodomain.knu2018.bandutils.service.devices.xwatch.XWatchSupport;
+import nodomain.knu2018.bandutils.service.isens.CareSensSupport;
 import nodomain.knu2018.bandutils.util.GB;
 
 public class DeviceSupportFactory {
@@ -148,6 +149,11 @@ public class DeviceSupportFactory {
                         break;
                     case XWATCH:
                         deviceSupport = new ServiceDeviceSupport(new XWatchSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case CARESENSN:
+                        deviceSupport = new ServiceDeviceSupport(new CareSensSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+
                 }
                 if (deviceSupport != null) {
                     deviceSupport.setContext(gbDevice, mBtAdapter, mContext);

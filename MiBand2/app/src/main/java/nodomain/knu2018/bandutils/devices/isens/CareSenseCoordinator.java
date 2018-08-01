@@ -1,26 +1,12 @@
-/*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti
-
-    This file is part of Gadgetbridge.
-
-    Gadgetbridge is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Gadgetbridge is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-package nodomain.knu2018.bandutils.devices.liveview;
+package nodomain.knu2018.bandutils.devices.isens;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
@@ -33,44 +19,59 @@ import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.DeviceType;
 
-public class LiveviewCoordinator extends AbstractDeviceCoordinator {
+
+public class CareSenseCoordinator extends AbstractDeviceCoordinator {
+
+    private static final String TAG = "CareSenseCoordinator";
+    @Override
+    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
+
+    }
+
     @NonNull
     @Override
     public DeviceType getSupportedType(GBDeviceCandidate candidate) {
-        String name = candidate.getDevice().getName();
-        if (name != null && name.startsWith("LiveView")) {
-            return DeviceType.LIVEVIEW;
+        try {
+            BluetoothDevice device = candidate.getDevice();
+            String name = device.getName();
+            if (name != null && name.equalsIgnoreCase(CareSensConst.CARE_SENS_N_NAME)){
+                return DeviceType.CARESENSN;
+            }
+        }catch (Exception e){
+            Log.e(TAG, "unable to check device support" + e);
+
         }
         return DeviceType.UNKNOWN;
     }
 
     @Override
     public DeviceType getDeviceType() {
-        return DeviceType.LIVEVIEW;
+        return DeviceType.CARESENSN;
     }
 
+    @Nullable
     @Override
     public Class<? extends Activity> getPairingActivity() {
         return null;
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public boolean supportsActivityDataFetching() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean supportsActivityTracking() {
-        return false;
+        return true;
     }
 
     @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
+        return null;
+    }
+
+    @Override
+    public InstallHandler findInstallHandler(Uri uri, Context context) {
         return null;
     }
 
@@ -96,7 +97,7 @@ public class LiveviewCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Sony Ericsson";
+        return null;
     }
 
     @Override
@@ -125,12 +126,12 @@ public class LiveviewCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        // nothing to delete, yet
-    }
-    @Override
     public boolean supportsFindDevice() {
-        return true;
+        return false;
     }
-}
 
+//    @Override
+//    public int getBondingStyle(GBDevice device) {
+//        return super.getBondingStyle(device);
+//    }
+}
