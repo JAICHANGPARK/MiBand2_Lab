@@ -163,7 +163,7 @@ public class AndroidUtils {
      * @param uri the Uri for which the path should be resolved
      * @return the path corresponding to the Uri as a String
      * @throws URISyntaxException
-    */
+     */
     private static @Nullable String internalGetFilePath(@NonNull Context context, @NonNull Uri uri) throws URISyntaxException {
         String selection = null;
         String[] selectionArgs = null;
@@ -181,7 +181,7 @@ public class AndroidUtils {
                         return id.replaceFirst("raw:", "");
                     }
                     uri = ContentUris.withAppendedId(
-                            Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                            Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
                 }
             } else if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 final String docId = DocumentsContract.getDocumentId(uri);

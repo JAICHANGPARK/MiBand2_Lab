@@ -30,12 +30,13 @@ import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAle
 import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.OverflowStrategy;
 import nodomain.knu2018.bandutils.service.devices.common.SimpleNotification;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiIcon;
+import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.util.StringUtils;
 
 public class Mi2TextNotificationStrategy extends Mi2NotificationStrategy {
     private final BluetoothGattCharacteristic newAlertCharacteristic;
 
-    public Mi2TextNotificationStrategy(MiBand2Support support) {
+    public Mi2TextNotificationStrategy(HuamiSupport support) {
         super(support);
         newAlertCharacteristic = support.getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_NEW_ALERT);
     }

@@ -19,13 +19,67 @@ package nodomain.knu2018.bandutils.service.devices.huami.amazfitcor;
 import android.content.Context;
 import android.net.Uri;
 
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.Set;
+
+import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
+import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorFWHelper;
+import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorService;
+import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipSupport;
+import nodomain.knu2018.bandutils.util.Prefs;
 
 public class AmazfitCorSupport extends AmazfitBipSupport {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AmazfitCorSupport.class);
+
+    @Override
+    protected AmazfitCorSupport setDisplayItems(TransactionBuilder builder) {
+
+        Prefs prefs = GBApplication.getPrefs();
+        Set<String> pages = prefs.getStringSet("cor_display_items", null);
+        LOG.info("Setting display items to " + (pages == null ? "none" : pages));
+        byte[] command = AmazfitCorService.COMMAND_CHANGE_SCREENS.clone();
+
+
+        if (pages != null) {
+            if (pages.contains("status")) {
+                command[1] |= 0x02;
+            }
+            if (pages.contains("notifications")) {
+                command[1] |= 0x04;
+            }
+            if (pages.contains("activity")) {
+                command[1] |= 0x08;
+            }
+            if (pages.contains("weather")) {
+                command[1] |= 0x10;
+            }
+            if (pages.contains("alarm")) {
+                command[1] |= 0x20;
+            }
+            if (pages.contains("timer")) {
+                command[1] |= 0x40;
+            }
+            if (pages.contains("settings")) {
+                command[1] |= 0x80;
+            }
+            if (pages.contains("alipay")) {
+                command[2] |= 0x01;
+            }
+            if (pages.contains("music")) {
+                command[2] |= 0x02;
+            }
+        }
+        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
+
+        return this;
+    }
 
     @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {

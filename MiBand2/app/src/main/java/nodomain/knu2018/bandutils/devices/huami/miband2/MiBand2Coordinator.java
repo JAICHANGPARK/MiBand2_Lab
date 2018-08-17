@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.huami.HuamiConst;
 import nodomain.knu2018.bandutils.devices.huami.HuamiCoordinator;
-import nodomain.knu2018.bandutils.devices.miband.MiBand2Service;
+import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.DeviceType;
@@ -43,19 +43,17 @@ public class MiBand2Coordinator extends HuamiCoordinator {
     @NonNull
     @Override
     public DeviceType getSupportedType(GBDeviceCandidate candidate) {
-        if (candidate.supportsService(MiBand2Service.UUID_SERVICE_MIBAND2_SERVICE)) {
+        if (candidate.supportsService(HuamiService.UUID_SERVICE_MIBAND2_SERVICE)) {
             return DeviceType.MIBAND2;
         }
 
         // and a heuristic for now
         try {
             BluetoothDevice device = candidate.getDevice();
-//            if (isHealthWearable(device)) {
             String name = device.getName();
             if (name != null && name.equalsIgnoreCase(HuamiConst.MI_BAND2_NAME)) {
                 return DeviceType.MIBAND2;
             }
-//            }
         } catch (Exception ex) {
             LOG.error("unable to check device support", ex);
         }

@@ -151,11 +151,11 @@ public abstract class HuamiCoordinator extends AbstractDeviceCoordinator {
     }
 
     public static Date getDisplayOnLiftStart() {
-        return getTimePreference( MiBandConst.PREF_DISPLAY_ON_LIFT_START, "00:00");
+        return getTimePreference(MiBandConst.PREF_DISPLAY_ON_LIFT_START, "00:00");
     }
 
     public static Date getDisplayOnLiftEnd() {
-        return getTimePreference( MiBandConst.PREF_DISPLAY_ON_LIFT_END, "00:00");
+        return getTimePreference(MiBandConst.PREF_DISPLAY_ON_LIFT_END, "00:00");
     }
 
     public static Set<String> getDisplayItems() {
@@ -219,7 +219,7 @@ public abstract class HuamiCoordinator extends AbstractDeviceCoordinator {
         DateFormat df = new SimpleDateFormat("HH:mm");
         try {
             return df.parse(time);
-        } catch(Exception e) {
+        } catch (Exception e) {
             LOG.error("Unexpected exception in MiBand2Coordinator.getTime: " + e.getMessage());
         }
 

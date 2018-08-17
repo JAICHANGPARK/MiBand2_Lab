@@ -48,7 +48,6 @@ public class Mi2FirmwareInfo extends HuamiFirmwareInfo {
 
     private static final int FW_HEADER_OFFSET = 0x150;
 
-    // TODO: 2018-07-07 추가했용- 박제창
     private static final byte FW_MAGIC = (byte) 0xf8;
     private static final int FW_MAGIC_OFFSET = 0x17d;
 
@@ -60,15 +59,18 @@ public class Mi2FirmwareInfo extends HuamiFirmwareInfo {
         crcToVersion.put(49197, "1.0.0.53");
         crcToVersion.put(32450, "1.0.1.28");
         crcToVersion.put(51770, "1.0.1.34");
-        crcToVersion.put(3929, "1.0.1.39");
+        crcToVersion.put(3929,  "1.0.1.39");
         crcToVersion.put(47364, "1.0.1.54");
         crcToVersion.put(44776, "1.0.1.59");
         crcToVersion.put(27318, "1.0.1.67");
         crcToVersion.put(54702, "1.0.1.69");
-
+        crcToVersion.put(31698, "1.0.1.81");
+        crcToVersion.put(53474, "1.0.1.81 (tph)");
+        crcToVersion.put(46048, "1.0.1.81 (tph as7000)");
+        crcToVersion.put(19930, "1.0.1.81 (tph india)");
         // fonts
         crcToVersion.put(45624, "Font");
-        crcToVersion.put(6377, "Font (En)");
+        crcToVersion.put(6377,  "Font (En)");
     }
 
     public Mi2FirmwareInfo(byte[] bytes) {
@@ -76,11 +78,14 @@ public class Mi2FirmwareInfo extends HuamiFirmwareInfo {
     }
 
     protected HuamiFirmwareType determineFirmwareType(byte[] bytes) {
-        if (ArrayUtils.startsWith(bytes, HuamiFirmwareInfo.FT_HEADER)) {
-            return HuamiFirmwareType.FONT;
+        if (ArrayUtils.startsWith(bytes, FT_HEADER)) {
+            if (bytes[FONT_TYPE_OFFSET] == 0x00 || bytes[FONT_TYPE_OFFSET] == (byte) 0xff) {
+                return HuamiFirmwareType.FONT;
+            }
+            return HuamiFirmwareType.INVALID;
         }
-        // TODO: 2018-07-07 약간 수정 - 박제창 1.1.2
-        if (ArrayUtils.equals(bytes, FW_HEADER, FW_HEADER_OFFSET) && (bytes[FW_MAGIC_OFFSET] == FW_MAGIC) ) {
+        if (ArrayUtils.equals(bytes, FW_HEADER, FW_HEADER_OFFSET)
+                && (bytes[FW_MAGIC_OFFSET] == FW_MAGIC)) {
             // TODO: this is certainly not a correct validation, but it works for now
             return HuamiFirmwareType.FIRMWARE;
         }

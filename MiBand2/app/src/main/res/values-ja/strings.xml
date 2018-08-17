@@ -48,10 +48,10 @@
     <string name="fw_upgrade_notice">お使いのMi Bandに、現在のファームウェアの代わりに%sをインストールしようとしています。</string>
     <string name="fw_multi_upgrade_notice">お使いのMi Bandに、現在のファームウェアの代わりに %1$s および %2$s をインストールしようとしています。</string>
     <string name="miband_firmware_known">このファームウェアはテスト済で、バンドユーティリティと互換性があることがわかっています。</string>
-    <string name="miband_firmware_unknown_warning">このファームウェアは未テストで、BandUtils と互換性がない可能性があります。
+    <string name="miband_firmware_unknown_warning">このファームウェアは未テストで、バンドユーティリティ と互換性がない可能性があります。
 \n
 \nお使いのMi Bandにフラッシュすることは推奨されません!</string>
-    <string name="miband_firmware_suggest_whitelist">それでも続行して、正しく動作した場合は、BandUtils開発者にホワイトリストの %s ファームウェア バージョンを教えてください</string>
+    <string name="miband_firmware_suggest_whitelist">それでも続行して、正しく動作した場合は、バンドユーティリティ開発者にホワイトリストの %s ファームウェア バージョンを教えてください</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">設定</string>
     <string name="pref_header_general">全般設定</string>
@@ -138,7 +138,7 @@
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU 制限</string>
     <string name="pref_summary_pebble_mtu_limit">Pebble 2/Pebble LE が期待どおりに機能しない場合は、この設定を試して MTU を制限してください (有効範囲 20-512)</string>
     <string name="pref_title_pebble_enable_applogs">ウォッチアプリのログ記録を有効にする</string>
-    <string name="pref_summary_pebble_enable_applogs">BandUtilsがウォッチアプリからログを記録するようにする (再接続が必要です)</string>
+    <string name="pref_summary_pebble_enable_applogs">バンドユーティリティがウォッチアプリからログを記録するようにする (再接続が必要です)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">早期 ACK PebbleKit</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">外部のサードパーティアプリケーションに送信されたメッセージは、常に即座に承認されます</string>
     <string name="pref_title_pebble_reconnect_attempts">再接続の試行</string>
@@ -195,8 +195,7 @@
     <string name="miband_pairing_using_dummy_userdata">有効なユーザーデータはありません。今のところ、ダミーのユーザーデータを使用します。</string>
     <string name="miband_pairing_tap_hint">お使いのMi Bandが振動と点滅したとき、それを連続して数回タップしてください。</string>
     <string name="appinstaller_install">インストール</string>
-    <string name="discovery_connected_devices_hint">お使いのデバイスを検出可能にしてください。現在、接続されたデバイスは、おそらく検出されません。
-        Android 6 以降では位置情報 (例 GPS) を有効にする必要があります。クラッシュや再起動を引き起こすため、バンドユーティリティに対してプライバシーガードを無効にしてください。お使いのデバイスが数分しても表示されない場合は、お使いのモバイルデバイスを再起動した後にもう一度試してください。</string>
+    <string name="discovery_connected_devices_hint">お使いのデバイスを検出可能にしてください。現在、接続されたデバイスは、おそらく検出されません。Android 6 以降では位置情報 (例 GPS) を有効にする必要があります。クラッシュや再起動を引き起こすため、バンドユーティリティに対してプライバシーガードを無効にしてください。お使いのデバイスが数分しても表示されない場合は、お使いのモバイルデバイスを再起動した後にもう一度試してください。</string>
     <string name="discovery_note">注:</string>
     <string name="candidate_item_device_image">デバイスイメージ</string>
     <string name="miband_prefs_alias">名前/別名</string>
@@ -405,11 +404,11 @@
     <string name="discovery_yes_pair">ペア</string>
     <string name="discovery_dont_pair">ペアにしない</string>
     <string name="fw_upgrade_notice_amazfitbip">Amazfit Bip に %s のファームウェアをインストールしようとしています。
-\n 
-\n.fw ファイル、その後 .res ファイル、最後に .gps ファイルをインストールしてください。お使いのウォッチは、.fw ファイルをインストールした後に再起動します。 
-\n 
-\n注: これらのファイルが以前インストールされているのものと完全に同じ場合、.res と .gps をインストールする必要はありません。 
-\n 
+\n
+\n.fw ファイル、その後 .res ファイル、最後に .gps ファイルをインストールしてください。お使いのウォッチは、.fw ファイルをインストールした後に再起動します。
+\n
+\n注: これらのファイルが以前インストールされているのものと完全に同じ場合、.res と .gps をインストールする必要はありません。
+\n
 \nご自身の責任で行ってください!</string>
     <string name="amazfitbip_firmware">Amazfit Bip ファームウェア%1$s</string>
     <string name="mi2_prefs_button_actions">ボタンの動作</string>
@@ -418,7 +417,7 @@
     <string name="mi2_prefs_button_press_count_summary">ブロードキャスト メッセージをトリガーするボタンを押した数</string>
     <string name="mi2_prefs_button_press_broadcast">送信するブロードキャスト メッセージ</string>
     <string name="mi2_prefs_button_press_broadcast_summary">ボタンを押した数で定義された数に達したブロードキャスト メッセージ</string>
-    <string name="mi2_prefs_button_press_broadcast_default_value">nodomain.knu2018.gadgetbridge.mibandButtonPressed</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value">nodomain.freeyourgadget.gadgetbridge.mibandButtonPressed</string>
     <string name="mi2_prefs_button_action">ボタンの動作を有効にする</string>
     <string name="mi2_prefs_button_action_summary">指定したボタンを押した数の動作を有効にします</string>
     <string name="mi2_prefs_button_action_vibrate">band の振動を有効にする</string>
@@ -431,12 +430,12 @@
     <string name="_pebble_watch_mute">ミュート</string>
     <string name="_pebble_watch_reply">返信</string>
     <string name="controlcenter_connect">接続</string>
-    <string name="fw_upgrade_notice_amazfitcor">Amazfit Cor に %s のファームウェアをインストールしようとしています。 
-\n 
-\n.fw ファイルをインストールし、その後 .res ファイルをインストールしください。お使いのウォッチは、.fw ファイルをインストールした後に再起動します。 
-\n 
-\n注: 以前にインストールされたものと同じ場合は、.res をインストールする必要はありません。 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor">Amazfit Cor に %s のファームウェアをインストールしようとしています。
+\n
+\n.fw ファイルをインストールし、その後 .res ファイルをインストールしください。お使いのウォッチは、.fw ファイルをインストールした後に再起動します。
+\n
+\n注: 以前にインストールされたものと同じ場合は、.res をインストールする必要はありません。
+\n
 \nテストされていません。デバイスが文鎮化する可能性があります。ご自身の責任で行って下さい!</string>
     <string name="pref_title_pebble_enable_bgjs">バックグラウンド JS を有効にします</string>
     <string name="pref_summary_pebble_enable_bgjs">有効にすると、ウォッチフェースに天気、バッテリー情報等を表示することができます。</string>
@@ -497,7 +496,7 @@
 
     <string name="devicetype_xwatch">XWatch</string>
 
-    <string name="notification_channel_name">Bandutil 通知</string>
+    <string name="notification_channel_name">バンドユーティリティ 通知</string>
     <string name="on">オン</string>
     <string name="controlcenter_start_activity_tracks">活動の追跡</string>
     <string name="activity_type_not_measured">未測定</string>
@@ -530,31 +529,4 @@
     <string name="menuitem_compass">コンパス</string>
     <string name="menuitem_settings">設定</string>
     <string name="menuitem_alipay">Alipay</string>
-
-
-    <string name="app_update_title">新しいバージョン出ました。</string>
-    <string name="app_update_message">もっと良い経験のために、アップデートが必要です。</string>
-    <string name="app_update_positive">了解</string>
-    <string name="app_update_negative">あとで</string>
-
-    <string name="user_information_name">お名前</string>
-    <string name="user_information_uuid">UUID</string>
-    <string name="user_information_aim">AIM INTERVAL</string>
-    <string name="user_information_gender">性別</string>
-    <string name="user_information_birth">お誕生日</string>
-    <string name="user_information_email">Eメール</string>
-    <string name="user_information_phone">スマホ番号</string>
-    <string name="user_information_bs_min">目標 (MIN)</string>
-    <string name="user_information_bs_max">目標 (MAX)</string>
-
-    <string name="app_rating_title">アプリの評価お願いします。</string>
-    <string name="app_rating_description">参考になり、改正に</string>
-    <string name="app_rating_hint">ここに伝えたいメッセージを。。</string>
-    <string name="app_rating_positive_button">提出</string>
-    <string name="app_rating_negative_button">取り消す</string>
-    <string name="app_rating_neutral_button">あとで</string>
-
-    <string name="FACEBOOK_APP_ID">169563493885122</string>
-    <string name="ACCOUNT_KIT_CLIENT_TOKEN">baf822a230081139aad0b6dee673a649</string>
-
 </resources>

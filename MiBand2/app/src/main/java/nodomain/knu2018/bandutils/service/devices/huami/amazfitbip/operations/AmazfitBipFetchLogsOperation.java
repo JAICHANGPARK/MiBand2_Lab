@@ -32,13 +32,13 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.devices.huami.amazfitbip.AmazfitBipService;
-import nodomain.knu2018.bandutils.devices.miband.MiBand2Service;
 import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.btle.actions.WaitAction;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipSupport;
-import nodomain.knu2018.bandutils.service.devices.huami.miband2.operations.AbstractFetchOperation;
+import nodomain.knu2018.bandutils.service.devices.huami.operations.AbstractFetchOperation;
 import nodomain.knu2018.bandutils.util.FileUtils;
 import nodomain.knu2018.bandutils.util.GB;
 
@@ -75,12 +75,12 @@ public class AmazfitBipFetchLogsOperation extends AbstractFetchOperation {
         GregorianCalendar sinceWhen = BLETypeConversions.createCalendar();
         sinceWhen.add(Calendar.DAY_OF_MONTH, -10);
         builder.write(characteristicFetch, BLETypeConversions.join(new byte[]{
-                        MiBand2Service.COMMAND_ACTIVITY_DATA_START_DATE,
+                        HuamiService.COMMAND_ACTIVITY_DATA_START_DATE,
                         AmazfitBipService.COMMAND_ACTIVITY_DATA_TYPE_DEBUGLOGS},
                 getSupport().getTimeBytes(sinceWhen, TimeUnit.MINUTES)));
         builder.add(new WaitAction(1000)); // TODO: actually wait for the success-reply
         builder.notify(characteristicActivityData, true);
-        builder.write(characteristicFetch, new byte[]{MiBand2Service.COMMAND_FETCH_DATA});
+        builder.write(characteristicFetch, new byte[]{HuamiService.COMMAND_FETCH_DATA});
     }
 
     @Override

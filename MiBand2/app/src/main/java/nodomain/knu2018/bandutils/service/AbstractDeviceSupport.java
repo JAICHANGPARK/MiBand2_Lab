@@ -199,7 +199,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
 
     protected void handleGBDeviceEvent(GBDeviceEventVersionInfo infoEvent) {
         Context context = getContext();
-        LOG.info("Got event for VERSION_INFO");
+        LOG.info("Got event for VERSION_INFO: " + infoEvent);
         if (gbDevice == null) {
             return;
         }
@@ -263,7 +263,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
                     .setContentTitle("Screenshot taken")
                     .setTicker("Screenshot taken")
                     .setContentText(filename)
-                    .setSmallIcon(R.mipmap.ic_app_band_icon)
+                    .setSmallIcon(R.drawable.ic_notification)
                     .setStyle(new NotificationCompat.BigPictureStyle()
                             .bigPicture(bmp))
                     .setContentIntent(pIntent)

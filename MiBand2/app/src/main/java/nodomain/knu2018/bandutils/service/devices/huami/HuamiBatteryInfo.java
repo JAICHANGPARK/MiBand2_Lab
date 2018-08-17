@@ -45,6 +45,7 @@ import nodomain.knu2018.bandutils.service.devices.miband.AbstractInfo;
 //        04		= 4   // num charges??
 //        64		= 100 // how much was charged
 
+
 public class HuamiBatteryInfo extends AbstractInfo {
     public static final byte DEVICE_BATTERY_NORMAL = 0;
     public static final byte DEVICE_BATTERY_CHARGING = 1;

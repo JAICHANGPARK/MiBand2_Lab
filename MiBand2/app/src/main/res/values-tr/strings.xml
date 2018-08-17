@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="app_name">BandUtils</string>
+    <string name="app_name">Gadgetbridge</string>
 
-    <string name="title_activity_controlcenter">BandUtils</string>
+    <string name="title_activity_controlcenter">Gadgetbridge</string>
     <string name="action_settings">Ayarlar</string>
     <string name="action_debug">Hata Gider</string>
     <string name="action_quit">Çıkış</string>
@@ -50,13 +50,13 @@
     <string name="_unknown_">(bilinmeyen)</string>
     <string name="test">Test</string>
     <string name="test_notification">Test bilgilendirmesi</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">Bu BandUtils\'den gelen bir test bilgilendirmesidir.</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">Bu Gadgetbridge\'den gelen bir test bilgilendirmesidir.</string>
     <string name="bluetooth_is_not_supported_">Bluetooth desteği yok.</string>
     <string name="bluetooth_is_disabled_">Bluetooth açık değil.</string>
     <string name="tap_connected_device_for_app_mananger">Uygulama yöneticisi için cihaza dokunun</string>
     <string name="tap_a_device_to_connect">Bağlanmak için cihaza dokunun</string>
     <string name="cannot_connect_bt_address_invalid_">Bağlanamıyor. Bluetooth adresi geçersiz olabilir!</string>
-    <string name="gadgetbridge_running">BandUtils çalışıyor</string>
+    <string name="gadgetbridge_running">Gadgetbridge çalışıyor</string>
     <string name="battery_low">düşük</string>
     <string name="battery_medium">orta</string>
     <string name="battery_full">dolu</string>
@@ -142,8 +142,8 @@
     <string name="appmanager_weather_deactivate">Sistem hava durumu uygulamasını devre dışı bırak</string>
     <string name="appmanager_weather_install_provider">Hava durumu bildirim uygulamasını yükle</string>
     <string name="app_configure">Yapılandır</string>
-    <string name="miband_firmware_known">Bu firmware test edilmiş ve BandUtils ile uyumlu olduğu bilinmektedir.</string>
-    <string name="miband_firmware_suggest_whitelist">Devam etmek istiyorsanız ve her sey daha sonra düzgün çalışmaya devam ederse, lütfen BandUtils geliştiricilerine% s firmware sürümünü beyaz listeye eklemesini söyleyin</string>
+    <string name="miband_firmware_known">Bu firmware test edilmiş ve Gadgetbridge ile uyumlu olduğu bilinmektedir.</string>
+    <string name="miband_firmware_suggest_whitelist">Devam etmek istiyorsanız ve her sey daha sonra düzgün çalışmaya devam ederse, lütfen Gadgetbridge geliştiricilerine %s firmware sürümünü beyaz listeye eklemesini söyleyin</string>
 
     <string name="pref_title_general_autostartonboot">Otomatik Başlat</string>
     <string name="pref_title_general_autoreconnect">Otomatik yeniden bağlan</string>
@@ -157,7 +157,7 @@
 
     <string name="pref_title_language">Dil</string>
 
-    <string name="pref_title_minimize_priority">"BandUtils bildirim gizle "</string>
+    <string name="pref_title_minimize_priority">"Gadgetbridge bildirim gizle "</string>
     <string name="pref_title_notifications_repetitions">Tekrar sayısı</string>
     <string name="pref_title_notifications_call">Telefon görüşmeleri</string>
     <string name="pref_title_notification_filter">Rahatsız etme</string>

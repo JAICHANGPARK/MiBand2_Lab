@@ -24,12 +24,15 @@ import android.support.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.huami.HuamiConst;
 import nodomain.knu2018.bandutils.devices.huami.HuamiCoordinator;
+import nodomain.knu2018.bandutils.devices.miband.MiBandConst;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.DeviceType;
+import nodomain.knu2018.bandutils.util.Prefs;
 
 
 public class MiBand3Coordinator extends HuamiCoordinator {
@@ -70,5 +73,10 @@ public class MiBand3Coordinator extends HuamiCoordinator {
     @Override
     public boolean supportsWeather() {
         return true;
+    }
+
+    public static boolean getBandScreenUnlock() {
+        Prefs prefs = GBApplication.getPrefs();
+        return prefs.getBoolean(MiBandConst.PREF_MI3_BAND_SCREEN_UNLOCK, false);
     }
 }

@@ -116,7 +116,7 @@ public class CareSensSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean useAutoConnect() {
-        return false;
+        return true;
     }
 
     @Override

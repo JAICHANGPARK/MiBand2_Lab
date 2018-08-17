@@ -26,14 +26,14 @@ import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertN
 import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert;
 import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.OverflowStrategy;
 import nodomain.knu2018.bandutils.service.devices.common.SimpleNotification;
+import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.miband2.Mi2TextNotificationStrategy;
-import nodomain.knu2018.bandutils.service.devices.huami.miband2.MiBand2Support;
 
 
 // This class in no longer in use except for incoming calls
 class AmazfitBipTextNotificationStrategy extends Mi2TextNotificationStrategy {
 
-    AmazfitBipTextNotificationStrategy(MiBand2Support support) {
+    AmazfitBipTextNotificationStrategy(HuamiSupport support) {
         super(support);
     }
 
@@ -64,3 +64,4 @@ class AmazfitBipTextNotificationStrategy extends Mi2TextNotificationStrategy {
         profile.newAlert(builder, alert, OverflowStrategy.TRUNCATE);
     }
 }
+

@@ -26,9 +26,10 @@ import nodomain.knu2018.bandutils.entities.MiBandActivitySample;
 import nodomain.knu2018.bandutils.entities.MiBandActivitySampleDao;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
-import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.TYPE_IGNORE;
-import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.TYPE_NO_CHANGE;
-import static nodomain.knu2018.bandutils.devices.miband2.MiBand2Const.TYPE_UNSET;
+import static nodomain.knu2018.bandutils.devices.huami.HuamiConst.TYPE_IGNORE;
+import static nodomain.knu2018.bandutils.devices.huami.HuamiConst.TYPE_NO_CHANGE;
+import static nodomain.knu2018.bandutils.devices.huami.HuamiConst.TYPE_UNSET;
+
 
 public class MiBand2SampleProvider extends AbstractMiBandSampleProvider {
 

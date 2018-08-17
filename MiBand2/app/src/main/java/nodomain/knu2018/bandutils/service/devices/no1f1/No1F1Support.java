@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.service.devices.no1f1;
 
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.net.Uri;
@@ -89,6 +90,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
         builder.setGattCallback(this);
         builder.notify(measureCharacteristic, true);
 
+        setTime(builder);
         sendSettings(builder);
 
         builder.write(ctrlCharacteristic, new byte[]{No1F1Constants.CMD_FIRMWARE_VERSION});
@@ -129,7 +131,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
                 LOG.info("Time is set to: " + (data[1] * 256 + ((int) data[2] & 0xff)) + "-" + data[3] + "-" + data[4] + " " + data[5] + ":" + data[6] + ":" + data[7]);
                 return true;
             case No1F1Constants.CMD_USER_DATA:
-                LOG.info("UserInfo data updated");
+                LOG.info("User data updated");
                 return true;
             case No1F1Constants.CMD_FETCH_STEPS:
             case No1F1Constants.CMD_FETCH_SLEEP:
@@ -173,18 +175,8 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
     public void onSetTime() {
         try {
             TransactionBuilder builder = performInitialized("setTime");
-            Calendar c = GregorianCalendar.getInstance();
-            byte[] datetimeBytes = new byte[]{
-                    No1F1Constants.CMD_DATETIME,
-                    (byte) ((c.get(Calendar.YEAR) / 256) & 0xff),
-                    (byte) (c.get(Calendar.YEAR) % 256),
-                    (byte) (c.get(Calendar.MONTH) + 1),
-                    (byte) c.get(Calendar.DAY_OF_MONTH),
-                    (byte) c.get(Calendar.HOUR_OF_DAY),
-                    (byte) c.get(Calendar.MINUTE),
-                    (byte) c.get(Calendar.SECOND)
-            };
-            builder.write(ctrlCharacteristic, datetimeBytes);
+            setTime(builder);
+            performConnected(builder.getTransaction());
         } catch (IOException e) {
             GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -396,6 +388,21 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
         return true;
     }
 
+    private void setTime(TransactionBuilder transaction) {
+        Calendar c = GregorianCalendar.getInstance();
+        byte[] datetimeBytes = new byte[]{
+                No1F1Constants.CMD_DATETIME,
+                (byte) ((c.get(Calendar.YEAR) / 256) & 0xff),
+                (byte) (c.get(Calendar.YEAR) % 256),
+                (byte) (c.get(Calendar.MONTH) + 1),
+                (byte) c.get(Calendar.DAY_OF_MONTH),
+                (byte) c.get(Calendar.HOUR_OF_DAY),
+                (byte) c.get(Calendar.MINUTE),
+                (byte) c.get(Calendar.SECOND)
+        };
+        transaction.write(ctrlCharacteristic, datetimeBytes);
+    }
+
     /**
      * Set display settings (time format and measurement system)
      *
@@ -522,7 +529,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
             byte[] msg;
 
             // send header
-            bytes = header.toString().getBytes("EUC-JP");
+            bytes = header.getBytes("EUC-JP");
             length = min(bytes.length, 18);
             msg = new byte[length + 2];
             msg[0] = No1F1Constants.CMD_NOTIFICATION;
@@ -531,7 +538,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
             builder.write(ctrlCharacteristic, msg);
 
             // send body
-            bytes = header.toString().getBytes("EUC-JP");
+            bytes = header.getBytes("EUC-JP");
             length = min(bytes.length, 18);
             msg = new byte[length + 2];
             msg[0] = No1F1Constants.CMD_NOTIFICATION;
@@ -582,7 +589,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
             LOG.info("CRC received: " + (data[2] & 0xff) + ", calculated: " + (crc & 0xff));
             if (data[2] != crc) {
                 GB.toast(getContext(), "Incorrect CRC. Try fetching data again.", Toast.LENGTH_LONG, GB.ERROR);
-                GB.updateTransferNotification("Data transfer failed", false, 0, getContext());
+                GB.updateTransferNotification(null,"Data transfer failed", false, 0, getContext());
                 if (getDevice().isBusy()) {
                     getDevice().unsetBusyTask();
                     getDevice().sendDeviceUpdateIntent(getContext());
@@ -598,7 +605,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
                         if (data[0] == No1F1Constants.CMD_FETCH_STEPS) {
                             samples.get(i).setRawKind(ActivityKind.TYPE_ACTIVITY);
                             samples.get(i).setRawIntensity(samples.get(i).getSteps());
-                        } else if (data[0] == No1F1Constants.CMD_FETCH_STEPS) {
+                        } else if (data[0] == No1F1Constants.CMD_FETCH_SLEEP) {
                             if (samples.get(i).getRawIntensity() < 7)
                                 samples.get(i).setRawKind(ActivityKind.TYPE_DEEP_SLEEP);
                             else
@@ -612,7 +619,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
                     } else if (data[0] == No1F1Constants.CMD_FETCH_SLEEP) {
                         sendFetchCommand(No1F1Constants.CMD_FETCH_HEARTRATE);
                     } else {
-                        GB.updateTransferNotification("", false, 100, getContext());
+                        GB.updateTransferNotification(null,"", false, 100, getContext());
                         if (getDevice().isBusy()) {
                             getDevice().unsetBusyTask();
                             getDevice().sendDeviceUpdateIntent(getContext());
@@ -620,7 +627,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
                     }
                 } catch (Exception ex) {
                     GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
-                    GB.updateTransferNotification("Data transfer failed", false, 0, getContext());
+                    GB.updateTransferNotification(null,"Data transfer failed", false, 0, getContext());
                 }
             }
         } else {
@@ -657,7 +664,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
                 firstTimestamp = sample.getTimestamp();
             int progress = startProgress + 33 * (sample.getTimestamp() - firstTimestamp) /
                     ((int) (Calendar.getInstance().getTimeInMillis() / 1000L) - firstTimestamp);
-            GB.updateTransferNotification(getContext().getString(R.string.busy_task_fetch_activity_data), true, progress, getContext());
+            GB.updateTransferNotification(null, getContext().getString(R.string.busy_task_fetch_activity_data), true, progress, getContext());
         }
     }
 

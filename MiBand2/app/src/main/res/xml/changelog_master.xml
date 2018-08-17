@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.1.6" versioncode="67">
+        <change>Date : 2018-08-17</change>
+        <change>Mi Band 2: Put some device specific settings into its own settings category</change>
+        <change>Mi Band 3: Support disabling of on-device menu items</change>
+        <change>Mi Band 3: Support locking the Mi Band sceen (swipe up to unlock)</change>
+        <change>Mi Band 3: support setting language (english and spanish tested)</change>
+        <change>Mi Band 3: Fix pairing</change>
+        <change>Mi Band 3: Send AQI to enable display of current temperature</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.1.5" versioncode="66">
         <change>Date : 2018-08-01</change>
         <change>Blood Glucose Meter Support Today !</change>

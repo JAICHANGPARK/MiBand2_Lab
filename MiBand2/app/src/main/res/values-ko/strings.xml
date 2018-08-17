@@ -1,21 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="app_name">BandUtils</string>
-    <string name="title_activity_controlcenter">BandUtils</string>
-
-    <string name="sub_header">관리</string>
-    <string name="footer_header">정보</string>
-
+    <string name="app_name">당뇨그루(밴드유틸)</string>
+    <string name="title_activity_controlcenter">당뇨그루(밴드유틸)</string>
     <string name="action_settings">설정</string>
     <string name="action_debug">디버그</string>
     <string name="action_quit">종료</string>
-    <string name="action_licenses">라이센스</string>
-    <string name="action_about">앱 정보</string>
-    <string name="action_check_db">생활 데이터 확인</string>
-    <string name="food_check_db">식품 데이터 검색</string>
-    <string name="action_storage">데이터 저장소 관리</string>
-    <string name="action_user_information">내 정보</string>
-
     <string name="controlcenter_fetch_activity_data">동기화</string>
     <string name="controlcenter_start_sleepmonitor">수면 측정계 (초기 버전)</string>
     <string name="controlcenter_find_device">잃어버린 기기 찾기</string>
@@ -35,11 +24,11 @@
     <string name="title_activity_fw_app_insaller">펌웨어/앱 설치</string>
     <string name="fw_upgrade_notice">지금 기존의 Mi Band 펌웨어 대신 %s 펌웨어를 설치하려고 합니다.</string>
     <string name="fw_multi_upgrade_notice">지금 Mi Band의 기존 펌웨어 대신 %1$s와 %2$s 펌웨어를 설치하려고 합니다.</string>
-    <string name="miband_firmware_known">이 펌웨어는 테스트를 거쳤고 앱과 호환됩니다.</string>
-    <string name="miband_firmware_unknown_warning">이 펌웨어는 테스트를 거치지 않았고 앱과와 호환되지 않을 수 있습니다.
+    <string name="miband_firmware_known">이 펌웨어는 테스트를 거쳤고 밴드유틸와 호환됩니다.</string>
+    <string name="miband_firmware_unknown_warning">이 펌웨어는 테스트를 거치지 않았고 밴드유틸와 호환되지 않을 수 있습니다.
 \n
 \nMi Band에 설치하지 않는 것이 좋습니다!</string>
-    <string name="miband_firmware_suggest_whitelist">여전히 계속 진행하기를 원하고 이후에도 정상적으로 작동하기를 원한다면, %s 화이트리스트 펌웨어 버전을 알려주세요</string>
+    <string name="miband_firmware_suggest_whitelist">여전히 계속 진행하기를 원하고 이후에도 정상적으로 작동하기를 원한다면, %s 화이트리스트 펌웨어 버전을 밴드유틸 개발자들에게 알려주세요</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">설정</string>
     <string name="pref_header_general">일반 설정</string>
@@ -83,13 +72,13 @@
     <string name="_unknown_">(알 수 없음)</string>
     <string name="test">테스트</string>
     <string name="test_notification">알림 테스트</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">이 알림은 앱에서 보낸 테스트용 알림입니다</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">이 알림은 밴드유틸이 보낸 테스트용 알림입니다</string>
     <string name="bluetooth_is_not_supported_">블루투스가 지원되지 않습니다.</string>
     <string name="bluetooth_is_disabled_">블루투스가 해제되어 있습니다.</string>
     <string name="tap_connected_device_for_app_mananger">연결된 기기를 선택해 앱 관리자 실행</string>
     <string name="tap_a_device_to_connect">기기를 선택해 연결</string>
     <string name="cannot_connect_bt_address_invalid_">연결할 수 없습니다. 블루투스 주소가 올바르지 않은 것 같습니다.</string>
-    <string name="gadgetbridge_running">BandUtil이 실행중입니다.</string>
+    <string name="gadgetbridge_running">밴드유틸이 실행중입니다.</string>
     <string name="installing_binary_d_d">바이너리 설치중: %1$d/%2$d</string>
     <string name="installation_failed_">설치 실패!</string>
     <string name="installation_successful">설치 성공!</string>
@@ -109,7 +98,7 @@
     <string name="pairing">%s에 페어링…</string>
     <string name="message_cannot_pair_no_mac">MAC 주소가 통과되지 않았습니다. 페어링 할 수 없습니다.</string>
     <string name="preferences_category_device_specific_settings">기기 특정 설정</string>
-    <string name="preferences_miband_settings">Mi Band 설정</string>
+    <string name="preferences_miband_settings">Mi Band / Amazfit 설정</string>
     <string name="male">남성</string>
     <string name="female">여성</string>
     <string name="other">기타</string>
@@ -193,8 +182,8 @@
     <string name="liveactivity_live_activity">실시간 활동</string>
     <string name="weeksteps_today_steps_description">오늘 걸음 수, 목표: %1$s</string>
     <string name="pref_title_dont_ack_transfer">활동 데이터 전송을 확인하지 않음</string>
-    <string name="pref_summary_dont_ack_transfers">만약 활동 데이터가 밴드에 확인되지 않았다면, 지워지지 않을 것입니다. 다른 앱들과 같이 사용될 때 유용합니다.</string>
-    <string name="pref_summary_keep_data_on_device">동기화 이후에도 Mi Band의 활동 데이터가 유지될 것입니다. 다른 앱들과 같이 사용될 때 유용합니다.</string>
+    <string name="pref_summary_dont_ack_transfers">만약 활동 데이터가 밴드에 확인되지 않았다면, 지워지지 않을 것입니다. 밴드유틸이 다른 앱들과 같이 사용될 때 유용합니다.</string>
+    <string name="pref_summary_keep_data_on_device">동기화 이후에도 Mi Band의 활동 데이터가 유지될 것입니다. 밴드유틸이 다른 앱들과 같이 사용될 때 유용합니다.</string>
     <string name="live_activity_steps_history">걸음 수 기록</string>
     <string name="live_activity_current_steps_per_minute">현재의 분당 걸음 수</string>
     <string name="live_activity_total_steps">전체 걸음 수</string>
@@ -260,17 +249,17 @@
 
     <string name="title_activity_calblacklist">비활성화 된 캘린더들</string>
 
-    <string name="fw_upgrade_notice_amazfitbip">지금 기존의 Amazfit Bip에 %s 펌웨어를 설치하려고 합니다. 
-\n 
-\n.gps 펌웨어를 설치하고 나서 .res 파일을, 그리고 최종적으로 .fw 파일을 설치하세요. .fw 파일을 설치한 후 기기가 재시작 됩니다. 
-\n 
-\n비고: 만약 전에 설치되어 있던 .res 파일과 .gps 파일을 그대로 사용한다면 각 파일을 다시 설치 할 필요는 없습니다. 
+    <string name="fw_upgrade_notice_amazfitbip">지금 기존의 Amazfit Bip에 %s 펌웨어를 설치하려고 합니다.
+\n
+\n.gps 펌웨어를 설치하고 나서 .res 파일을, 그리고 최종적으로 .fw 파일을 설치하세요. .fw 파일을 설치한 후 기기가 재시작 됩니다.
+\n
+\n비고: 만약 전에 설치되어 있던 .res 파일과 .gps 파일을 그대로 사용한다면 각 파일을 다시 설치 할 필요는 없습니다.
 \n
 \n본인의 책임 하에 진행하세요!</string>
     <string name="pref_title_general_autostartonboot">자동으로 시작</string>
     <string name="pref_title_language">언어</string>
 
-    <string name="pref_title_minimize_priority">알림 숨김</string>
+    <string name="pref_title_minimize_priority">밴드유틸 알림 숨김</string>
     <string name="pref_summary_minimize_priority_off">상태 표시줄과 잠금 화면 알림에 아이콘이 표시됩니다</string>
     <string name="pref_summary_minimize_priority_on">상태 표시줄과 잠금 화면 알림에 아이콘이 표시되지 않습니다</string>
 
@@ -332,7 +321,7 @@
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU 제한</string>
     <string name="pref_summary_pebble_mtu_limit">만약 Pebble 2/Pebble LE가 기대한 대로 작동하지 않는다면, 이 설정을 사용하여 MTU를 제한하세요 (20-512까지 설정 가능)</string>
     <string name="pref_title_pebble_enable_applogs">시계 앱 로그 활성화</string>
-    <string name="pref_summary_pebble_enable_applogs">시계 앱들의 로그를 Gadgetbridge가 기록합니다 (재연결 필요)</string>
+    <string name="pref_summary_pebble_enable_applogs">시계 앱들의 로그를 밴드유틸이 기록합니다 (재연결 필요)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">끝나기 전 미리 PebbleKit 연결에 ACK 보내기</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">제 3자 앱으로 보내는 메세지에 언제나 바로 ACK을 보냅니다</string>
 
@@ -364,9 +353,7 @@
     <string name="pairing_in_progress">연결 생성 중: %1$s (%2$s)</string>
     <string name="pairing_already_bonded">이미 %1$s (%2$s)에 연결이 생성되었으며 연결하는 중…</string>
     <string name="preferences_amazfitbip_settings">Amazfit Bip 설정</string>
-    <string name="discovery_connected_devices_hint">기기를 발견 가능하도록 설정하세요. 현재 연결된 기기는 나타나지 않을 가능성이 높습니다. 안드로이드 6.0 이상의 버전에서는 위치(예: GPS) 기능을 활성화하세요.
-        Privacy Guard가 설정되어 있다면 오작동을 일으킬 가능성이 있으므로 본 앱을 예외 처리하세요.
-        몇 분 안에 기기가 발견되지 않는다면, 기기를 재시작하고 다시 시도하세요.</string>
+    <string name="discovery_connected_devices_hint">기기를 발견 가능하도록 설정하세요. 현재 연결된 기기는 나타나지 않을 가능성이 높습니다. 안드로이드 6.0 이상의 버전에서는 위치(예: GPS) 기능을 활성화하세요. Privacy Guard가 설정되어 있다면 오작동을 일으킬 가능성이 있으므로 밴드유틸을 예외 처리하세요. 몇 분 안에 기기가 발견되지 않는다면, 기기를 재시작하고 다시 시도하세요.</string>
     <string name="vibration_try">시도하기</string>
     <string name="pref_screen_notification_profile_email">이메일 알림</string>
     <string name="pref_screen_notification_profile_generic_chat">챗</string>
@@ -509,6 +496,24 @@
     <string name="_pebble_watch_open_on_phone">스마트폰에서 열기</string>
     <string name="_pebble_watch_mute">음소거</string>
     <string name="_pebble_watch_reply">답장</string>
+
+    <string name="controlcenter_start_activity_tracks">당신의 활동 트랙</string>
+    <string name="activity_type_not_measured">측정되지 않음</string>
+    <string name="activity_type_activity">활동</string>
+    <string name="activity_type_light_sleep">얕은 수면</string>
+    <string name="activity_type_deep_sleep">깊은 수면</string>
+    <string name="activity_type_not_worn">디바이스 깨지 않음</string>
+    <string name="activity_type_running">달리기</string>
+    <string name="activity_type_walking">걷기</string>
+    <string name="activity_type_swimming">수영</string>
+    <string name="activity_type_unknown">알 수 없는 활동</string>
+    <string name="activity_summaries">활동종합</string>
+    <string name="activity_type_biking">바이크</string>
+    <string name="activity_type_treadmill">트레드밀</string>
+    <string name="select_all">전체 선택</string>
+    <string name="share">공유</string>
+    <string name="reset_index">데이터 불러오기 초기화</string>
+
     <string name="kind_firmware">펌웨어</string>
     <string name="kind_invalid">올바르지 않은 데이터</string>
     <string name="kind_font">글꼴</string>
@@ -517,15 +522,49 @@
     <string name="kind_gps_cep">GPS 오류 보정</string>
     <string name="kind_resources">리소스</string>
     <string name="kind_watchface">워치페이스</string>
+
     <string name="devicetype_unknown">알 수 없는 기기</string>
     <string name="devicetype_test">기기 테스트</string>
     <string name="devicetype_pebble">Pebble</string>
     <string name="devicetype_miband">Mi Band</string>
     <string name="devicetype_miband2">Mi Band 2</string>
+    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="devicetype_amazfit_bip">Amazfit Bip</string>
     <string name="devicetype_amazfit_cor">Amazfit Cor</string>
+    <string name="devicetype_vibratissimo">Vibratissimo</string>
+    <string name="devicetype_liveview">LiveView</string>
+    <string name="devicetype_hplus">HPlus</string>
+    <string name="devicetype_makibes_f68">Makibes F68</string>
+    <string name="devicetype_exrizu_k8">Exrizu K8</string>
+    <string name="devicetype_q8">Q8</string>
+    <string name="devicetype_no1_f1">No.1 F1</string>
+    <string name="devicetype_teclast_h30">Teclast H30</string>
+    <string name="devicetype_xwatch">XWatch</string>
+
+    <string name="choose_auto_export_location">추출 위치를 선택하세요</string>
+    <string name="notification_channel_name">밴드유틸 알림</string>
+
+    <!-- Menus on the smart device -->
+    <string name="menuitem_shortcut_alipay">Alipay (Shortcut)</string>
+    <string name="menuitem_shortcut_weather">날씨 (Shortcut)</string>
+    <string name="menuitem_status">상태</string>
+    <string name="menuitem_activity">활동</string>
+    <string name="menuitem_weather">날씨</string>
+    <string name="menuitem_alarm">알람</string>
+    <string name="menuitem_timer">타이머</string>
+    <string name="menuitem_compass">컴파스</string>
+    <string name="menuitem_settings">설정</string>
+    <string name="menuitem_alipay">Alipay</string>
 
 
+    <string name="sub_header">관리</string>
+    <string name="footer_header">정보</string>
+    <string name="action_licenses">라이센스</string>
+    <string name="action_about">앱 정보</string>
+    <string name="action_check_db">생활 데이터 확인</string>
+    <string name="food_check_db">식품 데이터 검색</string>
+    <string name="action_storage">데이터 저장소 관리</string>
+    <string name="action_user_information">내 정보</string>
 
     <string name="home_tap_target_title">터치하여 기록하기</string>
     <string name="home_tap_target_description">장비등록, 생활패턴 기록을 빠르게 기록하세요</string>
@@ -566,7 +605,6 @@
     <string name="category_select_text">연결할 장비를 선택하세요</string>
 
     <string name="nav_header_text_name">당뇨그루-밴드유틸</string>
-
 
     <string name="profile_edit_photo">프로필 사진</string>
     <string name="profile_edit_user_info">정보 수정</string>
@@ -618,6 +656,5 @@
     <string name="food_detail_cholesterol">콜레스테롤</string>
     <string name="food_detail_fatty">포화지방산</string>
     <string name="food_detail_trans_fat">트랜스지방산</string>
-
 
 </resources>
