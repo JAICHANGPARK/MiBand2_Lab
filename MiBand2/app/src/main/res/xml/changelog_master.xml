@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.1.7" versioncode="68">
+        <change>Date : 2018-08-22</change>
+        <change>UI : Databases Management UI Change</change>
+        <change>Mi Band 3: Fix notification text not being displayed</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.1.6" versioncode="67">
         <change>Date : 2018-08-17</change>
         <change>Mi Band 2: Put some device specific settings into its own settings category</change>

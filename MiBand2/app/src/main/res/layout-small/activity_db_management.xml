@@ -1,48 +1,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nodomain.knu2018.bandutils.activities.ControlCenterv2">
+    tools:context="nodomain.knu2018.bandutils.activities.DbManagementActivity">
+
+    <TextView
+        android:id="@+id/db_management_intro"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/bmhanna"
+        android:text="@string/activity_db_management_import_export_explanation"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/db_management_intro">
 
-        <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:grid="http://schemas.android.com/apk/res-auto"
+        <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            grid:alignmentMode="alignBounds"
-            grid:columnCount="2">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/exportDBButton"
-                android:fontFamily="@font/bmhanna"
-                android:text="Export DB"
-                grid:layout_column="0" />
-
-            <Button
-                android:id="@+id/importDBButton"
-                android:fontFamily="@font/bmhanna"
-                android:text="Import DB"
-                grid:layout_column="1"
-                grid:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/db_management_intro"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:fontFamily="@font/bmhanna"
-                android:text="@string/activity_db_management_import_export_explanation"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_swap_vert_black_24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/bmhanna"
+                    android:text="Management"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/secondarytext" />
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/activity_db_management_path"
@@ -50,9 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:fontFamily="@font/bmhanna"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/compress"
@@ -62,61 +70,94 @@
                 android:fontFamily="@font/bmhanna"
                 android:text="파일 압축"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/accent"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
+                android:textColor="@color/accent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bmhanna"
                 android:text="추출한 데이터를 압축하고 공유하고 싶을 때, 이 버튼을 눌러주세요."
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button
                 android:id="@+id/compressDBButton"
-                android:layout_marginTop="8dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
                 android:fontFamily="@font/bmhanna"
-                android:text="Compress DB"
-                grid:layout_column="0" />
+                android:gravity="start|center"
+                android:text="COMPRESS" />
+
+            <Button
+                android:id="@+id/exportDBButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:fontFamily="@font/bmhanna"
+                android:gravity="start|center"
+                android:text="EXPORT" />
 
             <Button
                 android:id="@+id/backupDBButton"
-                android:layout_marginTop="8dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
                 android:fontFamily="@font/bmhanna"
-                android:text="Backup DB"
-                grid:layout_column="1" />
+                android:gravity="start|center"
+                android:text="BACK UP" />
+
             <TextView
                 android:id="@+id/date_time_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bmhanna"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
-
-            <TextView
-                android:id="@+id/mergeOldActivityDataTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/bmhanna"
-                android:text="@string/activity_db_management_merge_old_title"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/accent"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
-
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button
-                android:id="@+id/deleteOldActivityDB"
-                android:layout_width="wrap_content"
+                android:id="@+id/importDBButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
                 android:fontFamily="@font/bmhanna"
-                android:text="Delete old DB" />
+                android:gravity="start|center"
+                android:text="IMPORT" />
+
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:tint="@color/under_text"
+                    app:srcCompat="@drawable/ic_do_not_disturb_alt_black_24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/bmhanna"
+                    android:text="Danger Zone"
+                    android:textColor="@color/under_text"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/under_text" />
 
             <TextView
                 android:id="@+id/emptyDBText"
@@ -125,18 +166,155 @@
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/bmhanna"
                 android:text="Warning! By pushing this button you will wipe your database and start from scratch."
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                grid:layout_columnSpan="2"
-                grid:layout_columnWeight="1" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button
                 android:id="@+id/emptyDBButton"
-                android:layout_width="wrap_content"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:drawableTint="@color/under_text"
                 android:fontFamily="@font/bmhanna"
-                android:text="Empty DB" />
+                android:gravity="start|center"
+                android:text="DELETE DATABASES"
+                android:textColor="@color/under_text" />
 
-        </android.support.v7.widget.GridLayout>
+            <Button
+                android:id="@+id/deleteOldActivityDB"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:drawableTint="@color/under_text"
+                android:fontFamily="@font/bmhanna"
+                android:gravity="start|center"
+                android:text="DELETE OLD DATABASES"
+                android:textColor="@color/under_text" />
+
+        </LinearLayout>
+
+
+        <!--<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:grid="http://schemas.android.com/apk/res-auto"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+        <!--grid:alignmentMode="alignBounds"-->
+        <!--grid:columnCount="2">-->
+
+        <!--<Button-->
+        <!--android:id="@+id/exportDBButton"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Export DB"-->
+        <!--grid:layout_column="0" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/importDBButton"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Import DB"-->
+        <!--grid:layout_column="1"-->
+        <!--grid:layout_gravity="center" />-->
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/activity_db_management_path"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--grid:layout_columnSpan="2"-->
+        <!--grid:layout_columnWeight="1" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/compress"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="파일 압축"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:textColor="@color/accent"-->
+        <!--grid:layout_columnSpan="2"-->
+        <!--grid:layout_columnWeight="1" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="추출한 데이터를 압축하고 공유하고 싶을 때, 이 버튼을 눌러주세요."-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--grid:layout_columnSpan="2"-->
+        <!--grid:layout_columnWeight="1" />-->
+
+
+        <!--<Button-->
+        <!--android:id="@+id/compressDBButton"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Compress DB"-->
+        <!--grid:layout_column="0" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/backupDBButton"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Backup DB"-->
+        <!--grid:layout_column="1" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/date_time_textview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--grid:layout_columnSpan="2"-->
+        <!--grid:layout_columnWeight="1" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/mergeOldActivityDataTitle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="40dp"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="@string/activity_db_management_merge_old_title"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:textColor="@color/accent"-->
+        <!--grid:layout_columnSpan="2"-->
+        <!--grid:layout_columnWeight="1" />-->
+
+
+        <!--<Button-->
+        <!--android:id="@+id/deleteOldActivityDB"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Delete old DB" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/emptyDBText"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="40dp"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Warning! By pushing this button you will wipe your database and start from scratch."-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--grid:layout_columnSpan="2"-->
+        <!--grid:layout_columnWeight="1" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/emptyDBButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fontFamily="@font/bmhanna"-->
+        <!--android:text="Empty DB" />-->
+
+        <!--</android.support.v7.widget.GridLayout>-->
 
 
     </ScrollView>
