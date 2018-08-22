@@ -5,7 +5,7 @@
     android:id="@+id/layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.WriteMealActivity">
+    tools:context=".activities.writing.WriteMealActivity">
 
     <LinearLayout
         android:id="@+id/layout_01"
@@ -15,7 +15,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/closeButton"
@@ -233,16 +233,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:bsb_auto_adjust_section_mark="true"
-                app:bsb_max="10"
-                app:bsb_min="0"
-                app:bsb_progress="0"
+                app:bsb_max="10.0"
+                app:bsb_min="0.0"
+                app:bsb_progress="0.0"
                 app:bsb_second_track_color="@color/accent_custom"
                 app:bsb_second_track_size="6dp"
                 app:bsb_section_count="10"
                 app:bsb_section_text_position="below_section_mark"
                 app:bsb_seek_by_section="true"
                 app:bsb_show_section_mark="true"
-                app:bsb_touch_to_seek="true" />
+                app:bsb_touch_to_seek="true"
+                app:bsb_is_float_type="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -266,7 +267,8 @@
                 app:bsb_section_text_position="below_section_mark"
                 app:bsb_seek_by_section="true"
                 app:bsb_show_section_mark="true"
-                app:bsb_touch_to_seek="true" />
+                app:bsb_touch_to_seek="true"
+                app:bsb_is_float_type="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -291,7 +293,8 @@
                 app:bsb_section_text_position="below_section_mark"
                 app:bsb_seek_by_section="true"
                 app:bsb_show_section_mark="true"
-                app:bsb_touch_to_seek="true" />
+                app:bsb_touch_to_seek="true"
+                app:bsb_is_float_type="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -315,7 +318,8 @@
                 app:bsb_section_text_position="below_section_mark"
                 app:bsb_seek_by_section="true"
                 app:bsb_show_section_mark="true"
-                app:bsb_touch_to_seek="true" />
+                app:bsb_touch_to_seek="true"
+                app:bsb_is_float_type="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -340,7 +344,8 @@
                 app:bsb_section_text_position="below_section_mark"
                 app:bsb_seek_by_section="false"
                 app:bsb_show_section_mark="false"
-                app:bsb_touch_to_seek="false" />
+                app:bsb_touch_to_seek="false"
+                app:bsb_is_float_type="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -364,7 +369,8 @@
                 app:bsb_section_text_position="below_section_mark"
                 app:bsb_seek_by_section="false"
                 app:bsb_show_section_mark="false"
-                app:bsb_touch_to_seek="false" />
+                app:bsb_touch_to_seek="false"
+                app:bsb_is_float_type="true" />
 
             <View
                 android:layout_width="match_parent"
@@ -382,7 +388,6 @@
 
             <com.xw.repo.BubbleSeekBar
                 android:id="@+id/seek_bar_7"
-
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
                 android:layout_marginTop="8dp"

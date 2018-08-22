@@ -21,6 +21,7 @@
     <string name="controlcenter_snackbar_disconnecting">Disconnecting</string>
     <string name="controlcenter_snackbar_connecting">Connecting</string>
     <string name="controlcenter_snackbar_requested_screenshot">Taking a screenshot of the device</string>
+    <string name="controlcenter_calibrate_device">Calibrate Device</string>
 
 
     <string name="title_activity_debug">Debug</string>
@@ -46,6 +47,9 @@
 
     <!-- Strings related to AppBlacklist -->
     <string name="title_activity_appblacklist">Notification blacklist</string>
+    <string name="blacklist_all_for_notifications">Blacklist all for notifications</string>
+    <string name="whitelist_all_for_notifications">Whitelist all for notifications</string>
+
 
     <!-- Strings related to CalBlacklist -->
     <string name="title_activity_calblacklist">Blacklisted Calendars</string>
@@ -54,11 +58,12 @@
     <string name="title_activity_fw_app_insaller">FW/App installer</string>
     <string name="fw_upgrade_notice">You are about to install firmware %s instead of the one currently on your Mi Band.</string>
     <string name="fw_upgrade_notice_amazfitbip">You are about to install the %s firmware on your Amazfit Bip.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
-    <string name="fw_upgrade_notice_amazfitcor">You are about to install the %s firmware on your Amazfit Cor.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nUNTESTED, MAY BRICK YOUR DEVICE, PROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_amazfitcor">You are about to install the %s firmware on your Amazfit Cor.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_miband3">You are about to install the %s firmware on your Mi Band 3.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nUNTESTED, MAY BRICK YOUR DEVICE, PROCEED AT YOUR OWN RISK!</string>
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
-    <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with BandUtil.</string>
-    <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with BandUtil.\n\nYou are DISCOURAGED from flashing it onto your Mi Band!"</string>
-    <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the BandUtil developers to whitelist the %s firmware version</string>
+    <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with BandUtils.</string>
+    <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with BandUtils.\n\nYou are DISCOURAGED from flashing it onto your Mi Band!"</string>
+    <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the BandUtils developers to whitelist the %s firmware version</string>
 
     <!-- Strings related to Settings -->
     <string name="title_activity_settings">Settings</string>
@@ -81,7 +86,7 @@
 
     <string name="pref_title_language">Language</string>
 
-    <string name="pref_title_minimize_priority">Hide the BandUtil notification</string>
+    <string name="pref_title_minimize_priority">Hide the BandUtils notification</string>
     <string name="pref_summary_minimize_priority_off">The icon in the status bar and the notification in the lockscreen are shown</string>
     <string name="pref_summary_minimize_priority_on">The icon in the status bar and the notification in the lockscreen are hidden</string>
 
@@ -170,8 +175,10 @@
     <string name="pref_summary_pebble_forcele">Use experimental Pebble LE support for all Pebbles, instead of BT classic. This requires pairing to non LE first, and then Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU limit</string>
     <string name="pref_summary_pebble_mtu_limit">If your Pebble 2/Pebble LE does not work as expected, try this setting to limit the MTU (valid range 20–512)</string>
+    <string name="pref_title_pebble_gatt_clientonly">GATT client only</string>
+    <string name="pref_summary_pebble_gatt_clientonly">This is for Pebble 2 only and experimental, try this if you have connectivity problems</string>
     <string name="pref_title_pebble_enable_applogs">Enable watch App logging</string>
-    <string name="pref_summary_pebble_enable_applogs">Will cause logs from watch apps to be logged by BandUtil (requires reconnect)</string>
+    <string name="pref_summary_pebble_enable_applogs">Will cause logs from watch apps to be logged by BandUtils (requires reconnect)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Prematurely ACK PebbleKit</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Will cause messages that are sent to external 3rd party apps to be acknowledged always and immediately</string>
     <string name="pref_title_pebble_enable_bgjs">Enable background JS</string>
@@ -186,12 +193,22 @@
     <string name="prefs_title_all_day_heart_rate">All day heart rate measurement</string>
     <string name="preferences_hplus_settings">HPlus/Makibes settings</string>
 
+    <!-- ID115 Preferences -->
+    <string name="preferences_id115_settings">ID115 settings</string>
+    <string name="prefs_screen_orientation">Screen orientation</string>
+
     <!-- Auto export preferences -->
     <string name="pref_header_auto_export">Auto export</string>
     <string name="pref_title_auto_export_enabled">Auto export enabled</string>
     <string name="pref_title_auto_export_location">Export location</string>
     <string name="pref_title_auto_export_interval">Export interval</string>
     <string name="pref_summary_auto_export_interval">Export every %d hour</string>
+
+    <!-- Auto fetch activity preferences -->
+    <string name="pref_auto_fetch">Auto fetch activity data</string>
+    <string name="pref_auto_fetch_summary">Fetch happens upon screen unlock. Only works if a lock mechanism is set!</string>
+    <string name="pref_auto_fetch_limit_fetches">Minimum time between fetches</string>
+    <string name="pref_auto_fetch_limit_fetches_summary">Fetches every %d minutes</string>
 
     <string name="not_connected">Not connected</string>
     <string name="connecting">Connecting</string>
@@ -200,7 +217,7 @@
     <string name="_unknown_">(unknown)</string>
     <string name="test">Test</string>
     <string name="test_notification">Test notification</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">This is a test notification from BandUtil</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">This is a test notification from BandUtils</string>
     <string name="bluetooth_is_not_supported_">Bluetooth is not supported.</string>
     <string name="bluetooth_is_disabled_">Bluetooth is disabled.</string>
     <string name="tap_connected_device_for_app_mananger">Tap connected device for App manager</string>
@@ -208,7 +225,7 @@
     <string name="tap_connected_device_for_vibration">Tap connected device for vibration</string>
     <string name="tap_a_device_to_connect">Tap a device to connect</string>
     <string name="cannot_connect_bt_address_invalid_">Cannot connect. Bluetooth address invalid?</string>
-    <string name="gadgetbridge_running">BandUtil running</string>
+    <string name="gadgetbridge_running">BandUtils running</string>
     <string name="installing_binary_d_d">Installing binary %1$d/%2$d</string>
     <string name="installation_failed_">Installation failed</string>
     <string name="installation_successful">Installed</string>
@@ -233,25 +250,27 @@
     <string name="pairing_already_bonded">"Already bonded with %1$s (%2$s), connecting…"</string>
     <string name="message_cannot_pair_no_mac">No MAC address passed, cannot pair.</string>
     <string name="preferences_category_device_specific_settings">Device specific settings</string>
-    <string name="preferences_miband_settings">Mi Band settings</string>
-    <!--<string name="preferences_miband_settings">Mi Band / Amazfit settings</string>-->
+    <string name="preferences_miband_settings">Mi Band / Amazfit settings</string>
+    <string name="preferences_miband2_settings">Mi Band 2 settings</string>
+    <string name="preferences_miband3_settings">Mi Band 3 settings</string>
     <string name="preferences_amazfitbip_settings">Amazfit Bip settings</string>
+    <string name="preferences_amazfitcor_settings">Amazfit Cor settings</string>s
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
+    <string name="horizontal">Horizontal</string>
+    <string name="vertical">Vertical</string>
     <string name="miband_pairing_using_dummy_userdata">No valid user data given, using dummy user data for now.</string>
     <string name="miband_pairing_tap_hint">When your Mi Band vibrates and blinks, tap it a few times in a row.</string>
     <string name="appinstaller_install">Install</string>
-    <string name="discovery_connected_devices_hint">Make your device discoverable. Currently connected devices will likely not be discovered.
-        Activate location (e.g. GPS) on Android 6+. Disable Privacy Guard for BandUtil,
-        because it may crash and reboot your phone. If no device is found after a few minutes,
-        try again after rebooting your mobile device.</string>
+    <string name="discovery_connected_devices_hint">Make your device discoverable. Currently connected devices will likely not be discovered. Activate location (e.g. GPS) on Android 6+. Disable Privacy Guard for BandUtils, because it may crash and reboot your phone. If no device is found after a few minutes, try again after rebooting your mobile device.</string>
     <string name="discovery_note">Note:</string>
     <string name="candidate_item_device_image">Device image</string>
     <string name="miband_prefs_alias">Name/Alias</string>
     <string name="pref_header_vibration_count">Vibration count</string>
+    <string name="watch9_pairing_tap_hint">When your watch vibrates, shake the device or press its button.</string>
 
     <string name="title_activity_sleepmonitor">Sleep monitor</string>
     <string name="pref_write_logfiles">Write log files</string>
@@ -367,6 +386,8 @@
     <string name="abstract_chart_fragment_kind_light_sleep">Light sleep</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">Deep sleep</string>
     <string name="abstract_chart_fragment_kind_not_worn">Not worn</string>
+    <string name="you_slept">You slept from %1$s to %2$s</string>
+    <string name="you_did_not_sleep">You did not sleep</string>
     <string name="device_not_connected">Not connected.</string>
     <string name="user_feedback_all_alarms_disabled">All alarms disabled</string>
     <string name="pref_title_keep_data_on_device">Keep activity data on device</string>
@@ -375,7 +396,7 @@
     <string name="miband_prefs_reserve_alarm_calendar">Alarms to reserve for upcoming events</string>
     <string name="miband_prefs_hr_sleep_detection">Use heart rate sensor to improve sleep detection</string>
     <string name="miband_prefs_device_time_offset_hours">Device time offset in hours (for detecting sleep of shift workers)</string>
-    <string name="miband2_prefs_dateformat">Mi2: Date format</string>
+    <string name="miband2_prefs_dateformat">Date format</string>
     <string name="dateformat_time">Time</string>
     <string name="dateformat_date_time"><![CDATA[Time & date]]></string>
     <string name="mi2_prefs_button_actions">Button actions</string>
@@ -384,7 +405,7 @@
     <string name="mi2_prefs_button_press_count_summary">Number of button presses to trigger message broadcast</string>
     <string name="mi2_prefs_button_press_broadcast">Broadcast message to send</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Broadcast message on defined number of button presses reached</string>
-    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.knu2018.gadgetbridge.mibandButtonPressed</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.mibandButtonPressed</string>
     <string name="mi2_prefs_button_action">Enable button action</string>
     <string name="mi2_prefs_button_action_summary">Enable action on specified number of button presses</string>
     <string name="mi2_prefs_button_action_vibrate">Enable band vibration</string>
@@ -407,12 +428,20 @@
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Disable the inactivity warnings for a time interval</string>
     <string name="mi2_prefs_do_not_disturb_start">Start time</string>
     <string name="mi2_prefs_do_not_disturb_end">End time</string>
-
+    <string name="mi3_prefs_band_screen_unlock">Band screen unlock"</string>
+    <string name="mi3_prefs_band_screen_unlock_summary">Swipe up to unlock the band\'s screen</string>
     <string name="automatic">Automatic</string>
     <string name="simplified_chinese">Simplified Chinese</string>
     <string name="traditional_chinese">Traditional Chinese</string>
     <string name="english">English</string>
     <string name="spanish">Spanish</string>
+    <string name="russian">Russian</string>
+    <string name="german">German</string>
+    <string name="italian">Italian</string>
+    <string name="french">French</string>
+    <string name="polish">Polish</string>
+    <string name="korean">Korean</string>
+    <string name="japanese">Japanese</string>
 
     <string name="FetchActivityOperation_about_to_transfer_since">About to transfer data since %1$s</string>
 
@@ -545,6 +574,7 @@
     <string name="devicetype_pebble">Pebble</string>
     <string name="devicetype_miband">Mi Band</string>
     <string name="devicetype_miband2">Mi Band 2</string>
+    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="devicetype_amazfit_bip">Amazfit Bip</string>
     <string name="devicetype_amazfit_cor">Amazfit Cor</string>
     <string name="devicetype_vibratissimo">Vibratissimo</string>
@@ -552,15 +582,23 @@
     <string name="devicetype_hplus">HPlus</string>
     <string name="devicetype_makibes_f68">Makibes F68</string>
     <string name="devicetype_exrizu_k8">Exrizu K8</string>
+    <string name="devicetype_q8">Q8</string>
     <string name="devicetype_no1_f1">No.1 F1</string>
     <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="devicetype_xwatch">XWatch</string>
+    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
+    <string name="devicetype_id115">ID115</string>
+    <string name="devicetype_watch9">Watch 9</string>
+    <string name="devicetype_caresens">CareSens N</string>
 
     <string name="choose_auto_export_location">Choose export location</string>
-    <string name="notification_channel_name">BandUtil notifications</string>
+    <string name="notification_channel_name">BandUtils notifications</string>
 
     <!-- Menus on the smart device -->
+    <string name="menuitem_shortcut_alipay">Alipay (Shortcut)</string>
+    <string name="menuitem_shortcut_weather">Weather (Shortcut)</string>
     <string name="menuitem_status">Status</string>
+    <string name="menuitem_notifications">Notifications</string>
     <string name="menuitem_activity">Activity</string>
     <string name="menuitem_weather">Weather</string>
     <string name="menuitem_alarm">Alarm</string>
@@ -568,38 +606,17 @@
     <string name="menuitem_compass">Compass</string>
     <string name="menuitem_settings">Settings</string>
     <string name="menuitem_alipay">Alipay</string>
+    <string name="menuitem_music">Music</string>
+    <string name="menuitem_more">More</string>
 
+    <string name="watch9_time_minutes">Minutes:</string>
+    <string name="watch9_time_hours">Hours:</string>
+    <string name="watch9_time_seconds">Seconds:</string>
+    <string name="watch9_calibration_hint">Set the time your device is showing to you right now.</string>
+    <string name="watch9_calibration_button">Calibrate</string>
+    <string name="title_activity_watch9_pairing">Watch 9 pairing</string>
+    <string name="title_activity_watch9_calibration">Watch 9 calibration</string>
 
-    <string name="md_sample_data">### Open Source License  \n * * * \n
-        ## Apache 2.0 \n
-        1. MarkdownView - falnatsheh \n
-        - https://github.com/falnatsheh/MarkdownView \n
-        2. MaterialStyledDialogs - Javier Santos \n
-        - https://github.com/javiersantos/MaterialStyledDialogs \n
-
-        # Markdown
-
-        ## Basic formatting
-
-        Paragraphs can be written like so. A paragraph is the basic block of Markdown. A paragraph is what text will turn into when there is no reason it should become anything else.
-
-        Paragraphs must be separated by a blank line. Basic formatting of *italics* and **bold** is supported.
-
-        ## Lists
-
-        ### Ordered list
-
-        1. Item 1
-        2. A second item
-        3. Number 3
-
-        ### Unordered list
-
-        * An item
-        * Another item
-        * And there's more...
-
-    </string>
 
     <!--FireBase Cloud massege-->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
@@ -608,4 +625,219 @@
         It should describe the category of notifications that will be sent through this channel
      -->
     <string name="default_notification_channel_name" translatable="true">News</string>
+
+
+    <string name="home_tap_target_title">Touch &amp; Write</string>
+    <string name="home_tap_target_description">You can register device and write life pattern</string>
+
+    <string name="app_update_title">New version available</string>
+    <string name="app_update_message">Please, update app to new version</string>
+    <string name="app_update_positive">Update</string>
+    <string name="app_update_negative">No, thanks</string>
+
+    <string name="user_information_name">NAME</string>
+    <string name="user_information_uuid">UUID</string>
+    <string name="user_information_aim">AIM INTERVAL</string>
+    <string name="user_information_gender">GENDER</string>
+    <string name="user_information_age">AGE</string>
+    <string name="user_information_birth">BIRTH</string>
+    <string name="user_information_email">EMAIL</string>
+    <string name="user_information_phone">PHONE NUMBER</string>
+    <string name="user_information_svae">SAVE</string>
+
+    <string name="user_information_bs_min">AIM (MIN)</string>
+    <string name="user_information_bs_max">AIM (MAX)</string>
+
+    <string name="FACEBOOK_APP_ID">169563493885122</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">baf822a230081139aad0b6dee673a649</string>
+
+    <string name="app_rating_title">Rate this application</string>
+    <string name="app_rating_description">Please select some stars and give your feedback</string>
+    <string name="app_rating_hint">Please write your comment here ...</string>
+    <string name="app_rating_positive_button">Submit</string>
+    <string name="app_rating_negative_button">Cancle</string>
+    <string name="app_rating_neutral_button">Later</string>
+
+    <string name="category_toolbar">CATEGORY</string>
+    <string name="category_first_image">Fitness Device</string>
+    <string name="category_second_image">Intake Device</string>
+    <string name="category_third_image">Drug Device</string>
+    <string name="category_fourth_image">GSM Device</string>
+    <string name="category_bottom_image">Select Category</string>
+    <string name="category_select_text">Choose your Device</string>
+
+    <string name="nav_header_text_name">Diabetes Grue-BandUtils</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="image">image</string>
+    <string name="desc">Being the savage\'s bowsman, that is, the person who pulled the
+    bow-oar in his boat. Dolor sit amet.</string>
+
+    <string name="profile_edit_photo">PHOTO</string>
+    <string name="profile_edit_user_info">EDIT INFO</string>
+    <string name="profile_edit_user_drug">EDIT DRUG</string>
+
+    <string name="profile_duplicate">DUPLICATE</string>
+    <string name="profile_schedule">SCHEDULE</string>
+    <string name="profile_delete">DELETE</string>
+    <string name="profile_network_exception_message">PLEASE CONNECT NETWORK. READ CACHE DATA</string>
+
+
+    <string name="rapid">초속효성</string>
+    <string name="rapid2">속효성</string>
+    <string name="netural">중간형</string>
+    <string name="longtime">지속형</string>
+    <string name="mixed">혼합형</string>
+
+    <string name="select_drug_title">Select Insulin</string>
+    <string name="select_drug_unit">Select Unit</string>
+    <string name="select_drug_none">선택된 약물 없음</string>
+    <string name="select_drug_dialog_title">ERROR</string>
+    <string name="select_drug_dialog_message">PLEASE CHOOSE YOUR INSULIN!</string>
+    <string name="select_drug_dialog_positive">OK</string>
+
+
+    <string name="home_horizontal_write_title">Write</string>
+    <string name="home_horizontal_device_title">Accessory</string>
+    <string name="home_horizontal_beacon_title">Near By Accessories</string>
+
+    <string name="home_horizontal_blood_sugar">Blood Sugar</string>
+    <string name="home_horizontal_fitness">Workout</string>
+    <string name="home_horizontal_drug">Insulin</string>
+    <string name="home_horizontal_meal">Meal</string>
+    <string name="home_horizontal_meal_photo">촬영</string>
+    <string name="home_horizontal_sleep">Sleep</string>
+
+    <string name="search_food_activity_title">Search Food Data</string>
+    <string name="search_food_activity_search_bar_hint">Search</string>
+
+    <string name="detail_food_activity_title">Detail Information</string>
+    <string name="food_detail_Number">Number</string>
+    <string name="food_detail_name">Name</string>
+    <string name="food_detail_group">Group</string>
+    <string name="food_detail_amount">Amount</string>
+    <string name="food_detail_kcal">KCal</string>
+    <string name="food_detail_carbo">Carbohydrate</string>
+    <string name="food_detail_protein">Protein</string>
+    <string name="food_detail_fat">Fat</string>
+
+    <string name="food_detail_sugar">Sugar</string>
+    <string name="food_detail_natrium">Natrium</string>
+    <string name="food_detail_cholesterol">Cholesterol</string>
+    <string name="food_detail_fatty">Saturated Fatty</string>
+    <string name="food_detail_trans_fat">Trans Fat</string>
+
+    <!--약물 샘플 -->
+    <!--초속효성-->
+    <array name="names_RRapid">
+        <item>노보래피드</item>
+        <item>애피드라</item>
+        <item>휴마로그</item>
+    </array>
+    <array name="description_RRapid">
+        <item>인슐린아스파트 100U/mL</item>
+        <item>인슐린글루리신(유전자재조합) 34.9mg</item>
+        <item>인슐린리스프로 1000단위/10mL</item>
+    </array>
+    <!--속효성-->
+    <array name="names_Rapid">
+        <item>휴물린R</item>
+        <item>노보린R</item>
+        <item>노보렛R</item>
+    </array>
+    <array name="description_Rapid">
+        <item>휴먼인슐린 1000IU/10mL</item>
+        <item>휴먼인슐린 300</item>
+        <item>휴먼인슐린 300</item>
+    </array>
+
+    <!--중간형-->
+    <array name="names_netural">
+        <item>인슈라타드</item>
+        <item>휴물린N</item>
+        <item>노보린N</item>
+        <item>노보렛N</item>
+    </array>
+    <array name="description_netural">
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+    </array>
+
+    <!--지속형-->
+    <array name="names_longtime">
+        <item>란투스</item>
+        <item>레버미어</item>
+        <item>투제오</item>
+        <item>트레시바</item>
+    </array>
+    <array name="description_longtime">
+        <item>인슐린글라진</item>
+        <item>인슐린디터머</item>
+        <item>인슐린글라진</item>
+        <item>인슐린데글루덱</item>
+    </array>
+
+    <array name="names_mixed">
+        <item>노보믹스30</item>
+        <item>노보믹스50</item>
+        <item>노보믹스70</item>
+        <item>믹스타드30</item>
+        <item>휴마로그믹스25</item>
+        <item>휴마로그믹스50</item>
+        <item>휴물린70/30</item>
+    </array>
+    <array name="description_mixed">
+        <item>인슐린아스파트</item>
+        <item>인슐린아스파트</item>
+        <item>인슐린아스파트</item>
+        <item>인슐린리스프로</item>
+        <item>인슐린리스프로</item>
+        <item>휴먼인슐린</item>
+        <item>휴먼인슐린</item>
+    </array>
+
+    <string-array name="photos">
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+        <item>@drawable/device_syringe</item>
+    </string-array>
+
+    <string name="my_cart">My Cart</string>
+    <string name="write_meal_choose_item_delete">DELETE</string>
+    <string name="order_id_mock">상세 보기</string>
+    <string name="price_mock" translatable="false">$25</string>
+    <string name="requests_count_mock" translatable="false">5</string>
+    <string name="requests_count_badge" translatable="false">KCal</string>
+    <string name="weight_mock" translatable="false">50 oz</string>
+    <string name="weight_badge">교환단위</string>
+    <string name="pledge_mock" translatable="false">$150</string>
+    <string name="pledge_badge">중량</string>
+    <string name="sender_badge" translatable="false">SENDER</string>
+    <string name="client_name_mock" translatable="false">Edward Norton</string>
+    <string name="rating_mock" translatable="false">(26)</string>
+    <string name="from_badge" translatable="false">FROM</string>
+    <string name="to_badge" translatable="false">TO</string>
+    <string name="delivery_date_badge" translatable="false">DELIVERY DATE</string>
+    <string name="delivery_time_mock" translatable="false">6:30 pm</string>
+    <string name="delivery_date_mock" translatable="false">May 16, 2016</string>
+    <string name="deadline_badge" translatable="false">REQUEST DEADLINE</string>
+    <string name="deadline_time_mock" translatable="false">24 minutes</string>
+    <string name="request_btn_text" translatable="false">REQUEST</string>
+    <string name="btn_annotation_mock" translatable="false">5 people have sent a request</string>
+    <string name="content_from1_mock">W 90th St</string>
+    <string name="content_from2_mock">New York, NY 10025</string>
+    <string name="content_to1_mock">46th Ave</string>
+    <string name="content_to2_mock">Woodside, NY 11101</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

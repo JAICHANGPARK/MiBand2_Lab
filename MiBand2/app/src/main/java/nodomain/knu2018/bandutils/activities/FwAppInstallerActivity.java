@@ -51,6 +51,9 @@ import nodomain.knu2018.bandutils.util.DeviceHelper;
 import nodomain.knu2018.bandutils.util.GB;
 
 
+/**
+ * The type Fw app installer activity.
+ */
 public class FwAppInstallerActivity extends AbstractGBActivity implements InstallActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(FwAppInstallerActivity.class);

@@ -1,6 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.1.7" versioncode="68">
+        <change>Date : 2018-08-22</change>
+        <change>UI : Databases Management UI Change</change>
+        <change>Mi Band 3: Fix notification text not being displayed</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.1.6" versioncode="67">
+        <change>Date : 2018-08-17</change>
+        <change>Mi Band 2: Put some device specific settings into its own settings category</change>
+        <change>Mi Band 3: Support disabling of on-device menu items</change>
+        <change>Mi Band 3: Support locking the Mi Band sceen (swipe up to unlock)</change>
+        <change>Mi Band 3: support setting language (english and spanish tested)</change>
+        <change>Mi Band 3: Fix pairing</change>
+        <change>Mi Band 3: Send AQI to enable display of current temperature</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.1.5" versioncode="66">
+        <change>Date : 2018-08-01</change>
+        <change>Blood Glucose Meter Support Today !</change>
+        <change>Support Device : CareSens N Premier Bluetooth</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.1.4" versioncode="65">
+        <change>Date : 2018-07-18</change>
+        <change>Accessories Scan Crash Fixed</change>
+        <change>Mi Band 3 Device Pairing Fixed</change>
+        <change>Mi Band 3 Send AQI to Enable display of current temperature</change>
+        <change>Mi Band 3 Supports language</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.1.3" versioncode="64">
+        <change>Date : 2018-07-16</change>
+        <change>오류 수정</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.1.2" versioncode="63">
+        <change>Date : 2018-07-07</change>
+        <change>미밴드3 검색 추가 </change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.1.1" versioncode="62">
+        <change>Date : 2018-07-02</change>
+        <change>이제 주변 장비 탐색이 자동으로 가능합니다.</change>
+        <change>식품 검색 상세 정보 확인 기능 추가.</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.1.0" versioncode="61">
+        <change>Date : 2018-06-26</change>
+        <change>홈 화면 UI 개편</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.19" versioncode="60">
+        <change>Date : 2018-06-25</change>
+        <change>인터넷 연결이 없을때 종료되었던 문제 해결</change>
+        <change>라이센스 정보 추가</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.18" versioncode="59">
+        <change>Date : 2018-06-25</change>
+        <change>사용자 메뉴 재 정렬</change>
+        <change>식품 데이터 검색 기능 수정</change>
+        <change>라이센스 정보 추가</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.17" versioncode="58">
+        <change>Date : 2018-06-23</change>
+        <change>기능 : 연결된 장비 목록 확인 기능 추가</change>
+        <change>기능 : 사용하는 약물 입력 기능 추가</change>
+        <change>UI : 사용자 정보 UI 변경</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.16" versioncode="57">
+        <change>Date : 2018-06-19</change>
+        <change>장비 추가 UI 개선했어요</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.15" versioncode="56">
+        <change>Date : 2018-06-13</change>
+        <change>심박 측정 기능 추가</change>
+        <change>설명: 설정에서 심박 측정을 설정하세요</change>
+
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.14" versioncode="55">
+        <change>Date : 2018-06-08</change>
+        <change>기능: 생활데이터 정렬기능 추가</change>
+        <change>설명: 이제 오름차순 내림차순으로 데이터를 확인하세요</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.13" versioncode="54">
+        <change>Date : 2018-06-04</change>
+        <change>기능: 앱평가 중복 팝업 현상 수정</change>
+        <change>기능: 나의 순위 알아보기 추가. 생활데이터에서 확인해보세요</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.12" versioncode="53">
+        <change>Date : 2018-06-03</change>
+        <change>기능: 데이터 백업 기능 추가. </change>
+        <change>데이터베이스 관리에서 확인하세요</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+    <release version="1.0.11" versioncode="52">
+        <change>Date : 2018-06-02</change>
+        <change>입력 취소시 무한 로딩되는 현상 수정.</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.10" versioncode="51">
+        <change>Date : 2018-05-30</change>
+        <change>당뇨그루와 함께하는 사람들의 기록 통계 기능을 추가했습니다.</change>
+        <change>개인 상세 정보 입력 및 수정이 가능해졌어요.</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.9" versioncode="50">
+        <change>Date : 2018-05-28</change>
+        <change>Hot Fix!</change>
+        <change>서버 입력 안정화</change>
+        <change>일정 디바이스에서 달력 색상이 어두운 현상 수정.</change>
+        <change>기타 버그 수정 및 앱 안정화</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.0.8" versioncode="49">
+        <change>Date : 2018-05-27</change>
+        <change>식사 사진 업로드 뷰 변경.</change>
+        <change>생활패턴 데이터 확인 UI를 개선했어요</change>
+        <change>생활패턴 데이터 날짜 검색 기능을 추가했어요. 달력을 길게눌러 범위를 설정하세요.</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.0.7" versioncode="48">
         <change>Date : 2018-05-24</change>
         <change>지원 기기 확대</change>

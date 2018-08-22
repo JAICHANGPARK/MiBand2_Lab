@@ -1,6 +1,5 @@
 package nodomain.knu2018.bandutils.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
@@ -13,16 +12,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ipaulpro.afilechooser.utils.FileUtils;
-
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nodomain.knu2018.bandutils.R;
+import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
 import nodomain.knu2018.bandutils.util.StorageCheck;
 import tyrantgit.explosionfield.ExplosionField;
+
+/**
+ * The type Storage check activity.
+ *
+ *          ____  ____  _________    __  ____       _____    __    __ __ __________
+ *        / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ *       / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ *      / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ *     /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ *
+ * Created by Dreamwalker on 2018-05-28.
+ */
 
 public class StorageCheckActivity extends AppCompatActivity {
     private static final String TAG = "StorageCheckActivity";
@@ -33,25 +43,71 @@ public class StorageCheckActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION = 1000;
     private static final int PICK_FILE_REQUEST = 1001;
 
+    /**
+     * The Storage check.
+     */
     StorageCheck storageCheck;
+    /**
+     * The Explosion field.
+     */
     ExplosionField explosionField;
+    /**
+     * The Bsdb helper.
+     */
+    WriteBSDBHelper bsdbHelper;
 
+
+    /**
+     * The Actual cache.
+     */
     @BindView(R.id.actualCache)
     TextView actualCache;
-
+    /**
+     * The Cache clear button.
+     */
     @BindView(R.id.cacheClearButton)
     Button cacheClearButton;
 
+    /**
+     * The Pattern database.
+     */
+    @BindView(R.id.pattern_database)
+    TextView patternDatabase;
+    /**
+     * The Pattern clear button.
+     */
+    @BindView(R.id.patternClearButton)
+    Button patternClearButton;
+
+    /**
+     * The Actual db.
+     */
     @BindView(R.id.actualDB)
     TextView actualDB;
+    /**
+     * The Db clear button.
+     */
     @BindView(R.id.DBClearButton)
     Button DBClearButton;
+
+    /**
+     * The Actual image.
+     */
     @BindView(R.id.actualImage)
     TextView actualImage;
+    /**
+     * The Image clear button.
+     */
     @BindView(R.id.imageClearButton)
     Button imageClearButton;
 
+    /**
+     * The Db file size.
+     */
     long dbFileSize = 0;
+    /**
+     * The Image file size.
+     */
     long imageFileSize = 0;
 
     @Override
@@ -61,6 +117,7 @@ public class StorageCheckActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         explosionField = ExplosionField.attach2Window(this);
         storageCheck = new StorageCheck(this);
+        bsdbHelper = new WriteBSDBHelper(this);
         setupToolbar();
 
         File external = Environment.getExternalStorageDirectory();
@@ -86,6 +143,11 @@ public class StorageCheckActivity extends AppCompatActivity {
         //Log.e(TAG, "onCreate: " + folderMemoryCheck("/BandUtil/data"));
     }
 
+    /**
+     * On click cache clear.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.cacheClearButton)
     public void onClickCacheClear(View v) {
         // TODO: 2018-05-19 정적 매소드를 호출하여 캐시 메모리 데이터 삭제
@@ -97,6 +159,29 @@ public class StorageCheckActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * On click pattern clear.
+     *
+     * @param v the v
+     */
+    @OnClick(R.id.patternClearButton)
+    public void onClickPatternClear(View v) {
+
+        bsdbHelper.onTruncate();
+        explosionField.explode(v);
+        patternClearButton.setVisibility(View.GONE);
+//        StorageCheck.clearExternalFolder(EX_DATA_PATH);
+//        explosionField.explode(v);
+//        DBClearButton.setVisibility(View.GONE);
+//        actualDB.setText(storageCheck.getExternalFileSize(EX_DATA_PATH));
+    }
+
+
+    /**
+     * On click db clear.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.DBClearButton)
     public void onClickDBClear(View v) {
         StorageCheck.clearExternalFolder(EX_DATA_PATH);
@@ -105,6 +190,11 @@ public class StorageCheckActivity extends AppCompatActivity {
         actualDB.setText(storageCheck.getExternalFileSize(EX_DATA_PATH));
     }
 
+    /**
+     * On click image clear.
+     *
+     * @param v the v
+     */
     @OnClick(R.id.imageClearButton)
     public void onClickImageClear(View v) {
 

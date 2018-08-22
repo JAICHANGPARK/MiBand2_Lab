@@ -29,17 +29,19 @@ import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.DeviceType;
+import nodomain.knu2018.bandutils.service.devices.hplus.HPlusSupport;
+import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
+import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitcor.AmazfitCorSupport;
+import nodomain.knu2018.bandutils.service.devices.huami.miband3.MiBand3Support;
+import nodomain.knu2018.bandutils.service.devices.jyou.TeclastH30Support;
 import nodomain.knu2018.bandutils.service.devices.liveview.LiveviewSupport;
-import nodomain.knu2018.bandutils.service.devices.miband2.MiBand2Support;
-import nodomain.knu2018.bandutils.service.devices.amazfitbip.AmazfitBipSupport;
 import nodomain.knu2018.bandutils.service.devices.miband.MiBandSupport;
 import nodomain.knu2018.bandutils.service.devices.no1f1.No1F1Support;
 import nodomain.knu2018.bandutils.service.devices.pebble.PebbleSupport;
 import nodomain.knu2018.bandutils.service.devices.vibratissimo.VibratissimoSupport;
-import nodomain.knu2018.bandutils.service.devices.hplus.HPlusSupport;
-import nodomain.knu2018.bandutils.service.devices.jyou.TeclastH30Support;
 import nodomain.knu2018.bandutils.service.devices.xwatch.XWatchSupport;
+import nodomain.knu2018.bandutils.service.isens.CareSensSupport;
 import nodomain.knu2018.bandutils.util.GB;
 
 public class DeviceSupportFactory {
@@ -113,7 +115,10 @@ public class DeviceSupportFactory {
                         deviceSupport = new ServiceDeviceSupport(new MiBandSupport(), EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
                     case MIBAND2:
-                        deviceSupport = new ServiceDeviceSupport(new MiBand2Support(), EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        deviceSupport = new ServiceDeviceSupport(new HuamiSupport(), EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case MIBAND3:
+                        deviceSupport = new ServiceDeviceSupport(new MiBand3Support(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
                     case AMAZFITBIP:
                         deviceSupport = new ServiceDeviceSupport(new AmazfitBipSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
@@ -144,6 +149,11 @@ public class DeviceSupportFactory {
                         break;
                     case XWATCH:
                         deviceSupport = new ServiceDeviceSupport(new XWatchSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case CARESENSN:
+                        deviceSupport = new ServiceDeviceSupport(new CareSensSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+
                 }
                 if (deviceSupport != null) {
                     deviceSupport.setContext(gbDevice, mBtAdapter, mContext);

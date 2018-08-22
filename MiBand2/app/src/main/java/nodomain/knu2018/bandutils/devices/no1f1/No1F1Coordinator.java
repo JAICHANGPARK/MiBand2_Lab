@@ -32,7 +32,6 @@ import java.util.Collections;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.knu2018.bandutils.GBException;
-import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.SampleProvider;
@@ -157,5 +156,10 @@ public class No1F1Coordinator extends AbstractDeviceCoordinator {
         Long deviceId = device.getId();
         QueryBuilder<?> qb = session.getNo1F1ActivitySampleDao().queryBuilder();
         qb.where(No1F1ActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+    }
+
+    @Override
+    public boolean supportsFindDevice() {
+        return true;
     }
 }

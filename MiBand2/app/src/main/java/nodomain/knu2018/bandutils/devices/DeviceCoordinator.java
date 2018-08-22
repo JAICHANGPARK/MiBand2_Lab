@@ -35,6 +35,7 @@ import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.DeviceType;
 
+
 /**
  * This interface is implemented at least once for every supported gadget device.
  * It allows Gadgetbridge to generically deal with different kinds of devices
@@ -45,7 +46,7 @@ import nodomain.knu2018.bandutils.model.DeviceType;
  * the given device.
  */
 public interface DeviceCoordinator {
-    String EXTRA_DEVICE_CANDIDATE = "nodomain.knu2018.gadgetbridge.impl.GBDeviceCandidate.EXTRA_DEVICE_CANDIDATE";
+    String EXTRA_DEVICE_CANDIDATE = "nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate.EXTRA_DEVICE_CANDIDATE";
     /**
      * Do not attempt to bond after discovery.
      */
@@ -242,4 +243,16 @@ public interface DeviceCoordinator {
      * forecast display.
      */
     boolean supportsWeather();
+
+    /**
+     * Indicates whether the device supports being found by vibrating,
+     * making some sound or lighting up
+     */
+    boolean supportsFindDevice();
+
+    /**
+     * Indicates whether the device supports displaying music information
+     * like artist, title, album, play state etc.
+     */
+    boolean supportsMusicInfo();
 }

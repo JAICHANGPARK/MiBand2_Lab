@@ -344,80 +344,80 @@
   <string name="timeformat_24h">24H</string>
   <string name="timeformat_am_pm">AM/PM</string>
   <string name="pref_screen_notification_profile_alarm_clock">Alarme</string>
-<string name="action_donate">Doar</string>
-    <string name="controlcenter_connect">Conectar</string>
-    <string name="controlcenter_navigation_drawer_open">Abrir gaveta de navegação</string>
-    <string name="controlcenter_navigation_drawer_close">Fechar gaveta de navegação</string>
-    <string name="controlcenter_snackbar_need_longpress">Pressione prolongadamente o cartão para desconectar</string>
-    <string name="controlcenter_snackbar_disconnecting">Desconectando</string>
-    <string name="controlcenter_snackbar_connecting">Conectando</string>
-    <string name="controlcenter_snackbar_requested_screenshot">Tirar captura de tela do dispositivo</string>
+  <string name="action_donate">Doar</string>
+  <string name="controlcenter_connect">Conectar</string>
+  <string name="controlcenter_navigation_drawer_open">Abrir gaveta de navegação</string>
+  <string name="controlcenter_navigation_drawer_close">Fechar gaveta de navegação</string>
+  <string name="controlcenter_snackbar_need_longpress">Pressione prolongadamente o cartão para desconectar</string>
+  <string name="controlcenter_snackbar_disconnecting">Desconectando</string>
+  <string name="controlcenter_snackbar_connecting">Conectando</string>
+  <string name="controlcenter_snackbar_requested_screenshot">Tirar captura de tela do dispositivo</string>
 
 
-    <string name="title_activity_calblacklist">Blacklist do Calendário</string>
+  <string name="title_activity_calblacklist">Blacklist do Calendário</string>
 
-    <string name="fw_upgrade_notice_amazfitbip">Você está prestes a instalar o firmware %s no Amazip Bip. 
+  <string name="fw_upgrade_notice_amazfitbip">Você está prestes a instalar o firmware %s no Amazip Bip.
 \n 
 \nCertifique-se de instalar o firmware .gps, depois o arquivo .res e, finalmente, o arquivo .fw. Seu relógio será reiniciado após a instalação do arquivo .fw. 
 \n 
 \nNota: você não precisa instalar .res e .gps se esses arquivos forem exatamente os mesmos que os instalados anteriormente. 
 \n 
 \nPROSSIGA POR SUA CONTA E RISCO!</string>
-    <string name="fw_upgrade_notice_amazfitcor">Você está prestes a instalar o firmware %s no seu Amazfit Cor.
+  <string name="fw_upgrade_notice_amazfitcor">Você está prestes a instalar o firmware %s no seu Amazfit Cor.
 \n
 \nCertifique-se de instalar o arquivo .res, e depois disso o arquivo .fw. Seu relógio será reiniciado após a instalação do arquivo .fw.
 \n
 \nNota: você não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente.
 \n
 \nNÃO TESTADO, PODE DANIFICAR SEU DISPOSITIVO, PROSSIGA AO SEU PRÓPRIO RISCO!</string>
-    <string name="pref_title_charts_swipe">Ativar deslizar para a esquerda/direita no gráfico de atividades</string>
+  <string name="pref_title_charts_swipe">Ativar deslizar para a esquerda/direita no gráfico de atividades</string>
 
-    <string name="pref_call_privacy_mode_number">Ocultar número e exibir nome</string>
-    <string name="pref_blacklist_calendars">Calendários na Blacklist</string>
+  <string name="pref_call_privacy_mode_number">Ocultar número e exibir nome</string>
+  <string name="pref_blacklist_calendars">Calendários na Blacklist</string>
 
-    <string name="pref_title_weather">Clima</string>
-    <string name="pref_title_weather_location">Localização climática (CM/LOS)</string>
+  <string name="pref_title_weather">Clima</string>
+  <string name="pref_title_weather_location">Localização climática (CM/LOS)</string>
 
-    <string name="pref_title_enable_calendar_sync">Sincronizar calendário</string>
-    <string name="pref_title_pebble_enable_bgjs">Habilitar JS em segundo plano</string>
-    <string name="pref_summary_pebble_enable_bgjs">Quando habilitado, permite que as Watchfaces mostrem o clima, informações da bateria, etc.</string>
+  <string name="pref_title_enable_calendar_sync">Sincronizar calendário</string>
+  <string name="pref_title_pebble_enable_bgjs">Habilitar JS em segundo plano</string>
+  <string name="pref_summary_pebble_enable_bgjs">Quando habilitado, permite que as Watchfaces mostrem o clima, informações da bateria, etc.</string>
 
-    <string name="pref_header_auto_export">Exportar preferências automaticamente</string>
-    <string name="pref_title_auto_export_enabled">Exportação automática habilitada</string>
-    <string name="pref_title_auto_export_location">Exportar localização</string>
-    <string name="pref_title_auto_export_interval">Intervalo de exportação</string>
-    <string name="pref_summary_auto_export_interval">Exportar a cada %d hora(s)</string>
+  <string name="pref_header_auto_export">Exportar preferências automaticamente</string>
+  <string name="pref_title_auto_export_enabled">Exportação automática habilitada</string>
+  <string name="pref_title_auto_export_location">Exportar localização</string>
+  <string name="pref_title_auto_export_interval">Intervalo de exportação</string>
+  <string name="pref_summary_auto_export_interval">Exportar a cada %d hora(s)</string>
 
-    <string name="preferences_amazfitbip_settings">Ajustes do Amazfit Bit</string>
-    <string name="discovery_connected_devices_hint">Permita que seu dispositivo seja detectado. Os dispositivos já pareados não serão detectados. Para o Android 6 ou superior, é necessário habilitar a localização de GPS. Desative o Privacy Guard para o Gadgetbridge, pois o telefone poderá travar ou reiniciar caso esteja ativo. Se nenhum dispositivo for encontrado após alguns minutos, tente novamente após reiniciar seu aparelho telefônico.</string>
-    <string name="prefs_title_heartrate_measurement_interval">Medição diária dos batimentos cardíacos</string>
-    <string name="interval_one_minute">A cada minuto</string>
-    <string name="interval_five_minutes">A cada 5 minutos</string>
-    <string name="interval_ten_minutes">A cada 10 minutos</string>
-    <string name="interval_thirty_minutes">A cada 30 minutos</string>
-    <string name="interval_one_hour">A cada hora</string>
+  <string name="preferences_amazfitbip_settings">Ajustes do Amazfit Bip</string>
+  <string name="discovery_connected_devices_hint">Permita que seu dispositivo seja detectado. Os dispositivos já pareados não serão detectados. Para o Android 6 ou superior, é necessário habilitar a localização de GPS. Desative o Privacy Guard para o Gadgetbridge, pois o telefone poderá travar ou reiniciar caso esteja ativo. Se nenhum dispositivo for encontrado após alguns minutos, tente novamente após reiniciar seu aparelho telefônico.</string>
+  <string name="prefs_title_heartrate_measurement_interval">Medição diária dos batimentos cardíacos</string>
+  <string name="interval_one_minute">A cada minuto</string>
+  <string name="interval_five_minutes">A cada 5 minutos</string>
+  <string name="interval_ten_minutes">A cada 10 minutos</string>
+  <string name="interval_thirty_minutes">A cada 30 minutos</string>
+  <string name="interval_one_hour">A cada hora</string>
 
-    <string name="stats_title">Áreas de velocidade</string>
-    <string name="stats_x_axis_label">Minutos totais</string>
-    <string name="stats_y_axis_label">Passos por minuto</string>
+  <string name="stats_title">Áreas de velocidade</string>
+  <string name="stats_x_axis_label">Minutos totais</string>
+  <string name="stats_y_axis_label">Passos por minuto</string>
 
-    <string name="notif_export_failed_title">A exportação do banco de dados falhou! Por favor, verifique suas configurações.</string>
-    <string name="weeksleepchart_sleep_a_week">Sono por semana</string>
-    <string name="weeksleepchart_today_sleep_description">Sono hoje, meta: %1$s</string>
-    <string name="calories">Calorias</string>
-    <string name="distance">Distância</string>
-    <string name="clock">Relógio</string>
-    <string name="heart_rate">Ritmo cardíaco</string>
-    <string name="battery">Bateria</string>
-    <string name="mi2_prefs_button_actions">Ações do botão</string>
-    <string name="mi2_prefs_button_actions_summary">Especifica as ações quando pressionado o botão da Mi Band 2</string>
-    <string name="mi2_prefs_button_press_count">Contagem de acionamento do botão</string>
-    <string name="mi2_prefs_button_press_count_summary">Número de toques no botão para enviar a mensagem</string>
-    <string name="mi2_prefs_button_press_broadcast">Mensagem para enviar</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Enviar mensagem após um número definido de toques no botão</string>
-    <string name="pref_summary_enable_calendar_sync">Enviar eventos do calendário para linha do tempo</string>
+  <string name="notif_export_failed_title">A exportação do banco de dados falhou! Por favor, verifique suas configurações.</string>
+  <string name="weeksleepchart_sleep_a_week">Sono por semana</string>
+  <string name="weeksleepchart_today_sleep_description">Sono hoje, meta: %1$s</string>
+  <string name="calories">Calorias</string>
+  <string name="distance">Distância</string>
+  <string name="clock">Relógio</string>
+  <string name="heart_rate">Ritmo cardíaco</string>
+  <string name="battery">Bateria</string>
+  <string name="mi2_prefs_button_actions">Ações do botão</string>
+  <string name="mi2_prefs_button_actions_summary">Especifica as ações quando pressionado o botão da Mi Band 2</string>
+  <string name="mi2_prefs_button_press_count">Contagem de acionamento do botão</string>
+  <string name="mi2_prefs_button_press_count_summary">Número de toques no botão para enviar a mensagem</string>
+  <string name="mi2_prefs_button_press_broadcast">Mensagem para enviar</string>
+  <string name="mi2_prefs_button_press_broadcast_summary">Enviar mensagem após um número definido de toques no botão</string>
+  <string name="pref_summary_enable_calendar_sync">Enviar eventos do calendário para linha do tempo</string>
 
-    <string name="mi2_prefs_button_action">Ativar botão</string>
-    <string name="mi2_prefs_button_action_vibrate">Ativar vibração</string>
-    <string name="notification_channel_name">Notificações - Gadgetbridge</string>
+  <string name="mi2_prefs_button_action">Ativar botão</string>
+  <string name="mi2_prefs_button_action_vibrate">Ativar vibração</string>
+  <string name="notification_channel_name">Notificações - Gadgetbridge</string>
 </resources>

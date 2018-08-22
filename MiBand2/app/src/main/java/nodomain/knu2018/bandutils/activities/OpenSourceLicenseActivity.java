@@ -7,8 +7,14 @@ import butterknife.BindView;
 import nodomain.knu2018.bandutils.R;
 import us.feras.mdv.MarkdownView;
 
+/**
+ * The type Open source license activity.
+ */
 public class OpenSourceLicenseActivity extends AppCompatActivity {
 
+    /**
+     * The Markdown view.
+     */
     @BindView(R.id.markdownView)
     MarkdownView markdownView;
 

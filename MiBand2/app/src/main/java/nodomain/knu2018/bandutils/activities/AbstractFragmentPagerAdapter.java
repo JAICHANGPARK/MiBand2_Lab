@@ -23,10 +23,18 @@ import android.view.ViewGroup;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Abstract fragment pager adapter.
+ */
 public abstract class AbstractFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private final Set<AbstractGBFragment> fragments = new HashSet<>();
     private Object primaryFragment;
 
+    /**
+     * Instantiates a new Abstract fragment pager adapter.
+     *
+     * @param fm the fm
+     */
     public AbstractFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }

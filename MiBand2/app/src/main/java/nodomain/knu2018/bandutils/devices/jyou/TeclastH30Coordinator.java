@@ -26,25 +26,22 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.support.annotation.NonNull;
 
-import de.greenrobot.dao.query.QueryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import nodomain.knu2018.bandutils.GBException;
-import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.SampleProvider;
 import nodomain.knu2018.bandutils.entities.DaoSession;
 import nodomain.knu2018.bandutils.entities.Device;
 import nodomain.knu2018.bandutils.impl.GBDevice;
+import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.DeviceType;
-import nodomain.knu2018.bandutils.util.Prefs;
-import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-import java.util.Collections;
 
 public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
 
@@ -158,4 +155,10 @@ public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
 
     }
+
+    @Override
+    public boolean supportsFindDevice() {
+        return true;
+    }
+
 }

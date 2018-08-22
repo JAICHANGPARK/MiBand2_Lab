@@ -23,7 +23,7 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
-import nodomain.knu2018.bandutils.service.devices.amazfitbip.AmazfitBipFirmwareInfo;
+import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipFirmwareInfo;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitcor.AmazfitCorFirmwareInfo;
 
 public class AmazfitCorFWHelper extends HuamiFWHelper {

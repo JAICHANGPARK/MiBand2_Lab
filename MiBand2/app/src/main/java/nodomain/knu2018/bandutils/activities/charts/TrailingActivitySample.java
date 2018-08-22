@@ -16,8 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.activities.charts;
 
+
 import nodomain.knu2018.bandutils.entities.AbstractActivitySample;
 
+/**
+ * The type Trailing activity sample.
+ */
 public class TrailingActivitySample extends AbstractActivitySample {
     private int timestamp;
     private long userId;

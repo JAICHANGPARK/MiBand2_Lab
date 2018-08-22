@@ -385,29 +385,29 @@
   <string name="discovery_pair_title">Emparelhar com %1$s?</string>
   <string name="discovery_yes_pair">Emparelhar</string>
   <string name="discovery_dont_pair">Não emparelhar</string>
-<string name="action_donate">Doar</string>
-    <string name="controlcenter_connect">Ligar</string>
-    <string name="title_activity_calblacklist">Calendários Bloqueados</string>
+  <string name="action_donate">Doar</string>
+  <string name="controlcenter_connect">Ligar</string>
+  <string name="title_activity_calblacklist">Calendários Bloqueados</string>
 
-    <string name="fw_upgrade_notice_amazfitbip">Está prestes a instalar o firmware %s na sua Amazfit Bip.
+  <string name="fw_upgrade_notice_amazfitbip">Está prestes a instalar o firmware %s na sua Amazfit Bip.
 \n
 \nPor favor garanta que instala o firmware .gps, o ficheiro .res e finalmente o ficheiro .fw. O seu relógio vai reiniciar depois de instalar o ficheiro .fw
 \n
 \nNota: Não necessita de instalar .res e .gps se os ficheiros forem os mesmos da última instalação.
 \n
 \nCONTINUE A SEU PRÓPRIO RISCO!</string>
-    <string name="fw_upgrade_notice_amazfitcor">Está prestes a instalar o firmware %s na sua Amazfit Cor.
+  <string name="fw_upgrade_notice_amazfitcor">Está prestes a instalar o firmware %s na sua Amazfit Cor.
 \n
 \nPor favor garanta que instala o ficheiro .res e depois o ficheiro .fw. O seu relógio vai reiniciar depois de instalar o ficheiro .fw
 \n
 \nNota: Não necessita de instalar .res se os ficheiro for o mesmo da última instalação.
 \n
 \nNÃO FOI TESTADO, PODERÁ DANIFICAR O SEU DISPOSITIVO.CONTINUE A SEU PRÓPRIO RISCO!</string>
-    <string name="pref_title_charts_swipe">"Ativar deslizar para esquerda/direita nos  gráficos de atividade"</string>
+  <string name="pref_title_charts_swipe">"Ativar deslizar para esquerda/direita nos  gráficos de atividade"</string>
 
-    <string name="pref_title_weather">Meteorologia</string>
-    <string name="pref_title_weather_location">Localização para meteorologia (CM/LOS)</string>
+  <string name="pref_title_weather">Meteorologia</string>
+  <string name="pref_title_weather_location">Localização para meteorologia (CM/LOS)</string>
 
-    <string name="pref_blacklist_calendars">Bloquear Calendários</string>
+  <string name="pref_blacklist_calendars">Bloquear Calendários</string>
 
-    </resources>
+</resources>

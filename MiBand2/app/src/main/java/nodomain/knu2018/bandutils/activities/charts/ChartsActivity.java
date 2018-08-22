@@ -30,6 +30,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -55,7 +56,11 @@ import nodomain.knu2018.bandutils.util.DeviceHelper;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.LimitedQueue;
 
+/**
+ * The type Charts activity.
+ */
 public class ChartsActivity extends AbstractGBFragmentActivity implements ChartsHost {
+    private static final String TAG = "ChartsActivity";
 
     private TextView mDateControl;
 
@@ -63,12 +68,21 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
     private Date mEndDate;
     private SwipeRefreshLayout swipeLayout;
 
+    /**
+     * The M activity amount cache.
+     */
     LimitedQueue mActivityAmountCache = new LimitedQueue(60);
 
     private static class ShowDurationDialog extends Dialog {
         private final String mDuration;
         private TextView durationLabel;
 
+        /**
+         * Instantiates a new Show duration dialog.
+         *
+         * @param duration the duration
+         * @param context  the context
+         */
         ShowDurationDialog(String duration, Context context) {
             super(context);
             mDuration = duration;
@@ -83,6 +97,11 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
             setDuration(mDuration);
         }
 
+        /**
+         * Sets duration.
+         *
+         * @param duration the duration
+         */
         public void setDuration(String duration) {
             if (mDuration != null) {
                 durationLabel.setText(duration);
@@ -199,8 +218,17 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
         return getString(R.string.sleep_activity_date_range, dateStringFrom, dateStringTo);
     }
 
+    /**
+     * Init dates.
+     * 시간을 가져오는 부분
+     * 인터페이스를 구현하여 사용한다.
+     * 종료시간과 시작 시간을 받아온다.
+     *
+     * @author DREAMWALKER
+     */
     protected void initDates() {
         setEndDate(new Date());
+        Log.e(TAG, "initDates: 종료시간 시작시간 구하는 것 ? " + DateTimeUtils.shiftByDays(getEndDate(), -1).getTime());
         setStartDate(DateTimeUtils.shiftByDays(getEndDate(), -1));
     }
 
@@ -216,6 +244,7 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
 
     @Override
     public void setEndDate(Date endDate) {
+        Log.e(TAG, "setEndDate: 종료시간?  " + endDate.getTime());
         mEndDate = endDate;
     }
 
@@ -304,6 +333,11 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
      */
     public class SectionsPagerAdapter extends AbstractFragmentPagerAdapter {
 
+        /**
+         * Instantiates a new Sections pager adapter.
+         *
+         * @param fm the fm
+         */
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -320,6 +354,10 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
                     return new WeekSleepChartFragment();
                 case 3:
                     return new WeekStepsChartFragment();
+
+                // TODO: 2018-07-08 차트 테스트
+                case 4:
+                    return new WeekStepsChartFragmentV2();
 //                case 4:
 //                    return new SpeedZonesFragment();
 //                case 5:
@@ -333,9 +371,9 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
             // Show 5 or 6 total pages.
             DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(mGBDevice);
             if (coordinator.supportsRealtimeData()) {
-                return 4;
+                return 5;
             }
-            return 4;
+            return 5;
         }
 
         @Override
@@ -349,6 +387,8 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
                     return getString(R.string.weeksleepchart_sleep_a_week);
                 case 3:
                     return getString(R.string.weekstepschart_steps_a_week);
+                case 4:
+                    return "Step Lab";
 //                case 4:
 //                    return getString(R.string.stats_title);
 //                case 5:
@@ -359,8 +399,17 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
     }
 }
 
+/**
+ * The type Non swipeable view pager.
+ */
 class NonSwipeableViewPager extends ViewPager {
 
+    /**
+     * Instantiates a new Non swipeable view pager.
+     *
+     * @param context the context
+     * @param attrs   the attrs
+     */
     public NonSwipeableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

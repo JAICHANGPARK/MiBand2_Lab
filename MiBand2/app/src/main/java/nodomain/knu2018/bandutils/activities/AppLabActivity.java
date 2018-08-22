@@ -9,9 +9,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import nodomain.knu2018.bandutils.R;
 
+/**
+ * The type App lab activity.
+ */
 public class AppLabActivity extends AppCompatActivity {
 
 
+    /**
+     * The Bifacial view.
+     */
     @BindView(R.id.view)
     BifacialView bifacialView;
 

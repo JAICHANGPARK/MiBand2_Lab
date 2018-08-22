@@ -54,7 +54,13 @@ import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.util.LimitedQueue;
 
 
+/**
+ * The type Abstract week chart fragment.
+ */
 public abstract class AbstractWeekChartFragment extends AbstractChartFragment {
+    /**
+     * The constant LOG.
+     */
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractWeekChartFragment.class);
 
     private Locale mLocale;
@@ -258,6 +264,12 @@ public abstract class AbstractWeekChartFragment extends AbstractChartFragment {
         private final PieData data;
         private final CharSequence centerText;
 
+        /**
+         * Instantiates a new Day data.
+         *
+         * @param data       the data
+         * @param centerText the center text
+         */
         DayData(PieData data, String centerText) {
             this.data = data;
             this.centerText = centerText;
@@ -268,15 +280,31 @@ public abstract class AbstractWeekChartFragment extends AbstractChartFragment {
         private final DefaultChartsData<BarData> weekBeforeData;
         private final DayData dayData;
 
+        /**
+         * Instantiates a new My charts data.
+         *
+         * @param dayData        the day data
+         * @param weekBeforeData the week before data
+         */
         MyChartsData(DayData dayData, DefaultChartsData<BarData> weekBeforeData) {
             this.dayData = dayData;
             this.weekBeforeData = weekBeforeData;
         }
 
+        /**
+         * Gets day data.
+         *
+         * @return the day data
+         */
         DayData getDayData() {
             return dayData;
         }
 
+        /**
+         * Gets week before data.
+         *
+         * @return the week before data
+         */
         DefaultChartsData<BarData> getWeekBeforeData() {
             return weekBeforeData;
         }
@@ -305,23 +333,76 @@ public abstract class AbstractWeekChartFragment extends AbstractChartFragment {
         return amounts;
     }
 
+    /**
+     * Gets goal.
+     *
+     * @return the goal
+     */
     abstract int getGoal();
 
+    /**
+     * Gets offset hours.
+     *
+     * @return the offset hours
+     */
     abstract int getOffsetHours();
 
+    /**
+     * Get totals for activity amounts float [ ].
+     *
+     * @param activityAmounts the activity amounts
+     * @return the float [ ]
+     */
     abstract float[] getTotalsForActivityAmounts(ActivityAmounts activityAmounts);
 
+    /**
+     * Format pie value string.
+     *
+     * @param value the value
+     * @return the string
+     */
     abstract String formatPieValue(int value);
 
+    /**
+     * Get pie labels string [ ].
+     *
+     * @return the string [ ]
+     */
     abstract String[] getPieLabels();
 
+    /**
+     * Gets pie value formatter.
+     *
+     * @return the pie value formatter
+     */
     abstract IValueFormatter getPieValueFormatter();
 
+    /**
+     * Gets bar value formatter.
+     *
+     * @return the bar value formatter
+     */
     abstract IValueFormatter getBarValueFormatter();
 
+    /**
+     * Gets y axis formatter.
+     *
+     * @return the y axis formatter
+     */
     abstract IAxisValueFormatter getYAxisFormatter();
 
+    /**
+     * Get colors int [ ].
+     *
+     * @return the int [ ]
+     */
     abstract int[] getColors();
 
+    /**
+     * Gets pie description.
+     *
+     * @param targetValue the target value
+     * @return the pie description
+     */
     abstract String getPieDescription(int targetValue);
 }

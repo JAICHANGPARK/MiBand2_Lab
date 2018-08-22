@@ -37,6 +37,9 @@ import nodomain.knu2018.bandutils.model.ActivityUser;
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 
 
+/**
+ * The type Week sleep chart fragment.
+ */
 public class WeekSleepChartFragment extends AbstractWeekChartFragment {
     @Override
     public String getTitle() {

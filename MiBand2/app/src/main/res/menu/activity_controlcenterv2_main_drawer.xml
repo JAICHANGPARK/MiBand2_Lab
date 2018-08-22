@@ -1,44 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--데이터 검색 및 확인 메뉴 -->
     <group
         android:checkableBehavior="single"
-        android:id="@+id/applicaction_options">
-        <item android:id="@+id/action_settings"
-            android:title="@string/action_settings"
-            android:icon="@drawable/ic_settings" />
-        <item android:id="@+id/action_debug"
-            android:title="@string/action_debug"
-            android:icon="@drawable/ic_debug" />
-
+        android:id="@+id/application_options">
+        <!--생활데이터 확인 -->
         <item android:id="@+id/action_check_db"
-            android:title="생활 데이터 확인"
+            android:title="@string/action_check_db"
             android:icon="@drawable/ic_format_list_numbered_black_24dp" />
+        <!--식품데이터 검색 -->
+        <item android:id="@+id/food_check_db"
+            android:title="@string/food_check_db"
+            android:icon="@drawable/ic_kitchen_black_24dp" />
+    </group>
 
-        <item android:id="@+id/action_storage"
-            android:title="데이터 저장소 관리"
-            android:icon="@drawable/ic_sd_storage_black_24dp" />
+    <!--데이터 관리 및 데이터베이스 관리-->
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/management_options">
+        <item
+            android:id="@+id/sub_header"
+            android:title="@string/sub_header">
+            <menu>
+                <item android:id="@+id/action_storage"
+                    android:title="@string/action_storage"
+                    android:icon="@drawable/ic_sd_storage_black_24dp" />
 
+                <item android:id="@+id/action_db_management"
+                    android:title="@string/action_db_management"
+                    android:icon="@drawable/ic_database_management" />
+                <!-- more items -->
+            </menu>
+        </item>
+
+        <!--< item-->
+        <!--android:id="@+id/donation_link"-->
+        <!--android:title="@string/action_donate"-->
+        <!--android:icon="@drawable/ic_donate" />-->
+        <!--<item-->
+        <!--android:id="@+id/external_changelog"-->
+        <!--android:title="@string/changelog_full_title"-->
+        <!--android:icon="@drawable/ic_history_black" />-->
     </group>
 
     <group
         android:checkableBehavior="single"
         android:id="@+id/further_options">
-        <item android:id="@+id/action_db_management"
-            android:title="@string/action_db_management"
-            android:icon="@drawable/ic_database_management" />
 
-        <item android:id="@+id/action_licenses"
-            android:title="라이센스 정보"
-            android:icon="@drawable/ic_free_breakfast_black_24dp" />
+        <item
+            android:id="@+id/footer_header"
+            android:title="@string/footer_header">
+            <menu>
 
-        <item android:id="@+id/action_about"
-            android:title="앱 정보"
-            android:icon="@drawable/ic_info_outline_black_24dp" />
+                <item android:id="@+id/action_user_information"
+                    android:title="@string/action_user_information"
+                    android:icon="@drawable/ic_perm_identity_black_24dp" />
 
-        <item android:id="@+id/action_quit"
-            android:title="@string/action_quit"
-            android:icon="@drawable/ic_quit" />
+                <item android:id="@+id/action_settings"
+                    android:title="@string/action_settings"
+                    android:icon="@drawable/ic_settings" />
+
+                <item android:id="@+id/action_debug"
+                    android:title="@string/action_debug"
+                    android:icon="@drawable/ic_debug" />
+
+                <item android:id="@+id/action_licenses"
+                    android:title="@string/action_licenses"
+                    android:icon="@drawable/ic_free_breakfast_black_24dp" />
+
+                <item android:id="@+id/action_about"
+                    android:title="@string/action_about"
+                    android:icon="@drawable/ic_info_outline_black_24dp" />
+
+                <item android:id="@+id/action_quit"
+                    android:title="@string/action_quit"
+                    android:icon="@drawable/ic_quit" />
+            </menu>
+        </item>
         <!--< item-->
             <!--android:id="@+id/donation_link"-->
             <!--android:title="@string/action_donate"-->

@@ -23,7 +23,7 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
-import nodomain.knu2018.bandutils.service.devices.miband2.Mi2FirmwareInfo;
+import nodomain.knu2018.bandutils.service.devices.huami.miband2.Mi2FirmwareInfo;
 
 public class MiBand2FWHelper extends HuamiFWHelper {
 

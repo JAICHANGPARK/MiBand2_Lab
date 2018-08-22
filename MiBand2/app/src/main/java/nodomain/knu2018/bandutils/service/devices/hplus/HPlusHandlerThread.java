@@ -641,7 +641,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
         HPlusHealthActivitySample sample = new HPlusHealthActivitySample(
                 timestamp,                      // ts
-                deviceId, userId,               // User id
+                deviceId, userId,               // UserInfo id
                 null,            // Raw Data
                 ActivityKind.TYPE_UNKNOWN,
                 0,                              // Intensity

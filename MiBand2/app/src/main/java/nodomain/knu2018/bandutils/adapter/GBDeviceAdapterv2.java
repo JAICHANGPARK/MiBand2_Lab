@@ -28,6 +28,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import nodomain.knu2018.bandutils.activities.VibrationActivity;
 import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.DeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.DeviceManager;
+import nodomain.knu2018.bandutils.devices.isens.CareSensConst;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.BatteryState;
 import nodomain.knu2018.bandutils.model.DeviceType;
@@ -62,6 +64,7 @@ import nodomain.knu2018.bandutils.util.GB;
  * Adapter for displaying GBDevice instances.
  */
 public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.ViewHolder> {
+    private static final String TAG = "GBDeviceAdapterv2";
 
     private final Context context;
     private List<GBDevice> deviceList;
@@ -109,9 +112,18 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                 return true;
             }
         });
-        holder.deviceImageView.setImageResource(R.drawable.ic_band_ok);
+
+        //holder.deviceImageView.setImageResource(R.drawable.level_list_device);
         //level-list does not allow negative values, hence we always add 100 to the key.
-        holder.deviceImageView.setImageLevel(device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
+        Log.e(TAG, "getKey 1 - " + device.getType().getKey());
+        Log.e(TAG, "getKey 2 - " + device.getType().getKey() + 100);
+        Log.e(TAG, "isInitialized  - " + device.isInitialized());
+
+        Log.e(TAG, "setImageLevel: " + device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
+
+        //holder.deviceImageView.setImageLevel(device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
+
+        holder.deviceImageView.setImageResource(device.isInitialized() ? device.getType().getIcon() : device.getType().getDisabledIcon());
 
         holder.deviceNameLabel.setText(getUniqueDeviceName(device));
 
@@ -206,18 +218,22 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                                                      {
                                                          @Override
                                                          public void onClick(View v) {
-                                                             Intent startIntent;
-                                                             startIntent = new Intent(context, ChartsActivity.class);
-                                                             startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                                                             context.startActivity(startIntent);
+                                                             Log.e(TAG, "onClick: " + device.getName());
+                                                             if (device.getName().equals(CareSensConst.CARE_SENS_N_NAME)){
+                                                                 Log.e(TAG, "onClick:  + clicked "  );
+                                                             }else {
+                                                                 Intent startIntent;
+                                                                 startIntent = new Intent(context, ChartsActivity.class);
+                                                                 startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                                                                 context.startActivity(startIntent);
+                                                             }
                                                          }
                                                      }
         );
 
         //show activity tracks
         holder.showActivityTracks.setVisibility(coordinator.supportsActivityTracks() ? View.VISIBLE : View.GONE);
-        holder.showActivityTracks.setOnClickListener(new View.OnClickListener()
-                                                     {
+        holder.showActivityTracks.setOnClickListener(new View.OnClickListener() {
                                                          @Override
                                                          public void onClick(View v) {
                                                              Intent startIntent;
@@ -250,7 +266,7 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
         );
 
-        holder.findDevice.setVisibility(device.isInitialized() ? View.VISIBLE : View.GONE);
+        holder.findDevice.setVisibility(device.isInitialized() && coordinator.supportsFindDevice() ? View.VISIBLE : View.GONE);
         holder.findDevice.setOnClickListener(new View.OnClickListener()
 
                                              {

@@ -381,7 +381,7 @@
     <string name="fwinstaller_firmware_not_compatible_to_device">Tento firmware nie je kompatibilný s týmto zariadením</string>
     <string name="miband_prefs_reserve_alarm_calendar">Alarmy pre nadchádzajúce udalosti</string>
     <string name="miband_prefs_hr_sleep_detection">Použiť sledovanie tepu pre zlepšenie detekcie spánku</string>
-	<string name="miband_prefs_device_time_offset_hours">Časový posun zariadenia v hodinách (pre zisťovanie spánku v pracujúcich na smeny)</string>
+    <string name="miband_prefs_device_time_offset_hours">Časový posun zariadenia v hodinách (pre zisťovanie spánku v pracujúcich na smeny)</string>
     <string name="miband2_prefs_dateformat">Mi2: formát datumu</string>
     <string name="dateformat_time">Čas</string>
     <string name="dateformat_date_time">Čas a dátum</string>
@@ -551,6 +551,6 @@
 
     <string name="choose_auto_export_location">Vyberte umiestnenie exportu</string>
     <string name="notification_channel_name">Gadgetbridge upozornenia</string>
-<string name="controlcenter_connect">Pripojiť</string>
+    <string name="controlcenter_connect">Pripojiť</string>
     <string name="on">Zap.</string>
-    </resources>
+</resources>

@@ -16,5 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.activities.charts;
 
+/**
+ * The type Charts data.
+ */
 public abstract class ChartsData {
 }

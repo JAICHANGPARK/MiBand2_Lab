@@ -33,8 +33,8 @@ public abstract class AbstractGBFragment extends Fragment {
     /**
      * Called when this fragment has been fully scrolled into the activity.
      *
-     * @see #isVisibleInActivity()
-     * @see #onMadeInvisibleInActivity()
+     * @see #isVisibleInActivity() #isVisibleInActivity()
+     * @see #onMadeInvisibleInActivity() #onMadeInvisibleInActivity()
      */
     protected void onMadeVisibleInActivity() {
     }
@@ -42,8 +42,8 @@ public abstract class AbstractGBFragment extends Fragment {
     /**
      * Called when this fragment has been scrolled out of the activity.
      *
-     * @see #isVisibleInActivity()
-     * @see #onMadeVisibleInActivity()
+     * @see #isVisibleInActivity() #isVisibleInActivity()
+     * @see #onMadeVisibleInActivity() #onMadeVisibleInActivity()
      */
     protected void onMadeInvisibleInActivity() {
         mVisibleInActivity = false;
@@ -52,11 +52,18 @@ public abstract class AbstractGBFragment extends Fragment {
     /**
      * Returns true if this fragment is currently visible in the hosting
      * activity, not taking into account whether the screen is enabled at all.
+     *
+     * @return the boolean
      */
     public boolean isVisibleInActivity() {
         return mVisibleInActivity;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     @Nullable
     protected abstract CharSequence getTitle();
 

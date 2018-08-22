@@ -21,6 +21,9 @@ import android.os.Bundle;
 import nodomain.knu2018.bandutils.R;
 
 
+/**
+ * The type Android pairing activity.
+ */
 public class AndroidPairingActivity extends AbstractGBActivity {
 
     @Override

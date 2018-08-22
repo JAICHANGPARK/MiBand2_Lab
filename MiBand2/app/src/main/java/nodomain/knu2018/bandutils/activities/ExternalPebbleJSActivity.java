@@ -54,6 +54,9 @@ import nodomain.knu2018.bandutils.util.WebViewSingleton;
 
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_CONNECT;
 
+/**
+ * The type External pebble js activity.
+ */
 public class ExternalPebbleJSActivity extends AbstractGBActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalPebbleJSActivity.class);
@@ -64,7 +67,13 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
      * otherwise it refers to the legacy webview from the activity_legacy_external_pebble_js layout
      */
     private WebView myWebView;
+    /**
+     * The constant START_BG_WEBVIEW.
+     */
     public static final String START_BG_WEBVIEW = "start_webview";
+    /**
+     * The constant SHOW_CONFIG.
+     */
     public static final String SHOW_CONFIG = "configure";
 
     @Override
@@ -236,6 +245,9 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
 
     private class ActivityJSInterface {
 
+        /**
+         * Close activity.
+         */
         @JavascriptInterface
         public void closeActivity() {
             NavUtils.navigateUpFromSameTask(ExternalPebbleJSActivity.this);

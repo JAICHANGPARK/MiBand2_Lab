@@ -128,4 +128,9 @@ public class LiveviewCoordinator extends AbstractDeviceCoordinator {
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
         // nothing to delete, yet
     }
+    @Override
+    public boolean supportsFindDevice() {
+        return true;
+    }
 }
+

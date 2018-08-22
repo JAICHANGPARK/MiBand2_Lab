@@ -95,8 +95,7 @@ public class GBApplication extends Application {
      */
     private static NotificationManager notificationManager;
 
-    public static final String ACTION_QUIT
-            = "nodomain.knu2018.gadgetbridge.gbapplication.action.quit";
+    public static final String ACTION_QUIT = "nodomain.knu2018.gadgetbridge.gbapplication.action.quit";
     public static final String ACTION_LANGUAGE_CHANGE = "nodomain.knu2018.gadgetbridge.gbapplication.action.language_change";
 
     private static GBApplication app;

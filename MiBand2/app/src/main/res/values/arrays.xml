@@ -11,6 +11,11 @@
     <string name="pref_theme_value_light" translatable="false">light</string>
     <string name="pref_theme_value_dark" translatable="false">dark</string>
 
+    <string-array name="data_select_option">
+        <item name="default">내림차순</item>
+        <item name="default2">오름차순</item>
+    </string-array>
+
     <string-array name="pref_language_options">
         <item name="default">System Default</item>
         <item name="cz">Čeština</item>
@@ -84,6 +89,15 @@
     <string-array name="wearside_values">
         <item>left</item>
         <item>right</item>
+    </string-array>
+
+    <string-array name="orientation">
+        <item>@string/horizontal</item>
+        <item>@string/vertical</item>
+    </string-array>
+    <string-array name="orientation_values">
+        <item>horizontal</item>
+        <item>vertical</item>
     </string-array>
 
     <string-array name="vibration_profile">
@@ -183,7 +197,33 @@
         <item>@string/p_battery</item>
     </string-array>
 
+    <string-array name="pref_miband3_display_items">
+        <item>@string/menuitem_notifications</item>
+        <item>@string/menuitem_weather</item>
+        <item>@string/menuitem_more</item>
+        <item>@string/menuitem_status</item>
+        <item>@string/heart_rate</item>
+    </string-array>
+
+    <string-array name="pref_miband3_display_items_values">
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_more</item>
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_heart_rate</item>
+    </string-array>
+
+    <string-array name="pref_miband3_display_items_default">
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_more</item>
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_heart_rate</item>
+    </string-array>
+
     <string-array name="pref_bip_display_items">
+        <item>@string/menuitem_shortcut_alipay</item>
+        <item>@string/menuitem_shortcut_weather</item>
         <item>@string/menuitem_status</item>
         <item>@string/menuitem_activity</item>
         <item>@string/menuitem_weather</item>
@@ -195,6 +235,8 @@
     </string-array>
 
     <string-array name="pref_bip_display_items_values">
+        <item>@string/p_menuitem_shortcut_alipay</item>
+        <item>@string/p_menuitem_shortcut_weather</item>
         <item>@string/p_menuitem_status</item>
         <item>@string/p_menuitem_activity</item>
         <item>@string/p_menuitem_weather</item>
@@ -204,6 +246,7 @@
         <item>@string/p_menuitem_settings</item>
         <item>@string/p_menuitem_alipay</item>
     </string-array>
+
     <string-array name="pref_bip_display_items_default">
         <item>@string/p_menuitem_status</item>
         <item>@string/p_menuitem_activity</item>
@@ -213,6 +256,42 @@
         <item>@string/p_menuitem_compass</item>
         <item>@string/p_menuitem_settings</item>
     </string-array>
+
+    <string-array name="pref_cor_display_items">
+        <item>@string/menuitem_status</item>
+        <item>@string/menuitem_notifications</item>
+        <item>@string/menuitem_activity</item>
+        <item>@string/menuitem_weather</item>
+        <item>@string/menuitem_alarm</item>
+        <item>@string/menuitem_timer</item>
+        <item>@string/menuitem_settings</item>
+        <item>@string/menuitem_alipay</item>
+        <item>@string/menuitem_music</item>
+    </string-array>
+
+    <string-array name="pref_cor_display_items_values">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_activity</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_alarm</item>
+        <item>@string/p_menuitem_timer</item>
+        <item>@string/p_menuitem_settings</item>
+        <item>@string/p_menuitem_alipay</item>
+        <item>@string/p_menuitem_music</item>
+    </string-array>
+
+    <string-array name="pref_cor_display_items_default">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_activity</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_alarm</item>
+        <item>@string/p_menuitem_timer</item>
+        <item>@string/p_menuitem_settings</item>
+        <item>@string/p_menuitem_music</item>
+    </string-array>
+
 
     <string-array name="pref_entries_unit_system">
         <item>@string/unit_metric</item>
@@ -254,6 +333,7 @@
         <item name="1">@string/traditional_chinese</item>
         <item name="2">@string/english</item>
         <item name="3">@string/spanish</item>
+        <item name="4">@string/russian</item>
     </string-array>
 
     <string-array name="pref_amazfitbip_language_values">
@@ -262,6 +342,37 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="pref_miband3_language">
+        <item name="auto">@string/automatic</item>
+        <item name="zh_CH">@string/simplified_chinese</item>
+        <item name="zh_TW">@string/traditional_chinese</item>
+        <item name="en_US">@string/english</item>
+        <item name="es_ES">@string/spanish</item>
+        <item name="ru_RU">@string/russian</item>
+        <item name="de_DE">@string/german</item>
+        <item name="it_IT">@string/italian</item>
+        <item name="fr_FR">@string/french</item>
+        <item name="pl_PL">@string/polish</item>
+        <item name="ja_JP">@string/japanese</item>
+        <item name="ko_KO">@string/korean</item>
+    </string-array>
+
+    <string-array name="pref_miband3_language_values">
+        <item>auto</item>
+        <item>zh_CH</item>
+        <item>zh_TW</item>
+        <item>en_US</item>
+        <item>es_ES</item>
+        <item>ru_RU</item>
+        <item>de_DE</item>
+        <item>it_IT</item>
+        <item>fr_FR</item>
+        <item>pl_PL</item>
+        <item>ja_JP</item>
+        <item>ko_KO</item>
     </string-array>
 
     <string-array name="prefs_heartrate_measurement_interval">
@@ -281,4 +392,6 @@
         <item>1800</item>
         <item>3600</item>
     </string-array>
+
+
 </resources>

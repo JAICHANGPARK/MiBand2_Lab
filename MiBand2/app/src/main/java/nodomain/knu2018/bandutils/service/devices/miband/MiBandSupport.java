@@ -291,7 +291,7 @@ public class MiBandSupport extends AbstractBTLEDeviceSupport {
      * @return
      */
     private MiBandSupport sendUserInfo(TransactionBuilder builder) {
-        LOG.debug("Writing User Info!");
+        LOG.debug("Writing UserInfo Info!");
         // Use a custom action instead of just builder.write() because mDeviceInfo
         // is set by handleDeviceInfo *after* this action is created.
         builder.add(new BtLEAction(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_USER_INFO)) {

@@ -31,7 +31,7 @@ import java.util.UUID;
 
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
 import nodomain.knu2018.bandutils.activities.initfood.FoodFetchActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -39,6 +39,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * The type App intro v 1 activity.
+ */
 public class AppIntroV1Activity extends WoWoActivity {
     private static final String TAG = "AppIntroV1Activity";
 
@@ -49,13 +52,31 @@ public class AppIntroV1Activity extends WoWoActivity {
     private ImageView targetPlanet;
     private View loginLayout;
 
+    /**
+     * The Retrofit.
+     */
     Retrofit retrofit;
+    /**
+     * The Service.
+     */
     IUploadAPI service;
 
+    /**
+     * The Pref.
+     */
     SharedPreferences pref;
+    /**
+     * The UserInfo name.
+     */
     String userName;
+    /**
+     * The UserInfo uuid.
+     */
     String userUUID;
 
+    /**
+     * The Dialog.
+     */
     AlertDialog dialog;
 
     @Override
@@ -87,7 +108,6 @@ public class AppIntroV1Activity extends WoWoActivity {
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
         service = retrofit.create(IUploadAPI.class);
 
-
         r = (int) Math.sqrt(screenW * screenW + screenH * screenH) + 10;
 
         ImageView earth = (ImageView) findViewById(R.id.earth);
@@ -106,7 +126,8 @@ public class AppIntroV1Activity extends WoWoActivity {
 
         pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
         if (pref.getBoolean("activity_executed", false)) {
-            Intent intent = new Intent(this, ControlCenterv2.class);
+//            Intent intent = new Intent(this, ControlCenterv2.class);
+            Intent intent = new Intent(AppIntroV1Activity.this, FoodFetchActivity.class);
             startActivity(intent);
             finish();
         } else {
@@ -325,7 +346,6 @@ public class AppIntroV1Activity extends WoWoActivity {
                                     ed.putBoolean("activity_executed", true);
                                     //ed.commit();
                                     ed.apply();
-
 
                                     Paper.book().write("userName", userName);
                                     Paper.book().write("userUUID", userUUID);

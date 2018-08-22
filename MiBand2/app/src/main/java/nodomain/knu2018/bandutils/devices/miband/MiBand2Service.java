@@ -59,7 +59,6 @@ public class MiBand2Service {
     // set 12 hour time mode
 
 
-
     private static final Map<UUID, String> MIBAND_DEBUG;
 
     /**
@@ -101,14 +100,17 @@ public class MiBand2Service {
     /**
      * In some logs it's 0x0...
      */
-    public static final byte AUTH_BYTE = 0x8;
+//    public static final byte AUTH_BYTE = 0x8;
+    // TODO: 2018-07-17 AUTO_BYTE 수정 0x8 --> 0x00 - 박제창
+    // TODO: 2018-07-18  AUTO_BYTE 수정 0x8 --> 0x08 : Only use 0x00 as auth flags on Mi Band 3 - to not disturb other devices
+    public static final byte AUTH_BYTE = 0x08;
 
     // maybe not really activity data, but steps?
     public static final byte COMMAND_FETCH_DATA = 0x02;
     public static final byte COMMAND_XXXX_ACTIVITY_DATA = 0x03; // maybe delete/drop activity data?
 
-    public static final byte[] COMMAND_SET_FITNESS_GOAL_START = new byte[] { 0x10, 0x0, 0x0 };
-    public static final byte[] COMMAND_SET_FITNESS_GOAL_END = new byte[] { 0, 0 };
+    public static final byte[] COMMAND_SET_FITNESS_GOAL_START = new byte[]{0x10, 0x0, 0x0};
+    public static final byte[] COMMAND_SET_FITNESS_GOAL_END = new byte[]{0, 0};
 
     public static final byte COMMAND_SET_USERINFO = 0x4f;
 
@@ -119,7 +121,7 @@ public class MiBand2Service {
     public static byte DISPLAY_ITEM_BIT_CLOCK = 0x01;
     public static byte DISPLAY_ITEM_BIT_STEPS = 0x02;
     public static byte DISPLAY_ITEM_BIT_DISTANCE = 0x04;
-    public static byte DISPLAY_ITEM_BIT_CALORIES= 0x08;
+    public static byte DISPLAY_ITEM_BIT_CALORIES = 0x08;
     public static byte DISPLAY_ITEM_BIT_HEART_RATE = 0x10;
     public static byte DISPLAY_ITEM_BIT_BATTERY = 0x20;
 
@@ -130,10 +132,10 @@ public class MiBand2Service {
 
     public static byte ENDPOINT_DISPLAY = 0x06;
 
-    public static final byte[] DATEFORMAT_DATE_TIME = new byte[] {ENDPOINT_DISPLAY, 0x0a, 0x0, 0x03 };
-    public static final byte[] DATEFORMAT_TIME = new byte[] {ENDPOINT_DISPLAY, 0x0a, 0x0, 0x0 };
-    public static final byte[] DATEFORMAT_TIME_12_HOURS = new byte[] {ENDPOINT_DISPLAY, 0x02, 0x0, 0x0 };
-    public static final byte[] DATEFORMAT_TIME_24_HOURS = new byte[] {ENDPOINT_DISPLAY, 0x02, 0x0, 0x1 };
+    public static final byte[] DATEFORMAT_DATE_TIME = new byte[]{ENDPOINT_DISPLAY, 0x0a, 0x0, 0x03};
+    public static final byte[] DATEFORMAT_TIME = new byte[]{ENDPOINT_DISPLAY, 0x0a, 0x0, 0x0};
+    public static final byte[] DATEFORMAT_TIME_12_HOURS = new byte[]{ENDPOINT_DISPLAY, 0x02, 0x0, 0x0};
+    public static final byte[] DATEFORMAT_TIME_24_HOURS = new byte[]{ENDPOINT_DISPLAY, 0x02, 0x0, 0x1};
     public static final byte[] COMMAND_ENABLE_DISPLAY_ON_LIFT_WRIST = new byte[]{ENDPOINT_DISPLAY, 0x05, 0x00, 0x01};
     public static final byte[] COMMAND_DISABLE_DISPLAY_ON_LIFT_WRIST = new byte[]{ENDPOINT_DISPLAY, 0x05, 0x00, 0x00};
     public static final byte[] COMMAND_SCHEDULE_DISPLAY_ON_LIFT_WRIST = new byte[]{ENDPOINT_DISPLAY, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -143,10 +145,10 @@ public class MiBand2Service {
     public static final byte[] COMMAND_DISABLE_ROTATE_WRIST_TO_SWITCH_INFO = new byte[]{ENDPOINT_DISPLAY, 0x0d, 0x00, 0x00};
     public static final byte[] COMMAND_ENABLE_DISPLAY_CALLER = new byte[]{ENDPOINT_DISPLAY, 0x10, 0x00, 0x00, 0x01};
     public static final byte[] COMMAND_DISABLE_DISPLAY_CALLER = new byte[]{ENDPOINT_DISPLAY, 0x10, 0x00, 0x00, 0x00};
-    public static final byte[] DISPLAY_XXX = new byte[] {ENDPOINT_DISPLAY, 0x03, 0x0, 0x0 };
-    public static final byte[] DISPLAY_YYY = new byte[] {ENDPOINT_DISPLAY, 0x10, 0x0, 0x1, 0x1 };
-    public static final byte[] COMMAND_DISTANCE_UNIT_METRIC = new byte[] { ENDPOINT_DISPLAY, 0x03, 0x00, 0x00 };
-    public static final byte[] COMMAND_DISTANCE_UNIT_IMPERIAL = new byte[] { ENDPOINT_DISPLAY, 0x03, 0x00, 0x01 };
+    public static final byte[] DISPLAY_XXX = new byte[]{ENDPOINT_DISPLAY, 0x03, 0x0, 0x0};
+    public static final byte[] DISPLAY_YYY = new byte[]{ENDPOINT_DISPLAY, 0x10, 0x0, 0x1, 0x1};
+    public static final byte[] COMMAND_DISTANCE_UNIT_METRIC = new byte[]{ENDPOINT_DISPLAY, 0x03, 0x00, 0x00};
+    public static final byte[] COMMAND_DISTANCE_UNIT_IMPERIAL = new byte[]{ENDPOINT_DISPLAY, 0x03, 0x00, 0x01};
 
     // The third byte controls the threshold, in minutes
     // The last 8 bytes represent 2 separate time intervals for the inactivity warnings
@@ -161,14 +163,14 @@ public class MiBand2Service {
     public static int INACTIVITY_WARNINGS_INTERVAL_2_START_MINUTES = 9;
     public static int INACTIVITY_WARNINGS_INTERVAL_2_END_HOURS = 10;
     public static int INACTIVITY_WARNINGS_INTERVAL_2_END_MINUTES = 11;
-    public static final byte[] COMMAND_ENABLE_INACTIVITY_WARNINGS = new byte[] { 0x08, 0x01, 0x3c, 0x00, 0x04, 0x00, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00 };
-    public static final byte[] COMMAND_DISABLE_INACTIVITY_WARNINGS = new byte[] { 0x08, 0x00, 0x3c, 0x00, 0x04, 0x00, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00 };
+    public static final byte[] COMMAND_ENABLE_INACTIVITY_WARNINGS = new byte[]{0x08, 0x01, 0x3c, 0x00, 0x04, 0x00, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00};
+    public static final byte[] COMMAND_DISABLE_INACTIVITY_WARNINGS = new byte[]{0x08, 0x00, 0x3c, 0x00, 0x04, 0x00, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00};
 
     public static byte ENDPOINT_DND = 0x09;
 
-    public static final byte[] COMMAND_DO_NOT_DISTURB_AUTOMATIC = new byte[] { ENDPOINT_DND, (byte) 0x83 };
-    public static final byte[] COMMAND_DO_NOT_DISTURB_OFF = new byte[] { ENDPOINT_DND, (byte) 0x82 };
-    public static final byte[] COMMAND_DO_NOT_DISTURB_SCHEDULED = new byte[] { ENDPOINT_DND, (byte) 0x81, 0x01, 0x00, 0x06, 0x00 };
+    public static final byte[] COMMAND_DO_NOT_DISTURB_AUTOMATIC = new byte[]{ENDPOINT_DND, (byte) 0x83};
+    public static final byte[] COMMAND_DO_NOT_DISTURB_OFF = new byte[]{ENDPOINT_DND, (byte) 0x82};
+    public static final byte[] COMMAND_DO_NOT_DISTURB_SCHEDULED = new byte[]{ENDPOINT_DND, (byte) 0x81, 0x01, 0x00, 0x06, 0x00};
     // The 4 last bytes set the start and end time in 24h format
     public static byte DND_BYTE_START_HOURS = 2;
     public static byte DND_BYTE_START_MINUTES = 3;
@@ -189,23 +191,23 @@ public class MiBand2Service {
     public static final byte COMMAND_FIRMWARE_CHECKSUM = 0x04; // to UUID_CHARACTERISTIC_FIRMWARE
     public static final byte COMMAND_FIRMWARE_REBOOT = 0x05; // to UUID_CHARACTERISTIC_FIRMWARE
 
-    public static final byte[] RESPONSE_FINISH_SUCCESS = new byte[] {RESPONSE, 2, SUCCESS };
-    public static final byte[] RESPONSE_FIRMWARE_DATA_SUCCESS = new byte[] {RESPONSE, COMMAND_FIRMWARE_START_DATA, SUCCESS };
+    public static final byte[] RESPONSE_FINISH_SUCCESS = new byte[]{RESPONSE, 2, SUCCESS};
+    public static final byte[] RESPONSE_FIRMWARE_DATA_SUCCESS = new byte[]{RESPONSE, COMMAND_FIRMWARE_START_DATA, SUCCESS};
     /**
      * Received in response to any dateformat configuration request (byte 0 in the byte[] value.
      */
-    public static final byte[] RESPONSE_DATEFORMAT_SUCCESS = new byte[] { RESPONSE, ENDPOINT_DISPLAY, 0x0a, 0x0, 0x01 };
-    public static final byte[] RESPONSE_ACTIVITY_DATA_START_DATE_SUCCESS = new byte[] { RESPONSE, COMMAND_ACTIVITY_DATA_START_DATE, SUCCESS};
+    public static final byte[] RESPONSE_DATEFORMAT_SUCCESS = new byte[]{RESPONSE, ENDPOINT_DISPLAY, 0x0a, 0x0, 0x01};
+    public static final byte[] RESPONSE_ACTIVITY_DATA_START_DATE_SUCCESS = new byte[]{RESPONSE, COMMAND_ACTIVITY_DATA_START_DATE, SUCCESS};
 
-    public static final byte[] WEAR_LOCATION_LEFT_WRIST = new byte[] { 0x20, 0x00, 0x00, 0x02 };
-    public static final byte[] WEAR_LOCATION_RIGHT_WRIST = new byte[] { 0x20, 0x00, 0x00, (byte) 0x82};
+    public static final byte[] WEAR_LOCATION_LEFT_WRIST = new byte[]{0x20, 0x00, 0x00, 0x02};
+    public static final byte[] WEAR_LOCATION_RIGHT_WRIST = new byte[]{0x20, 0x00, 0x00, (byte) 0x82};
 
     public static final byte[] COMMAND_ENABLE_HR_SLEEP_MEASUREMENT = new byte[]{0x15, 0x00, 0x01};
     public static final byte[] COMMAND_DISABLE_HR_SLEEP_MEASUREMENT = new byte[]{0x15, 0x00, 0x00};
 
     public static final byte COMMAND_SET_PERIODIC_HR_MEASUREMENT_INTERVAL = 0x14;
 
-    public static final byte[] COMMAND_TEXT_NOTIFICATION = new byte[] {0x05, 0x01};
+    public static final byte[] COMMAND_TEXT_NOTIFICATION = new byte[]{0x05, 0x01};
 
     static {
         MIBAND_DEBUG = new HashMap<>();

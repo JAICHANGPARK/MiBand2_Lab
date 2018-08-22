@@ -49,15 +49,24 @@ import nodomain.knu2018.bandutils.util.FileUtils;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.GBPrefs;
 
+import static nodomain.knu2018.bandutils.devices.miband.MiBandConst.PREF_MI2_DATEFORMAT;
+import static nodomain.knu2018.bandutils.devices.miband.MiBandConst.PREF_MI2_DISPLAY_ITEMS;
+import static nodomain.knu2018.bandutils.devices.miband.MiBandConst.PREF_MI3_BAND_SCREEN_UNLOCK;
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_HEIGHT_CM;
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_SLEEP_DURATION;
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_STEPS_GOAL;
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_WEIGHT_KG;
 import static nodomain.knu2018.bandutils.model.ActivityUser.PREF_USER_YEAR_OF_BIRTH;
 
+/**
+ * The type Settings activity.
+ */
 public class SettingsActivity extends AbstractSettingsActivity {
     private static final Logger LOG = LoggerFactory.getLogger(SettingsActivity.class);
 
+    /**
+     * The constant PREF_MEASUREMENT_SYSTEM.
+     */
     public static final String PREF_MEASUREMENT_SYSTEM = "measurement_system";
 
     private static final int FILE_REQUEST_CODE = 4711;
@@ -329,12 +338,81 @@ public class SettingsActivity extends AbstractSettingsActivity {
 //            }
 //        });
 
+
+        final Preference setDateFormat = findPreference(PREF_MI2_DATEFORMAT);
+        setDateFormat.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newVal) {
+                invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        GBApplication.deviceService().onSendConfiguration(PREF_MI2_DATEFORMAT);
+                    }
+                });
+                return true;
+            }
+        });
+
+        final Preference miBand2DisplayItems = findPreference(PREF_MI2_DISPLAY_ITEMS);
+        miBand2DisplayItems.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newVal) {
+                invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        GBApplication.deviceService().onSendConfiguration(PREF_MI2_DISPLAY_ITEMS);
+                    }
+                });
+                return true;
+            }
+        });
+
+        final Preference miBand3ScreenUnlock = findPreference(PREF_MI3_BAND_SCREEN_UNLOCK);
+        miBand3ScreenUnlock.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newVal) {
+                invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        GBApplication.deviceService().onSendConfiguration(PREF_MI3_BAND_SCREEN_UNLOCK);
+                    }
+                });
+                return true;
+            }
+        });
+
+        final Preference miBand3DisplayItems = findPreference("miband3_display_items");
+        miBand3DisplayItems.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newVal) {
+                invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        GBApplication.deviceService().onSendConfiguration(PREF_MI2_DISPLAY_ITEMS);
+                    }
+                });
+                return true;
+            }
+        });
+
+//        final Preference corDisplayItems = findPreference("cor_display_items");
+//        corDisplayItems.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            @Override
+//            public boolean onPreferenceChange(Preference preference, Object newVal) {
+//                invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        GBApplication.deviceService().onSendConfiguration(PREF_MI2_DISPLAY_ITEMS);
+//                    }
+//                });
+//                return true;
+//            }
+//        });
         // Get all receivers of Media Buttons
         Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
 
         PackageManager pm = getPackageManager();
-        List<ResolveInfo> mediaReceivers = pm.queryBroadcastReceivers(mediaButtonIntent,
-                PackageManager.GET_INTENT_FILTERS | PackageManager.GET_RESOLVED_FILTER);
+        List<ResolveInfo> mediaReceivers = pm.queryBroadcastReceivers(mediaButtonIntent, PackageManager.GET_INTENT_FILTERS | PackageManager.GET_RESOLVED_FILTER);
 
 
         CharSequence[] newEntries = new CharSequence[mediaReceivers.size() + 1];

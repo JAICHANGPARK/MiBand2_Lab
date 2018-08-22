@@ -1,7 +1,9 @@
 package nodomain.knu2018.bandutils.activities;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -36,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -46,9 +49,11 @@ import io.paperdb.Paper;
 import me.shaohui.advancedluban.Luban;
 import me.shaohui.advancedluban.OnCompressListener;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IUploadAPI;
-import nodomain.knu2018.bandutils.Remote.RetrofitClient;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
+import nodomain.knu2018.bandutils.remote.RetrofitClient;
 import nodomain.knu2018.bandutils.activities.initfood.SearchFoodActivity;
+import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
+import nodomain.knu2018.bandutils.database.WriteEntry;
 import nodomain.knu2018.bandutils.util.ObservableScrollView;
 import nodomain.knu2018.bandutils.util.ProgressRequestBody;
 import nodomain.knu2018.bandutils.util.ResultHolder;
@@ -56,101 +61,279 @@ import nodomain.knu2018.bandutils.util.UploadCallBacks;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static nodomain.knu2018.bandutils.Const.MealConst.BEEF_UNIT_KCAL;
+import static nodomain.knu2018.bandutils.Const.MealConst.FAT_UNIT_KCAL;
+import static nodomain.knu2018.bandutils.Const.MealConst.FRUIT_UNIT_KCAL;
+import static nodomain.knu2018.bandutils.Const.MealConst.GOKRYU_UNIT_KCAL;
+import static nodomain.knu2018.bandutils.Const.MealConst.MILK_UNIT_KCAL;
+import static nodomain.knu2018.bandutils.Const.MealConst.VEGETABLE_UNIT_KCAL;
+
+
+/**
+ * ____  ____  _________    __  ____       _____    __    __ __ __________
+ * / __ \/ __ \/ ____/   |  /  |/  / |     / /   |  / /   / //_// ____/ __ \
+ * / / / / /_/ / __/ / /| | / /|_/ /| | /| / / /| | / /   / ,<  / __/ / /_/ /
+ * / /_/ / _, _/ /___/ ___ |/ /  / / | |/ |/ / ___ |/ /___/ /| |/ /___/ _, _/
+ * /_____/_/ |_/_____/_/  |_/_/  /_/  |__/|__/_/  |_/_____/_/ |_/_____/_/ |_|
+ * <p>
+ * <p>
+ * Created by Dreamwalker on 2018-05-25.
+ */
 public class PreviewActivity extends AppCompatActivity implements UploadCallBacks {
 
     private static final String TAG = "PreviewActivity";
     private static final String BASE_URL = "http://kangwonelec.com/";
-    private static final int REQUEST_PERMISSION = 1000;
-    private static final int PICK_FILE_REQUEST = 1001;
 
+    /**
+     * The Image view.
+     */
     @BindView(R.id.image)
     ImageView imageView;
 
+    /**
+     * The Video view.
+     */
     @BindView(R.id.video)
     VideoView videoView;
 
+    /**
+     * The Actual resolution.
+     */
     @BindView(R.id.actualResolution)
     TextView actualResolution;
 
+    /**
+     * The Approx uncompressed size.
+     */
     @BindView(R.id.approxUncompressedSize)
     TextView approxUncompressedSize;
 
+    /**
+     * The Capture latency.
+     */
     @BindView(R.id.captureLatency)
     TextView captureLatency;
 
+    /**
+     * The Save button.
+     */
     @BindView(R.id.saveButton)
     Button saveButton;
 
+    /**
+     * The Bubble seek bar 1.
+     */
     @BindView(R.id.seek_bar_1)
     BubbleSeekBar bubbleSeekBar1;
+    /**
+     * The Bubble seek bar 2.
+     */
     @BindView(R.id.seek_bar_2)
     BubbleSeekBar bubbleSeekBar2;
+    /**
+     * The Bubble seek bar 3.
+     */
     @BindView(R.id.seek_bar_3)
     BubbleSeekBar bubbleSeekBar3;
+    /**
+     * The Bubble seek bar 4.
+     */
     @BindView(R.id.seek_bar_4)
     BubbleSeekBar bubbleSeekBar4;
+    /**
+     * The Bubble seek bar 5.
+     */
     @BindView(R.id.seek_bar_5)
     BubbleSeekBar bubbleSeekBar5;
+    /**
+     * The Bubble seek bar 6.
+     */
     @BindView(R.id.seek_bar_6)
     BubbleSeekBar bubbleSeekBar6;
 
+    /**
+     * The Bubble seek bar 7.
+     */
     @BindView(R.id.seek_bar_7)
     BubbleSeekBar bubbleSeekBar7;
 
+    /**
+     * The Fab.
+     */
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
+    /**
+     * The M obs scroll view.
+     */
     @BindView(R.id.demo_4_obs_scroll_view)
     ObservableScrollView mObsScrollView;
 
-
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
+    /**
+     * The Type.
+     */
     String type;
 
+    /**
+     * The Uri.
+     */
     Uri uri;
+    /**
+     * The Tmp file.
+     */
     File tmpFile;
+    /**
+     * The Path.
+     */
     File path;
-
+    /**
+     * The Compressed image.
+     */
     File compressedImage;
 
+    /**
+     * The Image index.
+     */
     String imageIndex;
+    /**
+     * The UserInfo uuid.
+     */
     String userUUID;
+    /**
+     * The M service.
+     */
     IUploadAPI mService;
+    /**
+     * The Progress dialog.
+     */
     ProgressDialog progressDialog;
+
+    /**
+     * The Content values.
+     */
+    ContentValues contentValues;
+    /**
+     * The Write bsdb helper.
+     */
+    WriteBSDBHelper writeBSDBHelper;
+    /**
+     * The Sq lite database.
+     */
+    SQLiteDatabase sqLiteDatabase;
+
+    /**
+     * The Network info.
+     */
+    NetworkInfo networkInfo;
 
     private IUploadAPI getAPIUpload() {
         return RetrofitClient.getClient(BASE_URL).create(IUploadAPI.class);
     }
 
 
+    /**
+     * The Int gokryu.
+     */
     int intGokryu = 0;
+    /**
+     * The Int beef.
+     */
     int intBeef = 0;
+    /**
+     * The Int vegetable.
+     */
     int intVegetable = 0;
+    /**
+     * The Int fat.
+     */
     int intFat = 0;
+    /**
+     * The Int milk.
+     */
     int intMilk = 0;
+    /**
+     * The Int fruit.
+     */
     int intFruit = 0;
-    int intTotalExchange = 0;
-    int intTotalKcal = 0;
-    // TODO: 2018-05-05 DB 순서대로 정렬
-    String inputType;
-    String typeValue;
+
+    /**
+     * The Gokryu value.
+     */
+// TODO: 2018-05-05 DB 순서대로 정렬
     String gokryuValue = "0";
+    /**
+     * The Beef value.
+     */
     String beefValue = "0";
+    /**
+     * The Vegetable value.
+     */
     String vegetableValue = "0";
+    /**
+     * The Fat value.
+     */
     String fatValue = "0";
+    /**
+     * The Milk value.
+     */
     String milkValue = "0";
+    /**
+     * The Fruit value.
+     */
     String fruitValue = "0";
 
+    /**
+     * The Exchange value.
+     */
     String exchangeValue;
+    /**
+     * The Satisfaction.
+     */
     String satisfaction;
+    /**
+     * The Kcal value.
+     */
     String kcalValue;
 
+    /**
+     * The UserInfo name.
+     */
+    String userName;
 
-    NetworkInfo networkInfo;
+    /**
+     * The Init date.
+     */
+    String initDate;
+    /**
+     * The Init time.
+     */
+    String initTime;
+    /**
+     * The Start date.
+     */
+    String startDate;
+    /**
+     * The Start time.
+     */
+    String startTime;
+    /**
+     * The End date.
+     */
+    String endDate;
+    /**
+     * The End time.
+     */
+    String endTime;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,7 +346,9 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
         mService = getAPIUpload();
 
         type = Paper.book().read("mealType");
+        userName = Paper.book().read("userName");
         userUUID = Paper.book().read("userUUIDV2");
+
         imageIndex = convertImageFileName(type);
 
         Log.e(TAG, "onCreate:  type " + type);
@@ -220,7 +405,16 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
         progressDialog.setCancelable(false);
 
 
+        initDataBases();
         initBubbleSeekBar();
+    }
+
+
+    private void initDataBases() {
+
+        writeBSDBHelper = new WriteBSDBHelper(this);
+        sqLiteDatabase = writeBSDBHelper.getWritableDatabase();
+        contentValues = new ContentValues();
     }
 
     private void initBubbleSeekBar() {
@@ -245,6 +439,7 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
                 super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat);
                 Log.e(TAG, "getProgressOnFinally: " + progress);
                 intGokryu = progress;
+                gokryuValue = String.valueOf(progress);
             }
 
         });
@@ -256,6 +451,7 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
                 //super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat);
                 Log.e(TAG, "getProgressOnFinally: " + progress);
                 intBeef = progress;
+                beefValue = String.valueOf(progress);
             }
         });
 
@@ -263,6 +459,7 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
                 intVegetable = progress;
+                vegetableValue = String.valueOf(vegetableValue);
 
             }
         });
@@ -270,18 +467,21 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
                 intFat = progress;
+                fatValue = String.valueOf(fatValue);
             }
         });
         bubbleSeekBar5.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
                 intMilk = progress;
+                milkValue = String.valueOf(progress);
             }
         });
         bubbleSeekBar6.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
                 intFruit = progress;
+                fruitValue = String.valueOf(progress);
             }
         });
 
@@ -364,13 +564,19 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
         return fileIndex;
     }
 
+    /**
+     * On click floating action button.
+     */
     @OnClick(R.id.fab)
-    public void onClickFloatingActionButton(){
+    public void onClickFloatingActionButton() {
 
         startActivity(new Intent(PreviewActivity.this, SearchFoodActivity.class));
 
     }
 
+    /**
+     * Save snap.
+     */
     @OnClick(R.id.saveButton)
     public void saveSnap() {
         // TODO: 2018-05-26 네트워크 연결 상태를 가져옵니다. - Dreamwalker.
@@ -394,17 +600,123 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
 
     }
 
-    private NetworkInfo getNetworkInfo(){
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+    /**
+     * 네트워크 시스템 연결 객체를 가져오는 메소드
+     *
+     * @return
+     * @author : 박제창 (Dreamwalker)
+     */
+    private NetworkInfo getNetworkInfo() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return  networkInfo;
+        return networkInfo;
 
+    }
+
+    /**
+     * 현재 시간을 가져오는 메소드
+     *
+     * @return
+     * @author : 박제창 (Dreamwalker)
+     */
+    private String[] getNowTime() {
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss", Locale.KOREA);
+        String initDate = simpleDateFormat.format(now.getTime());
+        String initTime = simpleTimeFormat.format(now.getTime());
+        return new String[]{initDate, initTime};
+    }
+
+    /**
+     * 타입 값의 마지막 문자열을 받아와 전과 후 비트 처리를 하기위한 메소드
+     *
+     * @param type
+     * @return
+     * @author : 박제창 (Dreamwalker)
+     */
+    private boolean divideBeforeAfter(String type) {
+        String s = "" + type.charAt(type.length() - 1);
+        Log.e(TAG, "divideBeforeAfter: " + s);
+        if (s.equals("전")) {
+            return true;
+        } else if (s.equals("후")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 입력된 교환단위를 섭취 칼로리로 변환해주는 메소드 입니다.
+     *
+     * @param intGokryu
+     * @param intBeef
+     * @param intVegetable
+     * @param intFat
+     * @param intMilk
+     * @param intFruit
+     * @return
+     * @author : 박제창 (Dreamwalker)
+     */
+    private String calculateKcal(int intGokryu, int intBeef, int intVegetable, int intFat, int intMilk, int intFruit) {
+        String result = null;
+
+        int totalKcal = (intGokryu * GOKRYU_UNIT_KCAL) + (intBeef * BEEF_UNIT_KCAL) +
+                (intVegetable * VEGETABLE_UNIT_KCAL) + (intFat * FAT_UNIT_KCAL) +
+                (intMilk * MILK_UNIT_KCAL) + (intFruit * FRUIT_UNIT_KCAL);
+
+        result = String.valueOf(totalKcal);
+        return result;
+    }
+
+    /**
+     * 입력된 교환단위를 전체 교환단위로 변환해주는 메소드 입니다.
+     *
+     * @param intGokryu
+     * @param intBeef
+     * @param intVegetable
+     * @param intFat
+     * @param intMilk
+     * @param intFruit
+     * @return
+     */
+    private String calculateExchange(int intGokryu, int intBeef, int intVegetable, int intFat, int intMilk, int intFruit) {
+        int totalExchange = intBeef + intFat + intFruit + intGokryu + intMilk + intVegetable;
+        return String.valueOf(totalExchange);
     }
 
     private void uploadFile() {
 
+        progressDialog.show();
+
+        boolean trigger = divideBeforeAfter(type);
+        if (trigger) {
+            String[] tmpDate = getNowTime();
+            initDate = tmpDate[0];
+            initTime = tmpDate[1];
+            startDate = tmpDate[0];
+            startTime = tmpDate[1];
+            endDate = "N";
+            endTime = "N";
+        } else {
+            String[] tmpDate = getNowTime();
+            initDate = tmpDate[0];
+            initTime = tmpDate[1];
+            startDate = "N";
+            startTime = "N";
+            endDate = tmpDate[0];
+            endTime = tmpDate[1];
+        }
+
+        exchangeValue = calculateExchange(intGokryu, intBeef, intVegetable, intFat, intMilk, intFruit);
+        kcalValue = calculateKcal(intGokryu, intBeef, intVegetable, intFat, intMilk, intFruit);
+
+        Log.e(TAG, "uploadFile: " + exchangeValue + ", " + kcalValue);
+
+
         if (compressedImage != null) {
-            if (networkInfo != null && networkInfo.isConnected()){
+            if (networkInfo != null && networkInfo.isConnected()) {
 
                 //            progressDialog = new ProgressDialog(PreviewActivity.this);
 //            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -422,6 +734,11 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
                 ProgressRequestBody requestBody = new ProgressRequestBody(compressedImage, this);
                 final MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", compressedImage.getName(), requestBody);
 
+                Call<ResponseBody> comment = mService.userMealRegiste(userName, "Y", type,
+                        startDate, startTime, endDate, endTime, "N",
+                        gokryuValue, beefValue, vegetableValue, fatValue, milkValue, fruitValue,
+                        exchangeValue, kcalValue, satisfaction);
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -431,13 +748,54 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
                                 //progressDialog.dismiss();
                                 //Log.e(TAG, "onResponse: " + response.body());
                                 //Toast.makeText(PreviewActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                                // TODO: 2018-05-28 사진 업로드 하고 다시 데이터 입력 요청  - 박제창
+                                comment.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        progressDialog.dismiss();
+                                        if (response.isSuccessful()){
+                                            Log.e(TAG, "onResponse: " + response.body().toString());
 
-                                Toast.makeText(PreviewActivity.this, "저장 성공", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(PreviewActivity.this, ControlCenterv2.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
+                                            // TODO: 2018-05-28 내부 데이터 베이스에 저장하는 것/
+                                            // TODO: 2018-05-14 base information
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_DATE, initDate );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_TIME, initTime );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_START_DATE, startDate );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_START_TIME, startTime );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_END_DATE, endDate );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_END_TIME, endTime );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_FOOD_TIME, "N" );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_TYPE, type );
+                                            // TODO: 2018-05-14 value information
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_GOKRYU, gokryuValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_BEEF, beefValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_VEGETABLE, vegetableValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_FAT, fatValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_MILK, milkValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_FRUIT, fruitValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_EXCHANGE, exchangeValue );
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_KCAL, kcalValue );
+                                            // TODO: 2018-05-14 satisfaction information.
+                                            contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_SATISFACTION, satisfaction );
 
+                                            long insertDB = sqLiteDatabase.insert(WriteEntry.MealEntry.TABLE_NAME, null, contentValues);
+                                            Log.e(TAG, "onResponse:  " + insertDB);
+
+                                            Toast.makeText(PreviewActivity.this, "저장 성공", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(PreviewActivity.this, ControlCenterv2.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        Toast.makeText(PreviewActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
                             }
 
                             @Override
@@ -447,7 +805,7 @@ public class PreviewActivity extends AppCompatActivity implements UploadCallBack
                         });
                     }
                 }).start();
-            }else {
+            } else {
                 Toast.makeText(this, "네트워크를 연결해주세요", Toast.LENGTH_SHORT).show();
             }
         } else {
