@@ -56,6 +56,7 @@ public class DetailFoodInfoActivity extends AppCompatActivity {
 
         initSetting();
         foodName = getIntent().getStringExtra(SELECT_FOOD_NAME);
+        // TODO: 2018-08-22 전달 받은 이름을 통해 데이터 베이스로 검색
         foodMap = dbHelper.fetchDetailFoodInfo(foodName);
 
 //        for (String name : foodMap.keySet()){
@@ -76,8 +77,6 @@ public class DetailFoodInfoActivity extends AppCompatActivity {
         initRecycler();
         setData();
         setAdapter();
-
-
     }
 
     private void initSetting(){
@@ -130,6 +129,7 @@ public class DetailFoodInfoActivity extends AppCompatActivity {
 
 
     }
+
 
     private void setAdapter(){
         adapter = new DetailFoodAdapter(this, titleList, valueList);

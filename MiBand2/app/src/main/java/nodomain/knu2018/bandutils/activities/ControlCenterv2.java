@@ -99,7 +99,7 @@ import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.BuildConfig;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
 import nodomain.knu2018.bandutils.activities.initfood.SearchFoodActivity;
 import nodomain.knu2018.bandutils.activities.selectdevice.CategoryActivity;
 import nodomain.knu2018.bandutils.activities.userprofile.HomeProfileActivity;

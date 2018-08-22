@@ -26,9 +26,11 @@ class DetailFoodViewHolder extends RecyclerView.ViewHolder {
         description = (TextView) itemView.findViewById(R.id.description);
         container = (CardView) itemView.findViewById(R.id.container);
     }
+
 }
 
 public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodViewHolder> {
+
     Context context;
     ArrayList<String> titleList;
     ArrayList<String> valueList;
@@ -38,7 +40,6 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodViewHolder
         this.titleList = titleList;
         this.valueList = valueList;
     }
-
 
     @NonNull
     @Override

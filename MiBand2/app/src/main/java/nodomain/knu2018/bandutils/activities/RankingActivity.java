@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IAnalysisAPI;
+import nodomain.knu2018.bandutils.remote.IAnalysisAPI;
 import nodomain.knu2018.bandutils.adapter.RankingAdapter;
 import nodomain.knu2018.bandutils.model.analysis.Ranks;
 import retrofit2.Call;

@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IAnalysisAPI;
+import nodomain.knu2018.bandutils.remote.IAnalysisAPI;
 import nodomain.knu2018.bandutils.adapter.MyWriteCountAdapter;
 import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
 import nodomain.knu2018.bandutils.model.analysis.MyWriteCount;

@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
 import nodomain.knu2018.bandutils.model.UserInfo;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -31,7 +31,7 @@ import java.util.UUID;
 
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IUploadAPI;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
 import nodomain.knu2018.bandutils.activities.initfood.FoodFetchActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -108,7 +108,6 @@ public class AppIntroV1Activity extends WoWoActivity {
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
         service = retrofit.create(IUploadAPI.class);
 
-
         r = (int) Math.sqrt(screenW * screenW + screenH * screenH) + 10;
 
         ImageView earth = (ImageView) findViewById(R.id.earth);
@@ -127,7 +126,8 @@ public class AppIntroV1Activity extends WoWoActivity {
 
         pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
         if (pref.getBoolean("activity_executed", false)) {
-            Intent intent = new Intent(this, ControlCenterv2.class);
+//            Intent intent = new Intent(this, ControlCenterv2.class);
+            Intent intent = new Intent(AppIntroV1Activity.this, FoodFetchActivity.class);
             startActivity(intent);
             finish();
         } else {

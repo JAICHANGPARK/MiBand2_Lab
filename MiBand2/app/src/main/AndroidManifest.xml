@@ -566,6 +566,7 @@
         <activity
             android:name=".activities.AboutDeveloperActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
+
         <activity
             android:name=".activities.AppIntroV1Activity"
             android:screenOrientation="portrait"
@@ -578,6 +579,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.initfood.FoodFetchActivity"
             android:screenOrientation="portrait"

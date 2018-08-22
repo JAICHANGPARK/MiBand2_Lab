@@ -1,5 +1,6 @@
 package nodomain.knu2018.bandutils.database.fooddb;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
     Context context;
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "meal_db.db";
 
     public DBHelper(Context context) {
@@ -28,13 +29,21 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Entry.SQL_CREATE_FOOD_DB_ENTRIES);
+        db.execSQL(Entry.SQL_CREATE_FOOD_DB_V2_ENTRIES);
         //Toast.makeText(context, "DB 생성 완료", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(Entry.SQL_DELETE_BS_ENTRIES);
-        onCreate(db);
+
+        if (newVersion == 3){
+            db.execSQL(Entry.SQL_DELETE_FOOD_DB_V2_ENTRIES);
+            onCreate(db);
+        }else {
+            db.execSQL(Entry.SQL_DELETE_BS_ENTRIES);
+            onCreate(db);
+        }
+
     }
 
     public void addFood(Food food) {
@@ -66,10 +75,50 @@ public class DBHelper extends SQLiteOpenHelper {
         //Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
     }
 
-    public Map<String, String> fetchDetailFoodInfo(String foodName){
+    public void addFood(ContentValues contentValues, int versionCode) {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        StringBuffer sb = new StringBuffer();
+        switch (versionCode) {
+            case 1:
+                break;
+            case 2:
+                db.insert(Entry.FoodEntryV2.TABLE_NAME, null, contentValues);
+                break;
+            default:
+                break;
+        }
+
+//        sb.append(" INSERT INTO ");
+//        sb.append(Entry.FoodEntry.TABLE_NAME + "(");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_NUMBER + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_GROUP + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_FOOD_NAME + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_AMOUNT + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_KCAL + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_CARBO + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_PROTEIN + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_FAT + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_SUGAR + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_NATRIUM + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_CHOLEST + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_FATTY + ",");
+//        sb.append(Entry.FoodEntry.COLUNM_NAME_TRANS_FATTY + ")");
+//        sb.append(" VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+//        String query = sb.toString();
+//        db.execSQL(query, new Object[]{food.getFoodNumber(), food.getFoodGroup(), food.getFoodName(),
+//                food.getFoodAmount(), food.getFoodKcal(), food.getFoodCarbo(),
+//                food.getFoodProtein(), food.getFoodFat(), food.getFoodSugar(), food.getFoodNatrium(),
+//                food.getFoodCholest(), food.getFoodFatty(), food.getFoodTransFatty()});
+        //Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
+        db.close();
+    }
+
+    public Map<String, String> fetchDetailFoodInfo(String foodName) {
 
         Map<String, String> foodMap = new HashMap<>();
-        SQLiteDatabase database  = getWritableDatabase();
+        SQLiteDatabase database = getWritableDatabase();
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -84,7 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = database.rawQuery(stringBuilder.toString(), null);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
 
             foodMap.put(Entry.FoodEntry.COLUNM_NAME_NUMBER, cursor.getString(0));
             foodMap.put(Entry.FoodEntry.COLUNM_NAME_GROUP, cursor.getString(1));
@@ -102,11 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
             foodMap.put(Entry.FoodEntry.COLUNM_NAME_TRANS_FATTY, cursor.getString(12));
 
         }
-
         return foodMap;
-
-
-
     }
 
     public ArrayList<String> readNameDate() {
@@ -378,6 +423,40 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean truncateTable(int versionCode) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        switch (versionCode) {
+            case 1:
+                return false;
+            case 2:
+                db.execSQL("DELETE FROM " + Entry.FoodEntryV2.TABLE_NAME);
+                return true;
+        }
+        return false;
+    }
+
+    public int countDatabaseSize(){
+        int count = 0;
+        SQLiteDatabase db = getWritableDatabase();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Cursor cursor = null;
+        // TODO: 2018-06-25 모든 데이터에서 음식 이름, 식품군 가져오기 - 박제창
+        stringBuilder.append("SELECT count( " + Entry.FoodEntryV2.COLUNM_FOOD_NAME  + ") ");
+        stringBuilder.append("FROM " + Entry.FoodEntryV2.TABLE_NAME);
+
+        cursor = db.rawQuery(stringBuilder.toString(), null);
+
+        while (cursor.moveToNext()){
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+
+        return count;
+
+    }
 
 }
 

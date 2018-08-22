@@ -1,14 +1,18 @@
 package nodomain.knu2018.bandutils.activities.initfood;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mancj.materialsearchbar.MaterialSearchBar;
@@ -64,11 +68,14 @@ public class SearchFoodActivity extends AppCompatActivity {
     /**
      * The Food list.
      */
-    ArrayList<Food> foodList  = new ArrayList<>();
+    ArrayList<Food> foodList = new ArrayList<>();
     /**
      * The Db helper.
      */
     DBHelper dbHelper;
+
+    int dbClass = 0;
+
 
 
     @Override
@@ -93,7 +100,6 @@ public class SearchFoodActivity extends AppCompatActivity {
         loadSuggestList();
         setSearchBarListener();
 
-
         adapter = new SearchAdapter(SearchFoodActivity.this, foodList);
         recyclerView.setAdapter(adapter);
 
@@ -101,13 +107,13 @@ public class SearchFoodActivity extends AppCompatActivity {
 
     }
 
-    private void initSearchBar(){
+    private void initSearchBar() {
         materialSearchBar.setHint(getString(R.string.search_food_activity_search_bar_hint));
         materialSearchBar.setCardViewElevation(10);
         materialSearchBar.setMaxSuggestionCount(10);
     }
 
-    private void setSearchBarListener(){
+    private void setSearchBarListener() {
 
         materialSearchBar.addTextChangeListener(new TextWatcher() {
             @Override
@@ -119,7 +125,7 @@ public class SearchFoodActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 List<String> suggest = new ArrayList<>();
-                for (String search : suggestList){
+                for (String search : suggestList) {
                     if (search.toLowerCase().contains(materialSearchBar.getText().toLowerCase()))
                         suggest.add(search);
                 }
@@ -135,7 +141,7 @@ public class SearchFoodActivity extends AppCompatActivity {
         materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
-                if (!enabled){
+                if (!enabled) {
                     recyclerView.setAdapter(adapter);
                 }
             }
@@ -162,9 +168,8 @@ public class SearchFoodActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * 처음 화면이 로딩될때 20개 정도의 데이터를 가져오는 메소드
-     *
+     * <p>
      * 수정(2018-06-06) :
      * Intent 전달시 TransactionTooLargeException 오류가 발생하는데 여기서 20개 이상의 데이터
      * 약 3만 바이트 이상을 차지하기 하고 있었고
@@ -173,7 +178,7 @@ public class SearchFoodActivity extends AppCompatActivity {
      * @Author : JAICHANGPARK(DREAMWALKER)
      */
     private void loadSuggestList() {
-        Log.e(TAG, "loadSuggestList:  called " );
+        Log.e(TAG, "loadSuggestList:  called ");
         suggestList = dbHelper.readNameDate();
         materialSearchBar.setLastSuggestions(suggestList);
     }
@@ -182,7 +187,7 @@ public class SearchFoodActivity extends AppCompatActivity {
     /**
      * Sqlite export.
      */
-    public void sqliteExport(){
+    public void sqliteExport() {
         //Context ctx = this; // for Activity, or Service. Otherwise simply get the context.
         //String dbname = "mydb.db";
         // dbpath = ctx.getDatabasePath(dbname);
@@ -206,7 +211,7 @@ public class SearchFoodActivity extends AppCompatActivity {
                     src.close();
                     dst.close();
                 }
-                if(backupDB.exists()){
+                if (backupDB.exists()) {
                     Toast.makeText(this, "DB Export Complete!!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -231,5 +236,60 @@ public class SearchFoodActivity extends AppCompatActivity {
             return null;
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_db_search, menu);
+//        return super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.filter:
+                String[] listItems = new String[]{"식품안전나라", "식품교환표", "2015국민영양조사", "기타"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Choose a Database");
+                builder.setSingleChoiceItems(listItems, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.e(TAG, "onClick: " + i);
+                        switch (i) {
+                            case 0:
+
+                                break;
+                            case 1:
+
+
+                                break;
+                            case 2:
+
+                                break;
+                            case 3:
+
+                                break;
+                        }
+                    }
+                });
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.e(TAG, "반찬 추가 onClick: " + i);
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.show();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

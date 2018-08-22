@@ -1,4 +1,4 @@
-package nodomain.knu2018.bandutils.Remote;
+package nodomain.knu2018.bandutils.remote;
 
 import nodomain.knu2018.bandutils.model.UserInfo;
 import okhttp3.MultipartBody;

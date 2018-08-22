@@ -73,6 +73,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> {
 
             Intent intent = new Intent(context, DetailFoodInfoActivity.class);
             String foodName = foodList.get(position).getFoodName();
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                         (Activity) context,

@@ -25,7 +25,7 @@ import butterknife.OnClick;
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IAnalysisAPI;
+import nodomain.knu2018.bandutils.remote.IAnalysisAPI;
 import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
 import nodomain.knu2018.bandutils.model.analysis.Ranks;
 import nodomain.knu2018.bandutils.model.analysis.WriteCount;
@@ -60,7 +60,6 @@ public class AnalysisUserActivity extends AppCompatActivity {
 
     @BindView(R.id.my_rank_button)
     ImageView totalRankButton;
-
 
     String userName;
 

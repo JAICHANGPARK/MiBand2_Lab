@@ -1,4 +1,4 @@
-package nodomain.knu2018.bandutils.Remote;
+package nodomain.knu2018.bandutils.remote;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

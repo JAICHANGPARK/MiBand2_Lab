@@ -7,23 +7,44 @@
 
     <TextView
         android:id="@+id/db_management_intro"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
         android:fontFamily="@font/bmhanna"
         android:text="@string/activity_db_management_import_export_explanation"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/activity_db_management_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/db_management_intro"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/bmhanna"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <View
+        android:layout_below="@+id/activity_db_management_path"
+        android:id="@+id/start_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/secondarytext" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/db_management_intro">
+        android:layout_below="@+id/start_line">
 
         <LinearLayout
-            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -53,20 +74,11 @@
             </LinearLayout>
 
 
-
-            <TextView
-                android:id="@+id/activity_db_management_path"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:fontFamily="@font/bmhanna"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
             <TextView
                 android:id="@+id/compress"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_margin="16dp"
                 android:fontFamily="@font/bmhanna"
                 android:text="파일 압축"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -75,6 +87,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:fontFamily="@font/bmhanna"
                 android:text="추출한 데이터를 압축하고 공유하고 싶을 때, 이 버튼을 눌러주세요."
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -109,13 +123,6 @@
                 android:gravity="start|center"
                 android:text="BACK UP" />
 
-            <TextView
-                android:id="@+id/date_time_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/bmhanna"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
             <Button
                 android:id="@+id/importDBButton"
                 style="?android:attr/borderlessButtonStyle"
@@ -125,6 +132,13 @@
                 android:fontFamily="@font/bmhanna"
                 android:gravity="start|center"
                 android:text="IMPORT" />
+
+            <TextView
+                android:id="@+id/date_time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bmhanna"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
             <Space
@@ -160,10 +174,11 @@
                 android:background="@color/under_text" />
 
             <TextView
+                android:textColor="@color/under_text"
                 android:id="@+id/emptyDBText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_margin="16dp"
                 android:fontFamily="@font/bmhanna"
                 android:text="Warning! By pushing this button you will wipe your database and start from scratch."
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -173,6 +188,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
                 android:drawableTint="@color/under_text"
                 android:fontFamily="@font/bmhanna"
@@ -181,6 +197,7 @@
                 android:textColor="@color/under_text" />
 
             <Button
+                android:layout_marginBottom="8dp"
                 android:id="@+id/deleteOldActivityDB"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"

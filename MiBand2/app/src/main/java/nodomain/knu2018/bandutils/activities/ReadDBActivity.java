@@ -51,7 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.Remote.IAnalysisAPI;
+import nodomain.knu2018.bandutils.remote.IAnalysisAPI;
 import nodomain.knu2018.bandutils.activities.writing.WriteHomesActivity;
 import nodomain.knu2018.bandutils.adapter.TimeLineAdapter;
 import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
