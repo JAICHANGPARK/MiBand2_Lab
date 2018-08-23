@@ -106,12 +106,15 @@ public class WriteBSDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         db.execSQL(SQL_DELETE_BS_ENTRIES);
         db.execSQL(SQL_DELETE_FITNESS_ENTRIES);
         db.execSQL(SQL_DELETE_DRUG_ENTRIES);
         db.execSQL(SQL_DELETE_MEAL_ENTRIES);
         db.execSQL(SQL_DELETE_SLEEP_ENTRIES);
         onCreate(db);
+
+
     }
 
     @Override

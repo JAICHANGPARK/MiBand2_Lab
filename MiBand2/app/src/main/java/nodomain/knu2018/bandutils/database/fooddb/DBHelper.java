@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import nodomain.knu2018.bandutils.model.foodmodel.Food;
+import nodomain.knu2018.bandutils.model.foodmodel.MixedFood;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -75,6 +76,12 @@ public class DBHelper extends SQLiteOpenHelper {
         //Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 두번째 버전 데이터베이스를 서버로 부터 읽어온 데이터를
+     * 저장하는 메소드
+      * @param contentValues
+     * @param versionCode
+     */
     public void addFood(ContentValues contentValues, int versionCode) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -89,31 +96,9 @@ public class DBHelper extends SQLiteOpenHelper {
             default:
                 break;
         }
-
-//        sb.append(" INSERT INTO ");
-//        sb.append(Entry.FoodEntry.TABLE_NAME + "(");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_NUMBER + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_GROUP + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_FOOD_NAME + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_AMOUNT + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_KCAL + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_CARBO + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_PROTEIN + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_FAT + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_SUGAR + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_NATRIUM + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_CHOLEST + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_FATTY + ",");
-//        sb.append(Entry.FoodEntry.COLUNM_NAME_TRANS_FATTY + ")");
-//        sb.append(" VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-//        String query = sb.toString();
-//        db.execSQL(query, new Object[]{food.getFoodNumber(), food.getFoodGroup(), food.getFoodName(),
-//                food.getFoodAmount(), food.getFoodKcal(), food.getFoodCarbo(),
-//                food.getFoodProtein(), food.getFoodFat(), food.getFoodSugar(), food.getFoodNatrium(),
-//                food.getFoodCholest(), food.getFoodFatty(), food.getFoodTransFatty()});
-        //Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
         db.close();
     }
+
 
     public Map<String, String> fetchDetailFoodInfo(String foodName) {
 
@@ -224,6 +209,93 @@ public class DBHelper extends SQLiteOpenHelper {
             valueGroup = cursor.getString(1);
             nameArrayList.add(new Food(valueGroup, valueName));
         }
+        return nameArrayList;
+    }
+
+    public ArrayList<MixedFood> searchDB(String name) {
+        ArrayList<MixedFood> nameArrayList = new ArrayList<>();
+        StringBuffer sb = new StringBuffer();
+        SQLiteDatabase db = getWritableDatabase();
+        String valueName;
+        String valueGroup;
+
+
+        Cursor cursor = null;
+        // TODO: 2018-08-23 데이터베이스 버전 2 의 이름과 그룹 가져오기
+        sb.append(" SELECT foodName, foodClass FROM mealdb_v2 ");
+        sb.append(" WHERE foodName LIKE '%" + name + "%'");
+        //sb.append(" LIMIT 20");
+
+        cursor = db.rawQuery(sb.toString(), null);
+
+
+        while (cursor.moveToNext()) {
+            valueName = cursor.getString(0);
+            valueGroup = cursor.getString(1);
+            nameArrayList.add(new MixedFood(valueGroup, valueName));
+        }
+        return nameArrayList;
+    }
+
+    /**
+     * 두번째 데이터베이스 검색한 입력 쿼리를 받아
+     * 전부 검색하여 가져오는 메소드
+     *
+     * @param name
+     * @return
+     */
+    public ArrayList<MixedFood> searchDBAll(String name) {
+        ArrayList<MixedFood> nameArrayList = new ArrayList<>();
+        StringBuffer sb = new StringBuffer();
+        SQLiteDatabase db = getWritableDatabase();
+
+        sb.append(" SELECT ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_CLASS + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_NAME + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_AMOUNT + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_GROUP_1 + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_GROUP_2 + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_GROUP_3 + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_GROUP_4 + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_GROUP_5 + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FOOD_GROUP_6 + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_TOTAL_EXCHANGE + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_KCAL + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_CARBO + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FATT + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_PROTEIN + ", ");
+        sb.append(Entry.FoodEntryV2.COLUNM_FIBER + " ");
+        sb.append("FROM " + Entry.FoodEntryV2.TABLE_NAME );
+        sb.append(" WHERE foodName LIKE '%" + name + "%'");
+
+//        // TODO: 2018-08-23 데이터베이스 버전 2 의 이름과 그룹 가져오기
+//        sb.append(" SELECT * FROM mealdb_v2 ");
+//        sb.append(" WHERE foodName LIKE '%" + name + "%'");
+        //sb.append(" LIMIT 20");
+
+        Cursor cursor = db.rawQuery(sb.toString(), null);
+
+
+        while (cursor.moveToNext()) {
+            nameArrayList.add(
+                    new MixedFood(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    cursor.getString(8),
+                    cursor.getString(9),
+                    cursor.getString(10),
+                    cursor.getString(11),
+                    cursor.getString(12),
+                    cursor.getString(13),
+                    cursor.getString(14)));
+        }
+        cursor.close();
         return nameArrayList;
     }
 

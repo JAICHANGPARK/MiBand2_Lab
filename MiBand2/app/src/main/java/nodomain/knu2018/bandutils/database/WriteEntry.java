@@ -7,7 +7,7 @@ public final class WriteEntry {
     public WriteEntry() {
     }
 
-    public static class BloodSugarEntry implements BaseColumns{
+    public static class BloodSugarEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "bloodsugar";
         public static final String COLUNM_NAME_DATE = "date";
@@ -16,7 +16,7 @@ public final class WriteEntry {
         public static final String COLUNM_NAME_VALUE = "value";
     }
 
-    public static class FitnessEntry implements BaseColumns{
+    public static class FitnessEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "fitness";
         public static final String COLUNM_NAME_DATE = "date";
@@ -26,7 +26,7 @@ public final class WriteEntry {
         public static final String COLUNM_NAME_LOAD = "load";
     }
 
-    public static class DrugEntry implements BaseColumns{
+    public static class DrugEntry implements BaseColumns {
         public static final String TABLE_NAME = "drug";
         public static final String COLUNM_NAME_DATE = "date";
         public static final String COLUNM_NAME_TIME = "time";
@@ -35,7 +35,7 @@ public final class WriteEntry {
         public static final String COLUNM_NAME_VALUE = "value";
     }
 
-    public static class MealEntry implements BaseColumns{
+    public static class MealEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "meal";
         public static final String COLUNM_NAME_DATE = "date";
@@ -58,7 +58,7 @@ public final class WriteEntry {
 
     }
 
-    public static class SleepEntry implements BaseColumns{
+    public static class SleepEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "sleep";
         public static final String COLUNM_NAME_DATE = "date";
@@ -72,4 +72,8 @@ public final class WriteEntry {
         public static final String COLUNM_NAME_VALUE_SATISFACTION = "satisfaction";
 
     }
+
+
+
+
 }

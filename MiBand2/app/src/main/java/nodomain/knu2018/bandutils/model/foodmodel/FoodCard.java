@@ -1,6 +1,9 @@
 package nodomain.knu2018.bandutils.model.foodmodel;
 
-public class FoodCard {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class FoodCard implements Parcelable{
 
     private String cardClass;
     private String foodClass;
@@ -58,6 +61,37 @@ public class FoodCard {
         this.fiber = fiber;
     }
 
+
+    protected FoodCard(Parcel in) {
+        cardClass = in.readString();
+        foodClass = in.readString();
+        foodName = in.readString();
+        foodAmount = in.readString();
+        foodGroup1 = in.readString();
+        foodGroup2 = in.readString();
+        foodGroup3 = in.readString();
+        foodGroup4 = in.readString();
+        foodGroup5 = in.readString();
+        foodGroup6 = in.readString();
+        totalExchange = in.readString();
+        kcal = in.readString();
+        carbo = in.readString();
+        fatt = in.readString();
+        prot = in.readString();
+        fiber = in.readString();
+    }
+
+    public static final Creator<FoodCard> CREATOR = new Creator<FoodCard>() {
+        @Override
+        public FoodCard createFromParcel(Parcel in) {
+            return new FoodCard(in);
+        }
+
+        @Override
+        public FoodCard[] newArray(int size) {
+            return new FoodCard[size];
+        }
+    };
 
     public String getCardClass() {
         return cardClass;
@@ -185,5 +219,30 @@ public class FoodCard {
 
     public void setFiber(String fiber) {
         this.fiber = fiber;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(cardClass);
+        dest.writeString(foodClass);
+        dest.writeString(foodName);
+        dest.writeString(foodAmount);
+        dest.writeString(foodGroup1);
+        dest.writeString(foodGroup2);
+        dest.writeString(foodGroup3);
+        dest.writeString(foodGroup4);
+        dest.writeString(foodGroup5);
+        dest.writeString(foodGroup6);
+        dest.writeString(totalExchange);
+        dest.writeString(kcal);
+        dest.writeString(carbo);
+        dest.writeString(fatt);
+        dest.writeString(prot);
+        dest.writeString(fiber);
     }
 }

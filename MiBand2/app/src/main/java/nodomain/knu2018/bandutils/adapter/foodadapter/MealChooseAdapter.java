@@ -18,11 +18,8 @@ import nodomain.knu2018.bandutils.model.foodmodel.FoodCard;
 
 public class MealChooseAdapter extends RecyclerView.Adapter<MealChooseAdapter.MyViewHolder> {
 
-    private Context context;
-
-    ArrayList<Integer> imageList;
+    Context context;
     ArrayList<FoodCard> foodCardArrayList;
-
     OnItemClickListener listener;
 
     public void setOnItemClickListener(OnItemClickListener listener){

@@ -21,6 +21,7 @@ import org.angmarch.views.NiceSpinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,10 +35,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.remote.IUploadAPI;
-import nodomain.knu2018.bandutils.remote.RetrofitClient;
 import nodomain.knu2018.bandutils.database.WriteBSDBHelper;
 import nodomain.knu2018.bandutils.database.WriteEntry;
+import nodomain.knu2018.bandutils.model.foodmodel.FoodCard;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
+import nodomain.knu2018.bandutils.remote.RetrofitClient;
 import nodomain.knu2018.bandutils.util.ObservableScrollView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -326,6 +328,7 @@ public class WriteMealActivity extends AppCompatActivity {
      * The Service.
      */
     IUploadAPI service;
+
     private IUploadAPI getAPIUpload() {
         return RetrofitClient.getClient(BASE_URL).create(IUploadAPI.class);
     }
@@ -338,6 +341,10 @@ public class WriteMealActivity extends AppCompatActivity {
      * The UserInfo uuid.
      */
     String userUUID;
+
+    ArrayList<FoodCard> beforeList;
+
+    float floatGroup1, floatGroup2, floatGroup3, floatGroup4, floatGroup5, floatGroup6;
 
 
     @Override
@@ -352,6 +359,29 @@ public class WriteMealActivity extends AppCompatActivity {
         Paper.init(this);
 
         inputType = "아침";
+
+        // TODO: 2018-08-23 선택한 음식을 가져옴 리스트로 모델 FoodCard를 가진다 .
+        beforeList = getIntent().getParcelableArrayListExtra("MEAL_CHOOSE_RESULT");
+        Log.e(TAG, "Get Parcelable AL: Size = " + beforeList.size());
+
+        for (int i = 0; i < beforeList.size(); i++) {
+            Log.e(TAG, "Parcelable: " + beforeList.get(i).getFoodName());
+            floatGroup1 += Float.valueOf(beforeList.get(i).getFoodGroup1());
+            floatGroup2 += Float.valueOf(beforeList.get(i).getFoodGroup2());
+            floatGroup3 += Float.valueOf(beforeList.get(i).getFoodGroup3());
+            floatGroup4 += Float.valueOf(beforeList.get(i).getFoodGroup4());
+            floatGroup5 += Float.valueOf(beforeList.get(i).getFoodGroup5());
+            floatGroup6 += Float.valueOf(beforeList.get(i).getFoodGroup6());
+        }
+
+        Log.e(TAG, "floatGroup1 -->  " + floatGroup1 );
+        Log.e(TAG, "floatGroup2 -->  " + floatGroup2 );
+        Log.e(TAG, "floatGroup3 -->  " + floatGroup3 );
+        Log.e(TAG, "floatGroup4 -->  " + floatGroup4 );
+        Log.e(TAG, "floatGroup5 -->  " + floatGroup5 );
+        Log.e(TAG, "floatGroup6 -->  " + floatGroup6 );
+        Log.e(TAG, "sum -->  " + (floatGroup1 + floatGroup2 + floatGroup3 + floatGroup4 + floatGroup5 + floatGroup6) );
+
 
         // TODO: 2018-05-14 데이터베이스 저장을 위한 객체 초기화 메소드
         initDataBases();
@@ -369,11 +399,11 @@ public class WriteMealActivity extends AppCompatActivity {
     /**
      * Retrofit 객체 생성
      */
-    private void initRetrofit(){
+    private void initRetrofit() {
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
         service = retrofit.create(IUploadAPI.class);
         userName = Paper.book().read("userName");
-        userUUID  = Paper.book().read("userUUIDV2");
+        userUUID = Paper.book().read("userUUIDV2");
 
     }
 
@@ -384,6 +414,14 @@ public class WriteMealActivity extends AppCompatActivity {
     }
 
     private void initExchangeSeekBar() {
+
+        seekBar01.setProgress(floatGroup1); //곡류군
+        seekBar02.setProgress(floatGroup2); // 어육류
+        seekBar03.setProgress(floatGroup3); // 채소군
+        seekBar04.setProgress(floatGroup6); // 지방군은 그룹 6 식!바는 4번
+        seekBar05.setProgress(floatGroup5); // 우유군
+        seekBar06.setProgress(floatGroup4); //과일군
+
         seekBar01.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
@@ -555,7 +593,7 @@ public class WriteMealActivity extends AppCompatActivity {
     private void initDateTimeTextView() {
         now = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-        simpleTimeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
+        simpleTimeFormat = new SimpleDateFormat("HH:mm:ss", Locale.KOREA);
         initDate = simpleDateFormat.format(now.getTime());
         initTime = simpleTimeFormat.format(now.getTime());
         startDate = initDate;
@@ -711,8 +749,8 @@ public class WriteMealActivity extends AppCompatActivity {
                 + "섭취 칼로리  : " + kcalValue + "\n\n"
                 + "식사 포만감 : " + satisfaction;
 
-        Call<ResponseBody> request = service.userMealRegiste(userName,"N", inputType,startDate,startTime,endDate,endTime,
-                mealTimeValue, gokryuValue,beefValue,vegetableValue,fatValue,milkValue,fruitValue,exchangeValue,kcalValue,satisfaction);
+        Call<ResponseBody> request = service.userMealRegiste(userName, "N", inputType, startDate, startTime, endDate, endTime,
+                mealTimeValue, gokryuValue, beefValue, vegetableValue, fatValue, milkValue, fruitValue, exchangeValue, kcalValue, satisfaction);
 
         new MaterialStyledDialog.Builder(this)
                 .setTitle("저장하시겠어요?")
@@ -726,25 +764,25 @@ public class WriteMealActivity extends AppCompatActivity {
                     initDate = simpleDateFormat.format(now.getTime());
                     initTime = simpleTimeFormat.format(now.getTime());
                     // TODO: 2018-05-14 base information
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_DATE, initDate );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_TIME, initTime );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_START_DATE, startDate );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_START_TIME, startTime );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_END_DATE, endDate );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_END_TIME, endTime );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_FOOD_TIME, mealTimeValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_TYPE, inputType );
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_DATE, initDate);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_TIME, initTime);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_START_DATE, startDate);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_START_TIME, startTime);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_END_DATE, endDate);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_END_TIME, endTime);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_FOOD_TIME, mealTimeValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_TYPE, inputType);
                     // TODO: 2018-05-14 value information
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_GOKRYU, gokryuValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_BEEF, beefValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_VEGETABLE, vegetableValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_FAT, fatValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_MILK, milkValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_FRUIT, fruitValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_EXCHANGE, exchangeValue );
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_KCAL, kcalValue );
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_GOKRYU, gokryuValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_BEEF, beefValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_VEGETABLE, vegetableValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_FAT, fatValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_MILK, milkValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_FRUIT, fruitValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_EXCHANGE, exchangeValue);
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_KCAL, kcalValue);
                     // TODO: 2018-05-14 satisfaction information.
-                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_SATISFACTION, satisfaction );
+                    contentValues.put(WriteEntry.MealEntry.COLUNM_NAME_VALUE_SATISFACTION, satisfaction);
 
                     long insertDB = db.insert(WriteEntry.MealEntry.TABLE_NAME, null, contentValues);
                     Toast.makeText(WriteMealActivity.this, "소중한 데이터를 잘 저장했어요. Code : " + insertDB, Toast.LENGTH_SHORT).show();

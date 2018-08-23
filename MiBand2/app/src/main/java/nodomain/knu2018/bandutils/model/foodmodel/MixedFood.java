@@ -42,6 +42,11 @@ public class MixedFood {
     private String prot;
     private String fiber;
 
+    public MixedFood(String foodClass, String foodName) {
+        this.foodClass = foodClass;
+        this.foodName = foodName;
+    }
+
     public MixedFood(String foodClass, String foodName, String foodAmount,
                      String foodGroup1, String foodGroup2, String foodGroup3,
                      String foodGroup4, String foodGroup5, String foodGroup6,
