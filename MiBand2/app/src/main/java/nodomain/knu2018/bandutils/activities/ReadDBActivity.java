@@ -87,78 +87,44 @@ public class ReadDBActivity extends AppCompatActivity {
 
     private static final String TAG = "ReadDBActivity";
 
-    /**
-     * The Db.
-     */
     SQLiteDatabase db;
-    /**
-     * The M helper.
-     */
+
     WriteBSDBHelper mHelper;
 
 //    @BindView(R.id.textView)
 //    TextView textView;
 
-    /**
-     * The Recycler view.
-     */
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    /**
-     * The Relative layout.
-     */
     @BindView(R.id.animation_view)
     RelativeLayout relativeLayout;
-    /**
-     * The Lottie animation view.
-     */
+
     @BindView(R.id.lottie_animation)
     LottieAnimationView lottieAnimationView;
 
-    /**
-     * The Marquee view.
-     */
     @BindView(R.id.marqueeView)
     MarqueeView marqueeView;
 
-    /**
-     * The Layout bottom sheet.
-     */
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
 
-    /**
-     * The Total text view.
-     */
     @BindView(R.id.total_text_view)
     TextView totalTextView;
 
-    /**
-     * The Today text view.
-     */
     @BindView(R.id.today_text_view)
     TextView todayTextView;
 
-    /**
-     * The Write button.
-     */
     @BindView(R.id.write_button)
     Button writeButton;
 
-    /**
-     * The Fab.
-     */
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
 
     @BindView(R.id.toobar_spinner)
     Spinner spinner;
 
-    /**
-     * The M time line adapter.
-     */
     TimeLineAdapter mTimeLineAdapter;
     /**
      * The Layout manager.

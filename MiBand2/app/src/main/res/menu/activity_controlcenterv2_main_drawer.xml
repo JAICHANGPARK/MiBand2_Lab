@@ -13,6 +13,11 @@
         <item android:id="@+id/food_check_db"
             android:title="@string/food_check_db"
             android:icon="@drawable/ic_kitchen_black_24dp" />
+
+        <!--&lt;!&ndash;저장 데이터 확인 테스트 &ndash;&gt;-->
+        <!--<item android:id="@+id/db_read_test"-->
+            <!--android:title="@string/food_check_db"-->
+            <!--android:icon="@drawable/ic_kitchen_black_24dp" />-->
     </group>
 
     <!--데이터 관리 및 데이터베이스 관리-->

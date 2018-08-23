@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
-    <release version="1.1.7" versioncode="68">
-        <change>Date : 2018-08-22</change>
+    <release version="1.2.0" versioncode="68">
+        <change>Date : 2018-08-23</change>
+        <change>이제 식사 기록 방식이 개선되었습니다.</change>
         <change>UI : Databases Management UI Change</change>
+        <change>Function : Meal Write Process Changed</change>
+        <change>Databases : Databases Version Upgrade </change>
         <change>Mi Band 3: Fix notification text not being displayed</change>
         <change>Coder : 박제창 </change>
         <change>Contributors : None</change>

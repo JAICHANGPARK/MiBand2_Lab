@@ -35,8 +35,8 @@ public final class WriteMealEntry {
 
 
     public static class MealEntryTop implements BaseColumns {
-        public static final String TABLE_NAME = "meal_main";
-        public static final String COLUNM_ID = "id";
+        public static final String TABLE_NAME = "meal_main_test";
+        public static final String COLUNM_INDEX = "saveIndex";
         public static final String COLUNM_TOTAL_FOOD_COUNT = "totalFoodCount";
         public static final String COLUNM_TOTAL_AMOUNT = "totalAmount";
         public static final String COLUNM_TOTAL_KCAL = "totalKCal";
@@ -48,11 +48,14 @@ public final class WriteMealEntry {
         public static final String COLUNM_TOTAL_END_DATETIME = "endDatetime";
         public static final String COLUNM_TOTAL_END_TIMESTAMP = "endTimestamp";
         public static final String COLUNM_INTAKE_TIME = "intakeTime";
+        public static final String COLUNM_TOTAL_FOOD_LIST = "foodList";
+        public static final String COLUNM_NAME_VALUE_SATISFACTION = "satisfaction";
 
     }
 
     public static class MealEntryMid implements BaseColumns {
-        public static final String TABLE_NAME = "meal_mid";
+        public static final String TABLE_NAME = "meal_mid_test";
+
 
     }
 

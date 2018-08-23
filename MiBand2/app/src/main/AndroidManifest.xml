@@ -504,14 +504,13 @@
         <activity
             android:name=".activities.writing.WriteFitnessActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
-        <activity android:name=".activities.writing.WriteMealChooseActivity"
+        <activity
+            android:name=".activities.writing.WriteMealChooseActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
         <activity
             android:name=".activities.writing.WriteMealActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
-
         <activity
             android:name=".activities.writing.WriteDrugActivity"
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
@@ -643,7 +642,7 @@
             android:theme="@style/GadgetbridgeTheme.NoActionBar2" />
         <activity android:name=".activities.selectdrug.SelectDrugUnitActivity" />
         <activity android:name=".activities.initfood.DetailFoodInfoActivity" />
-
+        <activity android:name=".activities.writing.DBReadTestActivity"></activity>
     </application>
 
 </manifest>

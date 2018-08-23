@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.R;
@@ -121,11 +124,14 @@ public class FoodFetchActivity extends AppCompatActivity {
     String fetchVersionCode;
     ArrayList<MixedFood> foodsList;
 
-
+    @BindView(R.id.textView10)
+    TextView headTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_fetch);
+
+        ButterKnife.bind(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -153,6 +159,8 @@ public class FoodFetchActivity extends AppCompatActivity {
             } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
                 Log.e(TAG, "onCreate: " + "모바일 네트워크 연결됨");
             }
+
+            headTextView.setText("잠시만 기다려주세요 \n 버전 정보 확인 중... ");
 
             versionCheckService.checkFoodDatabaseVersion(APP_VERSION_CHECK_PATH).enqueue(new Callback<AppVersion>() {
                 @Override
@@ -184,7 +192,7 @@ public class FoodFetchActivity extends AppCompatActivity {
                             });
                         }
                     } else {
-
+                        headTextView.setText("잠시만 기다려주세요 \n 일정 시간이 소요됩니다. ");
                         Log.e(TAG, "onResponse: 처음 사용자  처리 합니다 ");
                         // TODO: 2018-08-01 처음 사용자
                         long start = System.currentTimeMillis();

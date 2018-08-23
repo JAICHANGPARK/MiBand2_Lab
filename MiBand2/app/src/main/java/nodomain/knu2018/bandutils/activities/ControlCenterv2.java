@@ -99,7 +99,6 @@ import io.paperdb.Paper;
 import nodomain.knu2018.bandutils.BuildConfig;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.remote.IUploadAPI;
 import nodomain.knu2018.bandutils.activities.initfood.SearchFoodActivity;
 import nodomain.knu2018.bandutils.activities.selectdevice.CategoryActivity;
 import nodomain.knu2018.bandutils.activities.userprofile.HomeProfileActivity;
@@ -111,6 +110,7 @@ import nodomain.knu2018.bandutils.adapter.home.WriteHorizontalAdapter;
 import nodomain.knu2018.bandutils.devices.DeviceManager;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.beacon.KNUBeacon;
+import nodomain.knu2018.bandutils.remote.IUploadAPI;
 import nodomain.knu2018.bandutils.util.AndroidUtils;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.Prefs;
@@ -881,6 +881,11 @@ public class ControlCenterv2 extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         switch (item.getItemId()) {
+
+//            case R.id.db_read_test:
+//                Intent dbCheckTestIntent = new Intent(this, DBReadTestActivity.class);
+//                startActivity(dbCheckTestIntent);
+//                return true;
 
             case R.id.food_check_db:
                 Intent foodSearchIntent = new Intent(this, SearchFoodActivity.class);
