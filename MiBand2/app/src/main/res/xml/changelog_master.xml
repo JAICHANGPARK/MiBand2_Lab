@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.2.2" versioncode="70">
+        <change>Date : 2018-09-30</change>
+        <change>Blood Glucose Meter: Fixed Couldn't scan caresens n ble device</change>
+        <change>Support: Today we supported android sdk 28</change>
+
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
+    <release version="1.2.1" versioncode="69">
+        <change>Date : 2018-08-23</change>
+        <change>Fix and Support Multi-layout device</change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.2.0" versioncode="68">
         <change>Date : 2018-08-23</change>
         <change>이제 식사 기록 방식이 개선되었습니다.</change>

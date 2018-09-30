@@ -840,4 +840,14 @@
     <string name="content_to1_mock">46th Ave</string>
     <string name="content_to2_mock">Woodside, NY 11101</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="sub_header">관리</string>
+    <string name="footer_header">정보</string>
+    <string name="action_licenses">라이센스</string>
+    <string name="action_about">앱 정보</string>
+    <string name="action_check_db">생활 데이터 확인</string>
+    <string name="food_check_db">식품 데이터 검색</string>
+    <string name="action_storage">데이터 저장소 관리</string>
+    <string name="action_user_information">내 정보</string>
+
 </resources>

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class CareSensConst {
 
+//    public static final String CARE_SENS_N_NAME = "CareSens";
     public static final String CARE_SENS_N_NAME = "CareSens 0701";
 
     private static final int FLAGS_BIT = 0x01;

@@ -1,12 +1,19 @@
 package nodomain.knu2018.bandutils.devices.isens;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
+import android.os.ParcelUuid;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
@@ -26,6 +33,15 @@ public class CareSenseCoordinator extends AbstractDeviceCoordinator {
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
 
+    }
+
+    @NonNull
+    @Override
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Collection<? extends ScanFilter> createBLEScanFilters() {
+        ParcelUuid mi2Service = new ParcelUuid(CareSensConst.BLE_SERVICE_CUSTOM);
+        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(mi2Service).build();
+        return Collections.singletonList(filter);
     }
 
     @NonNull
