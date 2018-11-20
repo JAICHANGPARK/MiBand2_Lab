@@ -123,8 +123,7 @@ public class SleepAlarmWidget extends AppWidgetProvider {
         AlarmManager am = (AlarmManager) packageContext.getSystemService(Context.ALARM_SERVICE);
         // TODO: launch the alarm configuration activity when clicking the alarm in the status bar
         Intent intent = new Intent(packageContext, ConfigureAlarms.class);
-        PendingIntent pi = PendingIntent.getBroadcast(packageContext, 0, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(packageContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerTime, pi), pi);
     }
 }

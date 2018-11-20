@@ -1,4 +1,5 @@
-/*  Copyright (C) 2017 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2017-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -25,13 +26,11 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.Logging;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.database.DBHandler;
-import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.devices.huami.amazfitbip.AmazfitBipService;
 import nodomain.knu2018.bandutils.entities.BaseActivitySummary;
 import nodomain.knu2018.bandutils.export.ActivityTrackExporter;
@@ -40,12 +39,12 @@ import nodomain.knu2018.bandutils.model.ActivityKind;
 import nodomain.knu2018.bandutils.model.ActivityTrack;
 import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.actions.WaitAction;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.ActivityDetailsParser;
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 import nodomain.knu2018.bandutils.util.FileUtils;
 import nodomain.knu2018.bandutils.util.GB;
+
 
 /**
  * An operation that fetches activity data. For every fetch, a new operation must
@@ -70,14 +69,7 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
         LOG.info("start " + getName());
         buffer = new ByteArrayOutputStream(1024);
         GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-
-        builder.write(characteristicFetch, BLETypeConversions.join(new byte[] {
-                        HuamiService.COMMAND_ACTIVITY_DATA_START_DATE,
-                        AmazfitBipService.COMMAND_ACTIVITY_DATA_TYPE_SPORTS_DETAILS},
-                getSupport().getTimeBytes(sinceWhen, TimeUnit.MINUTES)));
-        builder.add(new WaitAction(1000)); // TODO: actually wait for the success-reply
-        builder.notify(characteristicActivityData, true);
-        builder.write(characteristicFetch, new byte[] { HuamiService.COMMAND_FETCH_DATA });
+        startFetching(builder, AmazfitBipService.COMMAND_ACTIVITY_DATA_TYPE_SPORTS_DETAILS, sinceWhen);
     }
 
     @Override

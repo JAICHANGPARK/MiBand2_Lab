@@ -25,9 +25,6 @@ import java.io.IOException;
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipFirmwareInfo;
 
-
-
-
 public class AmazfitBipFWHelper extends HuamiFWHelper {
 
     public AmazfitBipFWHelper(Uri uri, Context context) throws IOException {

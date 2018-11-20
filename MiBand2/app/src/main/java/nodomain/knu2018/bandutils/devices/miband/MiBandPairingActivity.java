@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -158,8 +157,7 @@ public class MiBandPairingActivity extends AbstractGBActivity {
         // start pairing immediately when we return from the user settings
         if (requestCode == REQ_CODE_USER_SETTINGS) {
             if (!MiBandCoordinator.hasValidUserInfo()) {
-                Log.e("Mi Band Pairing", "onActivityResult: " + getString(R.string.miband_pairing_using_dummy_userdata));
-                //GB.toast(this, getString(R.string.miband_pairing_using_dummy_userdata), Toast.LENGTH_LONG, GB.WARN);
+                GB.toast(this, getString(R.string.miband_pairing_using_dummy_userdata), Toast.LENGTH_LONG, GB.WARN);
             }
             startPairing();
         }

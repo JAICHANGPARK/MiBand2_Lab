@@ -1,5 +1,5 @@
 /*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, Felix
-    Konstantin Maurer
+    Konstantin Maurer, Taavi Eomäe
 
     This file is part of Gadgetbridge.
 
@@ -44,6 +44,7 @@ import java.util.Locale;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
+
 
 public class AndroidUtils {
     /**
@@ -163,7 +164,7 @@ public class AndroidUtils {
      * @param uri the Uri for which the path should be resolved
      * @return the path corresponding to the Uri as a String
      * @throws URISyntaxException
-     */
+    */
     private static @Nullable String internalGetFilePath(@NonNull Context context, @NonNull Uri uri) throws URISyntaxException {
         String selection = null;
         String[] selectionArgs = null;

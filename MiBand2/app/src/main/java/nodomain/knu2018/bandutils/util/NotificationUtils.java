@@ -24,6 +24,7 @@ import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.model.CallSpec;
 import nodomain.knu2018.bandutils.model.NotificationSpec;
 
+
 public class NotificationUtils {
     @NonNull
     public static String getPreferredTextFor(NotificationSpec notificationSpec, int lengthBody, int lengthSubject, Context context) {

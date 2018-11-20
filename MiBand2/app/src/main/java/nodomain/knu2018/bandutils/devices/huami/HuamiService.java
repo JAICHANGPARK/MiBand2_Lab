@@ -23,7 +23,6 @@ import java.util.UUID;
 
 import static nodomain.knu2018.bandutils.service.btle.AbstractBTLEDeviceSupport.BASE_UUID;
 
-
 public class HuamiService {
 
 

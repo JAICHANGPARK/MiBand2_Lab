@@ -242,7 +242,7 @@ public class HPlusHealthSampleProvider extends AbstractSampleProvider<HPlusHealt
         HPlusHealthActivitySample sample = new HPlusHealthActivitySample(
                 timestamp,            // ts
                 deviceId,
-                userId,          // UserInfo id
+                userId,          // User id
                 null,                         // Raw Data
                 ActivityKind.TYPE_UNKNOWN,
                 1, // Intensity

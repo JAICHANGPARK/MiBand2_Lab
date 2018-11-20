@@ -16,34 +16,57 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.activities;
 
+import nodomain.knu2018.bandutils.GBApplication;
+import nodomain.knu2018.bandutils.util.GBPrefs;
+import nodomain.knu2018.bandutils.util.Prefs;
+
 /**
  * The type Heart rate utils.
  */
 public class HeartRateUtils {
-    /**
-     * The constant MAX_HEART_RATE_VALUE.
-     */
     public static final int MAX_HEART_RATE_VALUE = 250;
-    /**
-     * The constant MIN_HEART_RATE_VALUE.
-     */
-    public static final int MIN_HEART_RATE_VALUE = 0;
+    public static final int MIN_HEART_RATE_VALUE = 10;
+
     /**
      * The maxiumum gap between two hr measurements in which
      * we interpolate between the measurements. Otherwise, two
      * distinct measurements will be shown.
-     * <p>
+     *
      * Value is in minutes
      */
     public static final int MAX_HR_MEASUREMENTS_GAP_MINUTES = 10;
 
+    private int maxHeartRateValue;
+    private int minHeartRateValue;
+
+    private static final HeartRateUtils instance = new HeartRateUtils();
+
+    public static HeartRateUtils getInstance() {
+        return instance;
+    }
+
     /**
-     * Is valid heart rate value boolean.
-     *
-     * @param value the value
-     * @return the boolean
+     * Singleton - to access this class use the static #getInstance()
      */
-    public static boolean isValidHeartRateValue(int value) {
-        return value > HeartRateUtils.MIN_HEART_RATE_VALUE && value < HeartRateUtils.MAX_HEART_RATE_VALUE;
+    private HeartRateUtils() {
+        updateCachedHeartRatePreferences();
+    }
+
+    public void updateCachedHeartRatePreferences(){
+        Prefs prefs = GBApplication.getPrefs();
+        maxHeartRateValue = prefs.getInt(GBPrefs.CHART_MAX_HEART_RATE, MAX_HEART_RATE_VALUE);
+        minHeartRateValue = prefs.getInt(GBPrefs.CHART_MIN_HEART_RATE, MIN_HEART_RATE_VALUE);
+    }
+
+    public int getMaxHeartRate(){
+        return maxHeartRateValue;
+    }
+
+    public int getMinHeartRate(){
+        return minHeartRateValue;
+    }
+
+    public boolean isValidHeartRateValue(int value) {
+        return value >= getMinHeartRate() && value <= getMaxHeartRate();
     }
 }

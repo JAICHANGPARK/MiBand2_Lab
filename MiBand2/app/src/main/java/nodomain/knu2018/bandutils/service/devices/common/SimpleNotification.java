@@ -16,8 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.service.devices.common;
 
-import nodomain.knu2018.bandutils.model.NotificationType;
+
 import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory;
+import nodomain.knu2018.bandutils.model.NotificationType;
 
 public class SimpleNotification {
     private final String message;

@@ -673,7 +673,7 @@ public class UserInformationActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cancle", Toast.LENGTH_SHORT).show();
             } else {
                 if (result.getAccessToken() != null) {
-                    android.app.AlertDialog alertDialog = new SpotsDialog(UserInformationActivity.this);
+                    android.app.AlertDialog alertDialog =  new SpotsDialog.Builder().setContext(UserInformationActivity.this).build();
                     alertDialog.show();
                     alertDialog.setMessage("Please waiting");
 

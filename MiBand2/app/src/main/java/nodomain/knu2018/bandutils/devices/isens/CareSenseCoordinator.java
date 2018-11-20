@@ -39,8 +39,8 @@ public class CareSenseCoordinator extends AbstractDeviceCoordinator {
     @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Collection<? extends ScanFilter> createBLEScanFilters() {
-        ParcelUuid mi2Service = new ParcelUuid(CareSensConst.BLE_SERVICE_CUSTOM);
-        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(mi2Service).build();
+        ParcelUuid careSensService = new ParcelUuid(CareSensConst.BLE_SERVICE_CUSTOM);
+        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(careSensService).build();
         return Collections.singletonList(filter);
     }
 

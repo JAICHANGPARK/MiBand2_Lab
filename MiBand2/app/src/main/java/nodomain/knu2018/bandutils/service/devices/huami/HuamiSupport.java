@@ -20,10 +20,8 @@ package nodomain.knu2018.bandutils.service.devices.huami;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateFormat;
@@ -79,7 +77,7 @@ import nodomain.knu2018.bandutils.entities.Device;
 import nodomain.knu2018.bandutils.entities.MiBandActivitySample;
 import nodomain.knu2018.bandutils.entities.User;
 import nodomain.knu2018.bandutils.impl.GBAlarm;
-import nodomain.knu2018.bandutils.impl.GBDevice;
+import nodomain.knu2018.bandutils.impl.GBDevice.State;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.ActivityUser;
 import nodomain.knu2018.bandutils.model.Alarm;
@@ -88,7 +86,6 @@ import nodomain.knu2018.bandutils.model.CalendarEvents;
 import nodomain.knu2018.bandutils.model.CallSpec;
 import nodomain.knu2018.bandutils.model.CannedMessagesSpec;
 import nodomain.knu2018.bandutils.model.DeviceService;
-import nodomain.knu2018.bandutils.model.DeviceType;
 import nodomain.knu2018.bandutils.model.MusicSpec;
 import nodomain.knu2018.bandutils.model.MusicStateSpec;
 import nodomain.knu2018.bandutils.model.NotificationSpec;
@@ -100,11 +97,6 @@ import nodomain.knu2018.bandutils.service.btle.BtLEAction;
 import nodomain.knu2018.bandutils.service.btle.GattCharacteristic;
 import nodomain.knu2018.bandutils.service.btle.GattService;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.actions.AbortTransactionAction;
-import nodomain.knu2018.bandutils.service.btle.actions.SetDeviceStateAction;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory;
-import nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfoProfile;
-import nodomain.knu2018.bandutils.service.btle.profiles.heartrate.HeartRateProfile;
 import nodomain.knu2018.bandutils.service.devices.common.SimpleNotification;
 import nodomain.knu2018.bandutils.service.devices.huami.actions.StopNotificationAction;
 import nodomain.knu2018.bandutils.service.devices.huami.miband2.Mi2NotificationStrategy;
@@ -150,14 +142,13 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     private static long currentButtonTimerActivationTime = 0;
 
     private static final Logger LOG = LoggerFactory.getLogger(HuamiSupport.class);
-    private final DeviceInfoProfile<HuamiSupport> deviceInfoProfile;
-    private final HeartRateProfile<HuamiSupport> heartRateProfile;
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private final nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfoProfile<HuamiSupport> deviceInfoProfile;
+    private final nodomain.knu2018.bandutils.service.btle.profiles.IntentListener mListener = new nodomain.knu2018.bandutils.service.btle.profiles.IntentListener() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void notify(Intent intent) {
             String s = intent.getAction();
-            if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(s)) {
-                handleDeviceInfo((nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfo) intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
+            if (nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfoProfile.ACTION_DEVICE_INFO.equals(s)) {
+                handleDeviceInfo((nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfo) intent.getParcelableExtra(nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfoProfile.EXTRA_DEVICE_INFO));
             }
         }
     };
@@ -179,6 +170,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     private boolean isMusicAppStarted = false;
     private MusicSpec bufferMusicSpec = null;
     private MusicStateSpec bufferMusicStateSpec = null;
+    private boolean heartRateNotifyEnabled;
 
     public HuamiSupport() {
         this(LOG);
@@ -197,34 +189,18 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         addSupportedService(MiBandService.UUID_SERVICE_MIBAND2_SERVICE);
         addSupportedService(HuamiService.UUID_SERVICE_FIRMWARE_SERVICE);
 
-        deviceInfoProfile = new DeviceInfoProfile<>(this);
+        deviceInfoProfile = new nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfoProfile<>(this);
+        deviceInfoProfile.addListener(mListener);
         addSupportedProfile(deviceInfoProfile);
-        heartRateProfile = new HeartRateProfile<>(this);
-        addSupportedProfile(heartRateProfile);
-
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(DeviceInfoProfile.ACTION_DEVICE_INFO);
-        intentFilter.addAction(DeviceService.ACTION_MIBAND2_AUTH);
-        broadcastManager.registerReceiver(mReceiver, intentFilter);
-    }
-
-    @Override
-    public void dispose() {
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
-        broadcastManager.unregisterReceiver(mReceiver);
-        super.dispose();
     }
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         try {
+            heartRateNotifyEnabled = false;
             boolean authenticate = needsAuth;
             needsAuth = false;
-            byte authFlags = HuamiService.AUTH_BYTE;
-            if (gbDevice.getType() == DeviceType.MIBAND3) {
-                authFlags = 0x00;
-            }
+            byte authFlags = getAuthFlags();
             new InitOperation(authenticate, authFlags, this, builder).perform();
             characteristicHRControlPoint = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT);
             characteristicChunked = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER);
@@ -232,6 +208,10 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             GB.toast(getContext(), "Initializing Mi Band 2 failed", Toast.LENGTH_SHORT, GB.ERROR, e);
         }
         return builder;
+    }
+
+    protected byte getAuthFlags() {
+        return HuamiService.AUTH_BYTE;
     }
 
     /**
@@ -288,7 +268,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
      * @param builder
      */
     public void setInitialized(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.add(new nodomain.knu2018.bandutils.service.btle.actions.SetDeviceStateAction(getDevice(), State.INITIALIZED, getContext()));
     }
 
     // MB2: AVL
@@ -389,7 +369,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Attempting to set Fitness Goal...");
         BluetoothGattCharacteristic characteristic = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_8_USER_SETTINGS);
         if (characteristic != null) {
-            int fitnessGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, 10000);
+            int fitnessGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
             byte[] bytes = ArrayUtils.addAll(
                     HuamiService.COMMAND_SET_FITNESS_GOAL_START,
                     BLETypeConversions.fromUint16(fitnessGoal));
@@ -661,14 +641,14 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
 
     protected void onAlarmClock(NotificationSpec notificationSpec) {
         alarmClockRinging = true;
-        AbortTransactionAction abortAction = new StopNotificationAction(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL)) {
+        nodomain.knu2018.bandutils.service.btle.actions.AbortTransactionAction abortAction = new StopNotificationAction(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL)) {
             @Override
             protected boolean shouldAbort() {
                 return !isAlarmClockRinging();
             }
         };
         String message = NotificationUtils.getPreferredTextFor(notificationSpec, 40, 40, getContext());
-        SimpleNotification simpleNotification = new SimpleNotification(message, AlertCategory.HighPriorityAlert, notificationSpec.type);
+        SimpleNotification simpleNotification = new SimpleNotification(message, nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.HighPriorityAlert, notificationSpec.type);
         performPreferredNotification("alarm clock ringing", MiBandConst.ORIGIN_ALARM_CLOCK, simpleNotification, HuamiService.ALERT_LEVEL_VIBRATE_ONLY, abortAction);
     }
 
@@ -694,14 +674,14 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     public void onSetCallState(CallSpec callSpec) {
         if (callSpec.command == CallSpec.CALL_INCOMING) {
             telephoneRinging = true;
-            AbortTransactionAction abortAction = new StopNotificationAction(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL)) {
+            nodomain.knu2018.bandutils.service.btle.actions.AbortTransactionAction abortAction = new StopNotificationAction(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL)) {
                 @Override
                 protected boolean shouldAbort() {
                     return !isTelephoneRinging();
                 }
             };
             String message = NotificationUtils.getPreferredTextFor(callSpec);
-            SimpleNotification simpleNotification = new SimpleNotification(message, AlertCategory.IncomingCall, null);
+            SimpleNotification simpleNotification = new SimpleNotification(message, nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.IncomingCall, null);
             performPreferredNotification("incoming call", MiBandConst.ORIGIN_INCOMING_CALL, simpleNotification, HuamiService.ALERT_LEVEL_PHONE_CALL, abortAction);
         } else if ((callSpec.command == CallSpec.CALL_START) || (callSpec.command == CallSpec.CALL_END)) {
             telephoneRinging = false;
@@ -867,6 +847,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         }
         try {
             TransactionBuilder builder = performInitialized("HeartRateTest");
+            enableNotifyHeartRateMeasurements(true, builder);
             builder.write(characteristicHRControlPoint, stopHeartMeasurementContinuous);
             builder.write(characteristicHRControlPoint, stopHeartMeasurementManual);
             builder.write(characteristicHRControlPoint, startHeartMeasurementManual);
@@ -883,10 +864,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         }
         try {
             TransactionBuilder builder = performInitialized("Enable realtime heart rate measurement");
-            BluetoothGattCharacteristic heartrateCharacteristic = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT);
-            if (heartrateCharacteristic != null) {
-                builder.notify(heartrateCharacteristic, enable);
-            }
+            enableNotifyHeartRateMeasurements(enable, builder);
             if (enable) {
                 builder.write(characteristicHRControlPoint, stopHeartMeasurementManual);
                 builder.write(characteristicHRControlPoint, startHeartMeasurementContinuous);
@@ -900,18 +878,28 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
+    private void enableNotifyHeartRateMeasurements(boolean enable, TransactionBuilder builder) {
+        if (heartRateNotifyEnabled != enable) {
+            BluetoothGattCharacteristic heartrateCharacteristic = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT);
+            if (heartrateCharacteristic != null) {
+                builder.notify(heartrateCharacteristic, enable);
+                heartRateNotifyEnabled = enable;
+            }
+        }
+    }
+
     @Override
     public void onFindDevice(boolean start) {
         isLocatingDevice = start;
 
         if (start) {
-            AbortTransactionAction abortAction = new AbortTransactionAction() {
+            nodomain.knu2018.bandutils.service.btle.actions.AbortTransactionAction abortAction = new nodomain.knu2018.bandutils.service.btle.actions.AbortTransactionAction() {
                 @Override
                 protected boolean shouldAbort() {
                     return !isLocatingDevice;
                 }
             };
-            SimpleNotification simpleNotification = new SimpleNotification(getContext().getString(R.string.find_device_you_found_it), AlertCategory.HighPriorityAlert, null);
+            SimpleNotification simpleNotification = new SimpleNotification(getContext().getString(R.string.find_device_you_found_it), nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.HighPriorityAlert, null);
             performDefaultNotification("locating device", simpleNotification, (short) 255, abortAction);
         }
     }
@@ -1355,7 +1343,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                         MiBand2SampleProvider provider = new MiBand2SampleProvider(gbDevice, session);
                         MiBandActivitySample sample = createActivitySample(device, user, ts, provider);
                         sample.setHeartRate(getHeartrateBpm());
-                        sample.setSteps(getSteps());
+//                        sample.setSteps(getSteps());
                         sample.setRawIntensity(ActivitySample.NOT_MEASURED);
                         sample.setRawKind(HuamiConst.TYPE_ACTIVITY); // to make it visible in the charts TODO: add a MANUAL kind for that?
 

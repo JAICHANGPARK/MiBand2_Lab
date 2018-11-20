@@ -21,7 +21,6 @@ import java.util.UUID;
 
 import nodomain.knu2018.bandutils.deviceevents.GBDeviceEvent;
 import nodomain.knu2018.bandutils.deviceevents.GBDeviceEventSendBytes;
-import nodomain.knu2018.bandutils.devices.EventHandler;
 import nodomain.knu2018.bandutils.model.CalendarEventSpec;
 import nodomain.knu2018.bandutils.model.CallSpec;
 import nodomain.knu2018.bandutils.model.CannedMessagesSpec;
@@ -248,6 +247,18 @@ public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport 
     @Override
     public void onSendWeather(WeatherSpec weatherSpec) {
         byte[] bytes = gbDeviceProtocol.encodeSendWeather(weatherSpec);
+        sendToDevice(bytes);
+    }
+
+    @Override
+    public void onSetFmFrequency(float frequency) {
+        byte[] bytes = gbDeviceProtocol.encodeFmFrequency(frequency);
+        sendToDevice(bytes);
+    }
+
+    @Override
+    public void onSetLedColor(int color) {
+        byte[] bytes = gbDeviceProtocol.encodeLedColor(color);
         sendToDevice(bytes);
     }
 }

@@ -26,6 +26,7 @@ import nodomain.knu2018.bandutils.devices.miband.MiBandCoordinator;
 import nodomain.knu2018.bandutils.model.NotificationType;
 import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory;
 
+
 /**
  * Provides methods to convert standard BLE units to byte sequences and vice versa.
  */

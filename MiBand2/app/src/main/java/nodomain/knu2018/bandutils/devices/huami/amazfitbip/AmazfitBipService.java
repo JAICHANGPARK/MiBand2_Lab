@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2018 Andreas Shimokawa
+/*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -23,7 +23,6 @@ import static nodomain.knu2018.bandutils.devices.huami.HuamiService.DISPLAY_ITEM
 import static nodomain.knu2018.bandutils.devices.huami.HuamiService.ENDPOINT_DISPLAY;
 import static nodomain.knu2018.bandutils.devices.huami.HuamiService.ENDPOINT_DISPLAY_ITEMS;
 
-
 public class AmazfitBipService {
     public static final UUID UUID_CHARACTERISTIC_WEATHER = UUID.fromString("0000000e-0000-3512-2118-0009af100700");
 
@@ -44,4 +43,3 @@ public class AmazfitBipService {
 
     public static final byte[] COMMAND_CHANGE_SCREENS = new byte[]{ENDPOINT_DISPLAY_ITEMS, DISPLAY_ITEM_BIT_CLOCK, 0x10, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 }
-

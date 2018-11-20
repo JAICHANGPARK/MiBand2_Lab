@@ -30,15 +30,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import nodomain.knu2018.bandutils.service.AbstractDeviceSupport;
 import nodomain.knu2018.bandutils.Logging;
 import nodomain.knu2018.bandutils.impl.GBDevice;
-import nodomain.knu2018.bandutils.service.AbstractDeviceSupport;
 import nodomain.knu2018.bandutils.service.btle.actions.CheckInitializedAction;
 import nodomain.knu2018.bandutils.service.btle.profiles.AbstractBleProfile;
+
 
 /**
  * Abstract base class for all devices connected through Bluetooth Low Energy (LE) aka
@@ -51,8 +51,8 @@ import nodomain.knu2018.bandutils.service.btle.profiles.AbstractBleProfile;
  * @see TransactionBuilder
  * @see BtLEQueue
  */
-public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport implements GattCallback {
-    private BtLEQueue mQueue;
+public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport implements nodomain.knu2018.bandutils.service.btle.GattCallback {
+    private nodomain.knu2018.bandutils.service.btle.BtLEQueue mQueue;
     private Map<UUID, BluetoothGattCharacteristic> mAvailableCharacteristics;
     private final Set<UUID> mSupportedServices = new HashSet<>(4);
     private Logger logger;
@@ -71,7 +71,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
     @Override
     public boolean connect() {
         if (mQueue == null) {
-            mQueue = new BtLEQueue(getBluetoothAdapter(), getDevice(), this, getContext());
+            mQueue = new nodomain.knu2018.bandutils.service.btle.BtLEQueue(getBluetoothAdapter(), getDevice(), this, getContext());
             mQueue.setAutoReconnect(getAutoReconnect());
         }
         return mQueue.connect();
@@ -91,7 +91,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
      * @param builder
      * @return the same builder as passed as the argument
      */
-    protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
+    protected nodomain.knu2018.bandutils.service.btle.TransactionBuilder initializeDevice(nodomain.knu2018.bandutils.service.btle.TransactionBuilder builder) {
         return builder;
     }
 
@@ -103,8 +103,8 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         }
     }
 
-    public TransactionBuilder createTransactionBuilder(String taskName) {
-        return new TransactionBuilder(taskName);
+    public nodomain.knu2018.bandutils.service.btle.TransactionBuilder createTransactionBuilder(String taskName) {
+        return new nodomain.knu2018.bandutils.service.btle.TransactionBuilder(taskName);
     }
 
     /**
@@ -117,7 +117,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
      * @see #performConnected(Transaction)
      * @see #initializeDevice(TransactionBuilder)
      */
-    public TransactionBuilder performInitialized(String taskName) throws IOException {
+    public nodomain.knu2018.bandutils.service.btle.TransactionBuilder performInitialized(String taskName) throws IOException {
         if (!isConnected()) {
             if (!connect()) {
                 throw new IOException("1: Unable to connect to device: " + getDevice());
@@ -125,7 +125,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         }
         if (!isInitialized()) {
             // first, add a transaction that performs device initialization
-            TransactionBuilder builder = createTransactionBuilder("Initialize device");
+            nodomain.knu2018.bandutils.service.btle.TransactionBuilder builder = createTransactionBuilder("Initialize device");
             builder.add(new CheckInitializedAction(gbDevice));
             initializeDevice(builder).queue(getQueue());
         }
@@ -152,14 +152,14 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
      * of the currently executing transaction.
      * @param builder
      */
-    public void performImmediately(TransactionBuilder builder) throws IOException {
+    public void performImmediately(nodomain.knu2018.bandutils.service.btle.TransactionBuilder builder) throws IOException {
         if (!isConnected()) {
             throw new IOException("Not connected to device: " + getDevice());
         }
         getQueue().insert(builder.getTransaction());
     }
 
-    public BtLEQueue getQueue() {
+    public nodomain.knu2018.bandutils.service.btle.BtLEQueue getQueue() {
         return mQueue;
     }
 
@@ -204,7 +204,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         Map<UUID, BluetoothGattCharacteristic> newCharacteristics = new HashMap<>();
         for (BluetoothGattService service : discoveredGattServices) {
             if (supportedServices.contains(service.getUuid())) {
-                logger.debug("discovered supported service: " + BleNamesResolver.resolveServiceName(service.getUuid().toString()) + ": " + service.getUuid());
+                logger.debug("discovered supported service: " + nodomain.knu2018.bandutils.service.btle.BleNamesResolver.resolveServiceName(service.getUuid().toString()) + ": " + service.getUuid());
                 List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
                 if (characteristics == null || characteristics.isEmpty()) {
                     logger.warn("Supported LE service " + service.getUuid() + "did not return any characteristics");
@@ -213,7 +213,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
                 HashMap<UUID, BluetoothGattCharacteristic> intmAvailableCharacteristics = new HashMap<>(characteristics.size());
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
                     intmAvailableCharacteristics.put(characteristic.getUuid(), characteristic);
-                    logger.info("    characteristic: " + BleNamesResolver.resolveCharacteristicName(characteristic.getUuid().toString()) + ": " + characteristic.getUuid());
+                    logger.info("    characteristic: " + nodomain.knu2018.bandutils.service.btle.BleNamesResolver.resolveCharacteristicName(characteristic.getUuid().toString()) + ": " + characteristic.getUuid());
                 }
                 newCharacteristics.putAll(intmAvailableCharacteristics);
 
@@ -221,7 +221,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
                     mAvailableCharacteristics = newCharacteristics;
                 }
             } else {
-                logger.debug("discovered unsupported service: " + BleNamesResolver.resolveServiceName(service.getUuid().toString()) + ": " + service.getUuid());
+                logger.debug("discovered unsupported service: " + nodomain.knu2018.bandutils.service.btle.BleNamesResolver.resolveServiceName(service.getUuid().toString()) + ": " + service.getUuid());
             }
         }
     }
@@ -318,4 +318,16 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
             profile.onReadRemoteRssi(gatt, rssi, status);
         }
     }
+
+
+    @Override
+    public void onSetFmFrequency(float frequency) {
+
+    }
+
+    @Override
+    public void onSetLedColor(int color) {
+
+    }
+
 }

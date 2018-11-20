@@ -60,7 +60,6 @@ public class GB {
     public static final String NOTIFICATION_CHANNEL_ID = "gadgetbridge";
     public static final String NOTIFICATION_CHANNEL_ID_TRANSFER = "gadgetbridge transfer";
 
-
     public static final int NOTIFICATION_ID = 1;
     public static final int NOTIFICATION_ID_INSTALL = 2;
     public static final int NOTIFICATION_ID_LOW_BATTERY = 3;
@@ -93,7 +92,7 @@ public class GB {
             text += ": " + context.getString(R.string.battery) + " " + device.getBatteryLevel() + "%";
         }
 
-        Boolean connected = device.isInitialized();
+        boolean connected = device.isInitialized();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
         builder.setContentTitle(deviceName)
                 .setTicker(deviceName + " - " + text)
@@ -282,6 +281,8 @@ public class GB {
         toast(context, message, displayTime, severity, null);
     }
 
+
+
     /**
      * Creates and display a Toast message using the application context
      * Can be called from any thread.
@@ -459,7 +460,7 @@ public class GB {
                 .setContentTitle(context.getString(R.string.notif_export_failed_title))
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_app_band_icon)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setOngoing(false);
 

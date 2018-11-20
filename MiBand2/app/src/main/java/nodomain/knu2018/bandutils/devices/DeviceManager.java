@@ -40,7 +40,7 @@ import nodomain.knu2018.bandutils.database.DBHandler;
 import nodomain.knu2018.bandutils.database.DBHelper;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.util.DeviceHelper;
-
+import nodomain.knu2018.bandutils.util.GB;
 
 /**
  * Provides access to the list of devices managed by Gadgetbridge.
@@ -55,12 +55,12 @@ public class DeviceManager {
      * Intent action to notify that the list of devices has changed.
      */
     public static final String ACTION_DEVICES_CHANGED
-            = "nodomain.knu2018.gadgetbridge.devices.devicemanager.action.devices_changed";
+            = "nodomain.knu2018.bandutils.devices.devicemanager.action.devices_changed";
     /**
      * Intent action to notify this class that the list of devices shall be refreshed.
      */
     public static final String ACTION_REFRESH_DEVICELIST
-            = "nodomain.knu2018.gadgetbridge.devices.devicemanager.action.set_version";
+            = "nodomain.knu2018.bandutils.devices.devicemanager.action.set_version";
     private final Context context;
     /**
      * This list is final, it will never be recreated. Only its contents change.
@@ -151,6 +151,8 @@ public class DeviceManager {
                 }
             }
         }
+        GB.updateNotification(selectedDevice, context);
+
     }
 
     private void refreshPairedDevices() {

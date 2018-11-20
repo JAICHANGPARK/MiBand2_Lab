@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import nodomain.knu2018.bandutils.util.GB;
 
+
 public class SetProgressAction extends PlainAction {
     private static final Logger LOG = LoggerFactory.getLogger(SetProgressAction.class);
 

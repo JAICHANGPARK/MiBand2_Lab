@@ -42,6 +42,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.UUID;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
@@ -192,7 +193,11 @@ class PebbleIoThread extends GBDeviceIoThread {
                     for (ParcelUuid uuid : uuids) {
                         LOG.info("found service UUID " + uuid);
                     }
-                    mBtSocket = btDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
+
+                    final UUID UuidSDP = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+                    mBtSocket = btDevice.createRfcommSocketToServiceRecord(UuidSDP);
+
+                    //mBtSocket = btDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
                     mBtSocket.connect();
                     mInStream = mBtSocket.getInputStream();
                     mOutStream = mBtSocket.getOutputStream();
@@ -382,7 +387,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                         gbDevice.setState(GBDevice.State.WAITING_FOR_RECONNECT);
                         gbDevice.sendDeviceUpdateIntent(getContext());
 
-                        int delaySeconds = 1;
+                        long delaySeconds = 1;
                         while (reconnectAttempts-- > 0 && !mQuit && !mIsConnected) {
                             LOG.info("Trying to reconnect (attempts left " + reconnectAttempts + ")");
                             mIsConnected = connect();
@@ -459,7 +464,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                 mOutStream.flush();
             }
         } catch (IOException e) {
-            LOG.error("Error writing.", e.getMessage());
+            LOG.error("Error writing.", e);
         }
         try {
             Thread.sleep(100);

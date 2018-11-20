@@ -44,8 +44,8 @@ public class GPXExporter implements ActivityTrackExporter {
     public void performExport(ActivityTrack track, File targetFile) throws IOException, GPXTrackEmptyException {
         String encoding = StandardCharsets.UTF_8.name();
         XmlSerializer ser = Xml.newSerializer();
-        try {
-            ser.setOutput(new FileOutputStream(targetFile), encoding);
+        try (FileOutputStream outputStream = new FileOutputStream(targetFile)) {
+            ser.setOutput(outputStream, encoding);
             ser.startDocument(encoding, Boolean.TRUE);
             ser.setPrefix("xsi", NS_XSI_URI);
             ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
@@ -61,7 +61,6 @@ public class GPXExporter implements ActivityTrackExporter {
 
             ser.endTag(NS_DEFAULT, "gpx");
             ser.endDocument();
-        } finally {
             ser.flush();
         }
     }
@@ -115,7 +114,7 @@ public class GPXExporter implements ActivityTrackExporter {
         ser.attribute(NS_DEFAULT, "lon", formatLocation(location.getLongitude()));
         ser.attribute(NS_DEFAULT, "lat", formatLocation(location.getLatitude()));
         ser.startTag(NS_DEFAULT, "ele").text(formatLocation(location.getAltitude())).endTag(NS_DEFAULT, "ele");
-        ser.startTag(NS_DEFAULT, "time").text(formatTime(point.getTime())).endTag(NS_DEFAULT, "time");
+        ser.startTag(NS_DEFAULT, "time").text(DateTimeUtils.formatIso8601UTC(point.getTime())).endTag(NS_DEFAULT, "time");
         String description = point.getDescription();
         if (description != null) {
             ser.startTag(NS_DEFAULT, "desc").text(description).endTag(NS_DEFAULT, "desc");
@@ -135,7 +134,7 @@ public class GPXExporter implements ActivityTrackExporter {
         }
 
         int hr = point.getHeartRate();
-        if (!HeartRateUtils.isValidHeartRateValue(hr)) {
+        if (!HeartRateUtils.getInstance().isValidHeartRateValue(hr)) {
             if (!includeHeartRateOfNearestSample) {
                 return;
             }
@@ -146,7 +145,7 @@ public class GPXExporter implements ActivityTrackExporter {
             }
 
             hr = closestPointItem.getHeartRate();
-            if (!HeartRateUtils.isValidHeartRateValue(hr)) {
+            if (!HeartRateUtils.getInstance().isValidHeartRateValue(hr)) {
                 return;
             }
         }
@@ -161,11 +160,12 @@ public class GPXExporter implements ActivityTrackExporter {
 
     private @Nullable ActivityPoint findClosestSensibleActivityPoint(Date time, List<ActivityPoint> trackPoints) {
         ActivityPoint closestPointItem = null;
+        HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
 
         long lowestDifference = 60 * 2 * 1000; // minimum distance is 2min
         for (ActivityPoint pointItem : trackPoints) {
             int hrItem = pointItem.getHeartRate();
-            if (HeartRateUtils.isValidHeartRateValue(hrItem)) {
+            if (heartRateUtilsInstance.isValidHeartRateValue(hrItem)) {
                 Date timeItem = pointItem.getTime();
                 if (timeItem.after(time) || timeItem.equals(time)) {
                     break; // we assume that the given trackPoints are sorted in time ascending order (oldest first)
@@ -200,3 +200,4 @@ public class GPXExporter implements ActivityTrackExporter {
         return includeHeartRate;
     }
 }
+

@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.service.devices.huami;
 
-
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.devices.miband.operations.AbstractMiBandOperation;
 

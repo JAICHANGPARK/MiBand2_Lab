@@ -16,12 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.service.devices.hplus;
 
-import nodomain.knu2018.bandutils.model.ActivityKind;
 
 /*
 * @author João Paulo Barraca &lt;jpbarraca@gmail.com&gt;
 */
 
+
+import nodomain.knu2018.bandutils.model.ActivityKind;
 
 public  class HPlusDataRecord {
     public final static int TYPE_UNKNOWN = 0;

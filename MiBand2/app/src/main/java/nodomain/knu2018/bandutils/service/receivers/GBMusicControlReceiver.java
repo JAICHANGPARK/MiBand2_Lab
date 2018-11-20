@@ -40,7 +40,7 @@ import nodomain.knu2018.bandutils.util.Prefs;
 public class GBMusicControlReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(GBMusicControlReceiver.class);
 
-    public static final String ACTION_MUSICCONTROL = "nodomain.knu2018.gadgetbridge.musiccontrol";
+    public static final String ACTION_MUSICCONTROL = "nodomain.knu2018.bandutils.musiccontrol";
 
     @Override
     public void onReceive(Context context, Intent intent) {

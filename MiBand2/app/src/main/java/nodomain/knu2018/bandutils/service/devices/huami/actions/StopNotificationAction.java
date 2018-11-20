@@ -22,7 +22,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.service.btle.actions.AbortTransactionAction;
 
-
 public abstract class StopNotificationAction extends AbortTransactionAction {
 
     private final BluetoothGattCharacteristic alertLevelCharacteristic;

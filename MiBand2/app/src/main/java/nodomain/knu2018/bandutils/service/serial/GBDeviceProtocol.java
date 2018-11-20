@@ -26,6 +26,7 @@ import nodomain.knu2018.bandutils.model.CannedMessagesSpec;
 import nodomain.knu2018.bandutils.model.NotificationSpec;
 import nodomain.knu2018.bandutils.model.WeatherSpec;
 
+
 public abstract class GBDeviceProtocol {
 
     private GBDevice mDevice;
@@ -131,6 +132,14 @@ public abstract class GBDeviceProtocol {
     }
 
     public byte[] encodeSendWeather(WeatherSpec weatherSpec) {
+        return null;
+    }
+
+    public byte[] encodeLedColor(int color) {
+        return null;
+    }
+
+    public byte[] encodeFmFrequency(float frequency) {
         return null;
     }
 }

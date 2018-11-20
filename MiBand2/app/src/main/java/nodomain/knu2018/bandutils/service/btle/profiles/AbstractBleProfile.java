@@ -19,9 +19,11 @@ package nodomain.knu2018.bandutils.service.btle.profiles;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import nodomain.knu2018.bandutils.impl.GBDevice;
@@ -44,8 +46,24 @@ import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 public abstract class AbstractBleProfile<T extends AbstractBTLEDeviceSupport> extends AbstractGattCallback {
     private final T mSupport;
 
+    private List<nodomain.knu2018.bandutils.service.btle.profiles.IntentListener> listeners = new ArrayList<nodomain.knu2018.bandutils.service.btle.profiles.IntentListener>(1);
+
     public AbstractBleProfile(T support) {
         this.mSupport = support;
+    }
+
+    public void addListener(nodomain.knu2018.bandutils.service.btle.profiles.IntentListener listener) {
+        if (listener != null && !listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+    }
+
+    public boolean removeListener(nodomain.knu2018.bandutils.service.btle.profiles.IntentListener listener) {
+        return listeners.remove(listener);
+    }
+
+    protected List<nodomain.knu2018.bandutils.service.btle.profiles.IntentListener> getListeners() {
+        return Collections.unmodifiableList(listeners);
     }
 
     /**
@@ -53,7 +71,11 @@ public abstract class AbstractBleProfile<T extends AbstractBTLEDeviceSupport> ex
      * @param intent the intent to broadcast
      */
     protected void notify(Intent intent) {
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        // note: we send synchronously in order to keep the processing order of BLE events
+        // in BtleQueue and the reception of results.
+        for (nodomain.knu2018.bandutils.service.btle.profiles.IntentListener listener : listeners) {
+            listener.notify(intent);
+        }
     }
 
     /**

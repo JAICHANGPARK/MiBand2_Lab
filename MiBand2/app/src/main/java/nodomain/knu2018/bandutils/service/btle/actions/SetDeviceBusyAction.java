@@ -21,6 +21,7 @@ import android.content.Context;
 
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
+
 public class SetDeviceBusyAction extends PlainAction {
     private final GBDevice device;
     private final Context context;

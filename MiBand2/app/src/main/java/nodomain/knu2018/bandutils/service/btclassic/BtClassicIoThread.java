@@ -26,27 +26,22 @@ import android.support.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketTimeoutException;
-import java.nio.ByteBuffer;
 import java.util.UUID;
 
 import nodomain.knu2018.bandutils.deviceevents.GBDeviceEvent;
-import nodomain.knu2018.bandutils.devices.liveview.LiveviewConstants;
 import nodomain.knu2018.bandutils.impl.GBDevice;
-import nodomain.knu2018.bandutils.service.serial.AbstractSerialDeviceSupport;
-import nodomain.knu2018.bandutils.service.serial.GBDeviceIoThread;
-import nodomain.knu2018.bandutils.service.serial.GBDeviceProtocol;
 import nodomain.knu2018.bandutils.util.GB;
 
-public abstract class BtClassicIoThread extends GBDeviceIoThread {
+
+public abstract class BtClassicIoThread extends nodomain.knu2018.bandutils.service.serial.GBDeviceIoThread {
     private static final Logger LOG = LoggerFactory.getLogger(BtClassicIoThread.class);
 
-    private final GBDeviceProtocol mProtocol;
-    private final AbstractSerialDeviceSupport mDeviceSupport;
+    private final nodomain.knu2018.bandutils.service.serial.GBDeviceProtocol mProtocol;
+    private final nodomain.knu2018.bandutils.service.serial.AbstractSerialDeviceSupport mDeviceSupport;
 
 
     private BluetoothAdapter mBtAdapter = null;
@@ -70,7 +65,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
     private boolean mIsConnected = false;
 
 
-    public BtClassicIoThread(GBDevice gbDevice, Context context, GBDeviceProtocol deviceProtocol, AbstractSerialDeviceSupport deviceSupport, BluetoothAdapter btAdapter) {
+    public BtClassicIoThread(GBDevice gbDevice, Context context, nodomain.knu2018.bandutils.service.serial.GBDeviceProtocol deviceProtocol, nodomain.knu2018.bandutils.service.serial.AbstractSerialDeviceSupport deviceSupport, BluetoothAdapter btAdapter) {
         super(gbDevice, context);
         mProtocol = deviceProtocol;
         mDeviceSupport = deviceSupport;
@@ -81,6 +76,10 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
     public synchronized void write(byte[] bytes) {
         if (null == bytes)
             return;
+        if (mOutStream == null) {
+            LOG.error("mOutStream is null");
+            return;
+        }
         LOG.debug("writing:" + GB.hexdump(bytes, 0, bytes.length));
         try {
             mOutStream.write(bytes);

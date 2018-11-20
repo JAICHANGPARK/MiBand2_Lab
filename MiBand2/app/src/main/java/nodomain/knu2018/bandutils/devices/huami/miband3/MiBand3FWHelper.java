@@ -24,7 +24,6 @@ import java.io.IOException;
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
 import nodomain.knu2018.bandutils.service.devices.huami.miband3.MiBand3FirmwareInfo;
 
-
 public class MiBand3FWHelper extends HuamiFWHelper {
 
     public MiBand3FWHelper(Uri uri, Context context) throws IOException {

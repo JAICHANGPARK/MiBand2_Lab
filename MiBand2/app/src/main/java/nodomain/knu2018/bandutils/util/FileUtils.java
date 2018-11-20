@@ -1,5 +1,5 @@
 /*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer, Felix
-    Konstantin Maurer, JohnnySun
+    Konstantin Maurer, JohnnySun, Taavi Eomäe
 
     This file is part of Gadgetbridge.
 
@@ -19,7 +19,6 @@ package nodomain.knu2018.bandutils.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.icu.util.Output;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -43,6 +42,7 @@ import java.util.List;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.GBEnvironment;
+
 
 public class FileUtils {
     // Don't use slf4j here -- would be a bootstrapping problem
@@ -318,6 +318,6 @@ public class FileUtils {
      * @return the valid file name
      */
     public static String makeValidFileName(String name) {
-        return name.replaceAll("\0/:\\r\\n\\\\", "_");
+        return name.replaceAll("[\0/:\\r\\n\\\\]", "_");
     }
 }

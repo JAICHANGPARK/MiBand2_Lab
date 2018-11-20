@@ -24,6 +24,8 @@ import android.support.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.huami.HuamiConst;
@@ -33,7 +35,6 @@ import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.DeviceType;
 import nodomain.knu2018.bandutils.util.Prefs;
-
 
 public class MiBand3Coordinator extends HuamiCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(MiBand3Coordinator.class);
@@ -78,5 +79,19 @@ public class MiBand3Coordinator extends HuamiCoordinator {
     public static boolean getBandScreenUnlock() {
         Prefs prefs = GBApplication.getPrefs();
         return prefs.getBoolean(MiBandConst.PREF_MI3_BAND_SCREEN_UNLOCK, false);
+    }
+
+    public static String getNightMode() {
+        Prefs prefs = GBApplication.getPrefs();
+
+        return prefs.getString(MiBandConst.PREF_MI3_NIGHT_MODE, MiBandConst.PREF_MI3_NIGHT_MODE_OFF);
+    }
+
+    public static Date getNightModeStart() {
+        return getTimePreference( MiBandConst.PREF_MI3_NIGHT_MODE_START, "16:00");
+    }
+
+    public static Date getNightModeEnd() {
+        return getTimePreference(MiBandConst.PREF_MI3_NIGHT_MODE_END, "07:00");
     }
 }

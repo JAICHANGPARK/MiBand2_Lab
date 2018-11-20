@@ -99,7 +99,7 @@ public class AnalysisUserActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         networkInfo = getNetworkInfo();
-        alertDialog = new SpotsDialog(this);
+        alertDialog = new SpotsDialog.Builder().setContext(this).build();
 
         userName = Paper.book().read("userName");
 

@@ -52,6 +52,7 @@ import nodomain.knu2018.bandutils.service.devices.pebble.webview.GBChromeClient;
 import nodomain.knu2018.bandutils.service.devices.pebble.webview.GBWebClient;
 import nodomain.knu2018.bandutils.service.devices.pebble.webview.JSInterface;
 
+
 public class WebViewSingleton {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebViewSingleton.class);
@@ -190,9 +191,8 @@ public class WebViewSingleton {
                     webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
                 }
             });
-            // TODO: 2018-07-07 update ! - 박제창
-            if (contextWrapper != null &&  !internetHelperBound && !internetHelperInstalled) {
-                String internetHelperPkg = "nodomain.knu2018.internethelper";
+            if (contextWrapper != null && !internetHelperBound && !internetHelperInstalled) {
+                String internetHelperPkg = "nodomain.freeyourgadget.internethelper";
                 String internetHelperCls = internetHelperPkg + ".MyService";
                 try {
                     contextWrapper.getPackageManager().getApplicationInfo(internetHelperPkg, 0);

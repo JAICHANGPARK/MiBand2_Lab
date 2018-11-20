@@ -31,6 +31,7 @@ import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.btle.profiles.AbstractBleProfile;
 import nodomain.knu2018.bandutils.util.StringUtils;
 
+
 public class AlertNotificationProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AlertNotificationProfile.class);
     private int maxLength = 18; // Mi2-ism?

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2018 Carsten Pfeiffer
+/*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -18,9 +18,9 @@ package nodomain.knu2018.bandutils.service.devices.huami;
 
 import java.util.GregorianCalendar;
 
+import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.devices.miband.MiBandDateConverter;
 import nodomain.knu2018.bandutils.model.BatteryState;
-import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.devices.miband.AbstractInfo;
 
 //00000006-0000-3512-2118-0009af100700
@@ -44,7 +44,6 @@ import nodomain.knu2018.bandutils.service.devices.miband.AbstractInfo;
 //        3b		= 59
 //        04		= 4   // num charges??
 //        64		= 100 // how much was charged
-
 
 public class HuamiBatteryInfo extends AbstractInfo {
     public static final byte DEVICE_BATTERY_NORMAL = 0;

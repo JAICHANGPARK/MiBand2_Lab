@@ -1,3 +1,20 @@
+/*  Copyright (C) 2017-2018 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
+    szilardx
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.service.devices.huami.amazfitbip;
 
 import org.slf4j.Logger;
@@ -10,12 +27,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.entities.BaseActivitySummary;
 import nodomain.knu2018.bandutils.model.ActivityPoint;
 import nodomain.knu2018.bandutils.model.ActivityTrack;
 import nodomain.knu2018.bandutils.model.GPSCoordinate;
-import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 
 public class ActivityDetailsParser {
     private static final Logger LOG = LoggerFactory.getLogger(ActivityDetailsParser.class);
@@ -107,6 +124,9 @@ public class ActivityDetailsParser {
                     case TYPE_GPS_SPEED6:
                         i += consumeSpeed6(bytes, i);
                         break;
+                    default:
+                        LOG.warn("unknown packet type" + type);
+                        i+=6;
                 }
             }
         } catch (IndexOutOfBoundsException ex) {

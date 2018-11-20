@@ -21,6 +21,7 @@ import android.content.Context;
 
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
+
 public class SetDeviceStateAction extends PlainAction {
     private final GBDevice device;
     private final GBDevice.State deviceState;

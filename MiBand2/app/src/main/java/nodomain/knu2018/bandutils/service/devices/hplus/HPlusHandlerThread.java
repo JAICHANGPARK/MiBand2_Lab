@@ -24,7 +24,6 @@ package nodomain.knu2018.bandutils.service.devices.hplus;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +35,8 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
+import nodomain.knu2018.bandutils.service.serial.GBDeviceIoThread;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.database.DBHandler;
@@ -51,8 +52,6 @@ import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.ActivityKind;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.DeviceService;
-import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.serial.GBDeviceIoThread;
 
 
 class HPlusHandlerThread extends GBDeviceIoThread {
@@ -641,7 +640,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
         HPlusHealthActivitySample sample = new HPlusHealthActivitySample(
                 timestamp,                      // ts
-                deviceId, userId,               // UserInfo id
+                deviceId, userId,               // User id
                 null,            // Raw Data
                 ActivityKind.TYPE_UNKNOWN,
                 0,                              // Intensity

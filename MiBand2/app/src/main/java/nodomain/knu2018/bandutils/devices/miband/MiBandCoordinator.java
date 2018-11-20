@@ -1,5 +1,5 @@
 /*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer, Christian
-    Fischer, Daniele Gobbetti, Szymon Tomasz Stefanek
+    Fischer, Daniele Gobbetti, José Rebelo, Szymon Tomasz Stefanek
 
     This file is part of Gadgetbridge.
 
@@ -36,6 +36,8 @@ import java.util.Collections;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.GBException;
+import nodomain.knu2018.bandutils.R;
+import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.SampleProvider;
@@ -174,6 +176,11 @@ public class MiBandCoordinator extends AbstractDeviceCoordinator {
         return false;
     }
 
+    @Override
+    public boolean supportsFindDevice() {
+        return true;
+    }
+
     public static boolean hasValidUserInfo() {
         String dummyMacAddress = MiBandService.MAC_ADDRESS_FILTER_1_1A + ":00:00:00";
         try {
@@ -257,10 +264,5 @@ public class MiBandCoordinator extends AbstractDeviceCoordinator {
 
     private boolean isMiPro(String hardwareVersion) {
         return MiBandConst.MI_PRO.equals(hardwareVersion);
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return true;
     }
 }

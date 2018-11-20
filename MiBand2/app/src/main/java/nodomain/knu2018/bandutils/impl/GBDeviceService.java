@@ -1,5 +1,6 @@
 /*  Copyright (C) 2015-2018 Alberto, Andreas Shimokawa, Carsten Pfeiffer,
-    criogenic, Frank Slezak, ivanovlev, Julien Pivotto, Kasha, Steffen Liebergeld
+    criogenic, dakhnod, Frank Slezak, ivanovlev, Julien Pivotto, Kasha, Steffen
+    Liebergeld
 
     This file is part of Gadgetbridge.
 
@@ -41,8 +42,10 @@ import nodomain.knu2018.bandutils.model.NotificationSpec;
 import nodomain.knu2018.bandutils.model.WeatherSpec;
 import nodomain.knu2018.bandutils.service.DeviceCommunicationService;
 import nodomain.knu2018.bandutils.util.LanguageUtils;
+import nodomain.knu2018.bandutils.util.RtlUtils;
 
 import static nodomain.knu2018.bandutils.util.JavaExtensions.coalesce;
+
 
 public class GBDeviceService implements DeviceService {
     protected final Context mContext;
@@ -77,6 +80,14 @@ public class GBDeviceService implements DeviceService {
             for (String extra : transliterationExtras) {
                 if (intent.hasExtra(extra)) {
                     intent.putExtra(extra, LanguageUtils.transliterate(intent.getStringExtra(extra)));
+                }
+            }
+        }
+
+        if (RtlUtils.rtlSupport()) {
+            for (String extra : transliterationExtras) {
+                if (intent.hasExtra(extra)) {
+                    intent.putExtra(extra, RtlUtils.fixRtl(intent.getStringExtra(extra)));
                 }
             }
         }
@@ -139,10 +150,12 @@ public class GBDeviceService implements DeviceService {
                 .putExtra(EXTRA_NOTIFICATION_SUBJECT, notificationSpec.subject)
                 .putExtra(EXTRA_NOTIFICATION_TITLE, notificationSpec.title)
                 .putExtra(EXTRA_NOTIFICATION_BODY, notificationSpec.body)
-                .putExtra(EXTRA_NOTIFICATION_ID, notificationSpec.id)
+                .putExtra(EXTRA_NOTIFICATION_ID, notificationSpec.getId())
                 .putExtra(EXTRA_NOTIFICATION_TYPE, notificationSpec.type)
+                .putExtra(EXTRA_NOTIFICATION_ACTIONS, notificationSpec.attachedActions)
                 .putExtra(EXTRA_NOTIFICATION_SOURCENAME, notificationSpec.sourceName)
-                .putExtra(EXTRA_NOTIFICATION_PEBBLE_COLOR, notificationSpec.pebbleColor);
+                .putExtra(EXTRA_NOTIFICATION_PEBBLE_COLOR, notificationSpec.pebbleColor)
+                .putExtra(EXTRA_NOTIFICATION_SOURCEAPPID, notificationSpec.sourceAppId);
         invokeService(intent);
     }
 
@@ -402,5 +415,19 @@ public class GBDeviceService implements DeviceService {
         }
 
         return name;
+    }
+
+    @Override
+    public void onSetFmFrequency(float frequency) {
+        Intent intent = createIntent().setAction(ACTION_SET_FM_FREQUENCY)
+                .putExtra(EXTRA_FM_FREQUENCY, frequency);
+        invokeService(intent);
+    }
+
+    @Override
+    public void onSetLedColor(int color) {
+        Intent intent = createIntent().setAction(ACTION_SET_LED_COLOR)
+                .putExtra(EXTRA_LED_COLOR, color);
+        invokeService(intent);
     }
 }

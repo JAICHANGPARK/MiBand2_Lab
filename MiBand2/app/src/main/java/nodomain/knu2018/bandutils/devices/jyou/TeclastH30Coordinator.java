@@ -1,5 +1,5 @@
 /*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, protomors, Sami Alaoui
+    Gobbetti, Dougal19, José Rebelo, protomors, Sami Alaoui
 
     This file is part of Gadgetbridge.
 
@@ -26,26 +26,34 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.support.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-import java.util.Collections;
-
+import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.knu2018.bandutils.GBException;
+import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.SampleProvider;
 import nodomain.knu2018.bandutils.entities.DaoSession;
 import nodomain.knu2018.bandutils.entities.Device;
 import nodomain.knu2018.bandutils.impl.GBDevice;
-import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.DeviceType;
+import nodomain.knu2018.bandutils.util.Prefs;
+import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
 
     protected static final Logger LOG = LoggerFactory.getLogger(TeclastH30Coordinator.class);
+
+    // e.g. H3-B20F
+    private Pattern deviceNamePattern = Pattern.compile("^H[13]-[ABCDEF0123456789]{4}$");
 
     @NonNull
     @Override
@@ -59,9 +67,19 @@ public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
     @NonNull
     @Override
     public DeviceType getSupportedType(GBDeviceCandidate candidate) {
-        String name = candidate.getDevice().getName();
-        if (name != null && (name.startsWith("TECLAST_H30") || name.startsWith("TECLAST_H10"))) {
+        if (candidate.supportsService(JYouConstants.UUID_SERVICE_JYOU)) {
             return DeviceType.TECLASTH30;
+        }
+
+        String name = candidate.getDevice().getName();
+        if (name != null) {
+            if (name.startsWith("TECLAST_H30") || name.startsWith("TECLAST_H10")) {
+                return DeviceType.TECLASTH30;
+            }
+            Matcher deviceNameMatcher = deviceNamePattern.matcher(name);
+            if (deviceNameMatcher.matches()) {
+                return DeviceType.TECLASTH30;
+            }
         }
         return DeviceType.UNKNOWN;
     }
@@ -84,6 +102,11 @@ public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
     @Override
     public boolean supportsWeather() {
         return false;
+    }
+
+    @Override
+    public boolean supportsFindDevice() {
+        return true;
     }
 
     @Override
@@ -155,10 +178,4 @@ public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
 
     }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return true;
-    }
-
 }

@@ -18,7 +18,6 @@ package nodomain.knu2018.bandutils.service.btle.profiles.heartrate;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.widget.Toast;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +25,12 @@ import org.slf4j.LoggerFactory;
 import nodomain.knu2018.bandutils.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.knu2018.bandutils.service.btle.GattCharacteristic;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.profiles.AbstractBleProfile;
-import nodomain.knu2018.bandutils.util.GB;
+
 
 /**
  * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml
  */
-public class HeartRateProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
+public class HeartRateProfile<T extends AbstractBTLEDeviceSupport> extends nodomain.knu2018.bandutils.service.btle.profiles.AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(HeartRateProfile.class);
 
     /**
@@ -71,7 +69,7 @@ public class HeartRateProfile<T extends AbstractBTLEDeviceSupport> extends Abstr
                 format = BluetoothGattCharacteristic.FORMAT_UINT8;
             }
             final int heartRate = characteristic.getIntValue(format, 1);
-            LOG.info("Heart rate: " + heartRate, Toast.LENGTH_LONG, GB.INFO);
+            LOG.info("Heart rate: " + heartRate);
         }
         return false;
     }

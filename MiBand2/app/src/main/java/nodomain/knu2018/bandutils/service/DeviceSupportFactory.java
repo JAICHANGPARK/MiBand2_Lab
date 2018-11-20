@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2018 0nse, Andreas Shimokawa, Carsten Pfeiffer,
-    Daniele Gobbetti, João Paulo Barraca, ladbsoft, protomors, Quallenauge,
-    Sami Alaoui, Sergey Trofimov
+/*  Copyright (C) 2015-2018 0nse, Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, João Paulo Barraca, José Rebelo, Kranz, ladbsoft, maxirnilian,
+    protomors, Quallenauge, Sami Alaoui, Sergey Trofimov, tiparega, Vadim Kaushan
 
     This file is part of Gadgetbridge.
 
@@ -34,15 +34,19 @@ import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitcor.AmazfitCorSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.miband3.MiBand3Support;
+import nodomain.knu2018.bandutils.service.devices.id115.ID115Support;
 import nodomain.knu2018.bandutils.service.devices.jyou.TeclastH30Support;
 import nodomain.knu2018.bandutils.service.devices.liveview.LiveviewSupport;
 import nodomain.knu2018.bandutils.service.devices.miband.MiBandSupport;
 import nodomain.knu2018.bandutils.service.devices.no1f1.No1F1Support;
 import nodomain.knu2018.bandutils.service.devices.pebble.PebbleSupport;
+import nodomain.knu2018.bandutils.service.devices.roidmi.RoidmiSupport;
 import nodomain.knu2018.bandutils.service.devices.vibratissimo.VibratissimoSupport;
+import nodomain.knu2018.bandutils.service.devices.watch9.Watch9DeviceSupport;
 import nodomain.knu2018.bandutils.service.devices.xwatch.XWatchSupport;
-import nodomain.knu2018.bandutils.service.isens.CareSensSupport;
+import nodomain.knu2018.bandutils.service.devices.zetime.ZeTimeDeviceSupport;
 import nodomain.knu2018.bandutils.util.GB;
+
 
 public class DeviceSupportFactory {
     private final BluetoothAdapter mBtAdapter;
@@ -141,6 +145,9 @@ public class DeviceSupportFactory {
                     case EXRIZUK8:
                         deviceSupport = new ServiceDeviceSupport(new HPlusSupport(DeviceType.EXRIZUK8), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
+                    case Q8:
+                        deviceSupport = new ServiceDeviceSupport(new HPlusSupport(DeviceType.Q8), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
                     case NO1F1:
                         deviceSupport = new ServiceDeviceSupport(new No1F1Support(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
@@ -150,10 +157,21 @@ public class DeviceSupportFactory {
                     case XWATCH:
                         deviceSupport = new ServiceDeviceSupport(new XWatchSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
-                    case CARESENSN:
-                        deviceSupport = new ServiceDeviceSupport(new CareSensSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+		            case ZETIME:
+                        deviceSupport = new ServiceDeviceSupport(new ZeTimeDeviceSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
-
+                    case ID115:
+                        deviceSupport = new ServiceDeviceSupport(new ID115Support(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case WATCH9:
+                        deviceSupport = new ServiceDeviceSupport(new Watch9DeviceSupport(), EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case ROIDMI:
+                        deviceSupport = new ServiceDeviceSupport(new RoidmiSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case ROIDMI3:
+                        deviceSupport = new ServiceDeviceSupport(new RoidmiSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
                 }
                 if (deviceSupport != null) {
                     deviceSupport.setContext(gbDevice, mBtAdapter, mContext);

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
+
 /**
  * A special action that is executed at the very front of the initialization
  * sequence (transaction). It will abort the entire initialization sequence

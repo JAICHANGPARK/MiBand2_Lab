@@ -1,6 +1,7 @@
 /*  Copyright (C) 2015-2018 Andreas Shimokawa, Avamander, Carsten Pfeiffer,
-    Daniele Gobbetti, Daniel Hauck, Frank Slezak, ivanovlev, João Paulo Barraca,
-    Julien Pivotto, Kasha, Sergey Trofimov, Steffen Liebergeld, Uwe Hermann
+    dakhnod, Daniele Gobbetti, Daniel Hauck, Frank Slezak, ivanovlev, João Paulo
+    Barraca, Julien Pivotto, Kasha, Martin, Sergey Trofimov, Steffen Liebergeld,
+    Taavi Eomäe, Uwe Hermann
 
     This file is part of Gadgetbridge.
 
@@ -46,6 +47,7 @@ import java.util.UUID;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.R;
+import nodomain.knu2018.bandutils.activities.HeartRateUtils;
 import nodomain.knu2018.bandutils.devices.DeviceCoordinator;
 import nodomain.knu2018.bandutils.externalevents.AlarmClockReceiver;
 import nodomain.knu2018.bandutils.externalevents.AlarmReceiver;
@@ -104,7 +106,9 @@ import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SETMUSICSTAT
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SETTIME;
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SET_ALARMS;
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SET_CONSTANT_VIBRATION;
+import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SET_FM_FREQUENCY;
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SET_HEARTRATE_MEASUREMENT_INTERVAL;
+import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_SET_LED_COLOR;
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_START;
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_STARTAPP;
 import static nodomain.knu2018.bandutils.model.DeviceService.ACTION_TEST_NEW_FUNCTION;
@@ -129,7 +133,9 @@ import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_CANNEDMESSAGE
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_CONFIG;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_CONNECT_FIRST_TIME;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_FIND_START;
+import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_FM_FREQUENCY;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_INTERVAL_SECONDS;
+import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_LED_COLOR;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_ALBUM;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_ARTIST;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_DURATION;
@@ -141,6 +147,7 @@ import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_STATE;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_TRACK;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_TRACKCOUNT;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_MUSIC_TRACKNR;
+import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_NOTIFICATION_ACTIONS;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_NOTIFICATION_BODY;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_NOTIFICATION_FLAGS;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_NOTIFICATION_ID;
@@ -156,6 +163,7 @@ import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_RECORDED_DATA
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_URI;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_VIBRATION_INTENSITY;
 import static nodomain.knu2018.bandutils.model.DeviceService.EXTRA_WEATHER;
+
 
 public class DeviceCommunicationService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final Logger LOG = LoggerFactory.getLogger(DeviceCommunicationService.class);
@@ -333,11 +341,25 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     mGBDevice.sendDeviceUpdateIntent(this);
                 }
                 break;
+            default:
+                if (mDeviceSupport == null || mGBDevice == null) {
+                    LOG.warn("device support:" + mDeviceSupport + ", device: " + mGBDevice + ", aborting");
+                } else {
+                    handleAction(intent, action, prefs);
+                }
+                break;
+        }
+        return START_STICKY;
+    }
+
+    private void handleAction(Intent intent, String action, Prefs prefs) {
+        switch (action) {
             case ACTION_REQUEST_DEVICEINFO:
                 mGBDevice.sendDeviceUpdateIntent(this);
                 break;
             case ACTION_NOTIFICATION: {
-                NotificationSpec notificationSpec = new NotificationSpec();
+                int desiredId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1);
+                NotificationSpec notificationSpec = new NotificationSpec(desiredId);
                 notificationSpec.phoneNumber = intent.getStringExtra(EXTRA_NOTIFICATION_PHONENUMBER);
                 notificationSpec.sender = intent.getStringExtra(EXTRA_NOTIFICATION_SENDER);
                 notificationSpec.subject = intent.getStringExtra(EXTRA_NOTIFICATION_SUBJECT);
@@ -345,31 +367,29 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 notificationSpec.body = intent.getStringExtra(EXTRA_NOTIFICATION_BODY);
                 notificationSpec.sourceName = intent.getStringExtra(EXTRA_NOTIFICATION_SOURCENAME);
                 notificationSpec.type = (NotificationType) intent.getSerializableExtra(EXTRA_NOTIFICATION_TYPE);
+                notificationSpec.attachedActions = (ArrayList<NotificationSpec.Action>) intent.getSerializableExtra(EXTRA_NOTIFICATION_ACTIONS);
                 notificationSpec.pebbleColor = (byte) intent.getSerializableExtra(EXTRA_NOTIFICATION_PEBBLE_COLOR);
-                notificationSpec.id = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1);
                 notificationSpec.flags = intent.getIntExtra(EXTRA_NOTIFICATION_FLAGS, 0);
                 notificationSpec.sourceAppId = intent.getStringExtra(EXTRA_NOTIFICATION_SOURCEAPPID);
 
                 if (notificationSpec.type == NotificationType.GENERIC_SMS && notificationSpec.phoneNumber != null) {
-                    notificationSpec.id = mRandom.nextInt(); // FIXME: add this in external SMS Receiver?
-                    GBApplication.getIDSenderLookup().add(notificationSpec.id, notificationSpec.phoneNumber);
+                    GBApplication.getIDSenderLookup().add(notificationSpec.getId(), notificationSpec.phoneNumber);
                 }
 
-                if (((notificationSpec.flags & NotificationSpec.FLAG_WEARABLE_REPLY) > 0)
+                //TODO: check if at least one of the attached actions is a reply action instead?
+                if ((notificationSpec.attachedActions != null && notificationSpec.attachedActions.size() > 0)
                         || (notificationSpec.type == NotificationType.GENERIC_SMS && notificationSpec.phoneNumber != null)) {
                     // NOTE: maybe not where it belongs
-                    if (prefs.getBoolean("pebble_force_untested", false)) {
-                        // I would rather like to save that as an array in SharedPreferences
-                        // this would work but I dont know how to do the same in the Settings Activity's xml
-                        ArrayList<String> replies = new ArrayList<>();
-                        for (int i = 1; i <= 16; i++) {
-                            String reply = prefs.getString("canned_reply_" + i, null);
-                            if (reply != null && !reply.equals("")) {
-                                replies.add(reply);
-                            }
+                    // I would rather like to save that as an array in SharedPreferences
+                    // this would work but I dont know how to do the same in the Settings Activity's xml
+                    ArrayList<String> replies = new ArrayList<>();
+                    for (int i = 1; i <= 16; i++) {
+                        String reply = prefs.getString("canned_reply_" + i, null);
+                        if (reply != null && !reply.equals("")) {
+                            replies.add(reply);
                         }
-                        notificationSpec.cannedReplies = replies.toArray(new String[replies.size()]);
                     }
+                    notificationSpec.cannedReplies = replies.toArray(new String[replies.size()]);
                 }
 
                 mDeviceSupport.onNotification(notificationSpec);
@@ -523,7 +543,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 break;
             }
             case ACTION_SET_HEARTRATE_MEASUREMENT_INTERVAL: {
-                Integer seconds = intent.getIntExtra(EXTRA_INTERVAL_SECONDS, 0);
+                int seconds = intent.getIntExtra(EXTRA_INTERVAL_SECONDS, 0);
                 mDeviceSupport.onSetHeartRateMeasurementInterval(seconds);
                 break;
             }
@@ -548,9 +568,19 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
                 break;
             }
+            case ACTION_SET_LED_COLOR:
+                int color = intent.getIntExtra(EXTRA_LED_COLOR, 0);
+                if (color != 0) {
+                    mDeviceSupport.onSetLedColor(color);
+                }
+                break;
+            case ACTION_SET_FM_FREQUENCY:
+                float frequency = intent.getFloatExtra(EXTRA_FM_FREQUENCY, -1);
+                if (frequency != -1) {
+                    mDeviceSupport.onSetFmFrequency(frequency);
+                }
+                break;
         }
-
-        return START_STICKY;
     }
 
     /**
@@ -766,6 +796,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (mDeviceSupport != null) {
                 mDeviceSupport.setAutoReconnect(autoReconnect);
             }
+        }
+        if (GBPrefs.CHART_MAX_HEART_RATE.equals(key) || GBPrefs.CHART_MIN_HEART_RATE.equals(key)) {
+            HeartRateUtils.getInstance().updateCachedHeartRatePreferences();
         }
     }
 

@@ -279,6 +279,16 @@ public class CareSensSupport extends AbstractBTLEDeviceSupport {
 
     }
 
+    @Override
+    public void onSetFmFrequency(float frequency) {
+
+    }
+
+    @Override
+    public void onSetLedColor(int color) {
+
+    }
+
     private void handleGlucoseMeasurement(byte[] msg) {
 
         int offset = 0;

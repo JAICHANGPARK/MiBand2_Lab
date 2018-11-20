@@ -36,7 +36,6 @@ import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
 import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.actions.SetDeviceBusyAction;
 import nodomain.knu2018.bandutils.service.btle.actions.SetProgressAction;
 import nodomain.knu2018.bandutils.service.devices.huami.AbstractHuamiOperation;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiFirmwareInfo;
@@ -44,6 +43,7 @@ import nodomain.knu2018.bandutils.service.devices.huami.HuamiFirmwareType;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.Prefs;
+
 
 public class UpdateFirmwareOperation extends AbstractHuamiOperation {
     private static final Logger LOG = LoggerFactory.getLogger(UpdateFirmwareOperation.class);
@@ -192,7 +192,7 @@ public class UpdateFirmwareOperation extends AbstractHuamiOperation {
         try {
             TransactionBuilder builder = performInitialized("send firmware info");
 //                getSupport().setLowLatency(builder);
-            builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.updating_firmware), getContext()));
+            builder.add(new nodomain.knu2018.bandutils.service.btle.actions.SetDeviceBusyAction(getDevice(), getContext().getString(R.string.updating_firmware), getContext()));
             int fwSize = getFirmwareInfo().getSize();
             byte[] sizeBytes = BLETypeConversions.fromUint24(fwSize);
             int arraySize = 4;

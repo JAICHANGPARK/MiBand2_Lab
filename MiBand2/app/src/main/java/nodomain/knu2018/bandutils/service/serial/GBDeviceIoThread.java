@@ -20,6 +20,7 @@ import android.content.Context;
 
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
+
 public abstract class GBDeviceIoThread extends Thread {
     protected final GBDevice gbDevice;
     private final Context context;

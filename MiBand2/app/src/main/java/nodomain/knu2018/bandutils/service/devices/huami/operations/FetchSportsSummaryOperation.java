@@ -29,13 +29,11 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.Logging;
 import nodomain.knu2018.bandutils.database.DBHandler;
 import nodomain.knu2018.bandutils.database.DBHelper;
-import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.devices.huami.amazfitbip.AmazfitBipService;
 import nodomain.knu2018.bandutils.entities.BaseActivitySummary;
 import nodomain.knu2018.bandutils.entities.DaoSession;
@@ -44,10 +42,10 @@ import nodomain.knu2018.bandutils.entities.User;
 import nodomain.knu2018.bandutils.model.ActivityKind;
 import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.actions.WaitAction;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.BipActivityType;
 import nodomain.knu2018.bandutils.util.GB;
+
 
 /**
  * An operation that fetches activity data. For every fetch, a new operation must
@@ -67,13 +65,7 @@ public class FetchSportsSummaryOperation extends AbstractFetchOperation {
     protected void startFetching(TransactionBuilder builder) {
         LOG.info("start" + getName());
         GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-        builder.write(characteristicFetch, BLETypeConversions.join(new byte[] {
-                        HuamiService.COMMAND_ACTIVITY_DATA_START_DATE,
-                        AmazfitBipService.COMMAND_ACTIVITY_DATA_TYPE_SPORTS_SUMMARIES},
-                getSupport().getTimeBytes(sinceWhen, TimeUnit.MINUTES)));
-        builder.add(new WaitAction(1000)); // TODO: actually wait for the success-reply
-        builder.notify(characteristicActivityData, true);
-        builder.write(characteristicFetch, new byte[] { HuamiService.COMMAND_FETCH_DATA });
+        startFetching(builder, AmazfitBipService.COMMAND_ACTIVITY_DATA_TYPE_SPORTS_SUMMARIES, sinceWhen);
     }
 
     @Override
@@ -173,7 +165,8 @@ public class FetchSportsSummaryOperation extends AbstractFetchOperation {
         BaseActivitySummary summary = new BaseActivitySummary();
         ByteBuffer buffer = ByteBuffer.wrap(stream.toByteArray()).order(ByteOrder.LITTLE_ENDIAN);
 //        summary.setVersion(BLETypeConversions.toUnsigned(buffer.getShort()));
-        buffer.getShort(); // version
+        short version = buffer.getShort(); // version
+        LOG.debug("Got verison " + version);
         int activityKind = ActivityKind.TYPE_UNKNOWN;
         try {
             int rawKind = BLETypeConversions.toUnsigned(buffer.getShort());

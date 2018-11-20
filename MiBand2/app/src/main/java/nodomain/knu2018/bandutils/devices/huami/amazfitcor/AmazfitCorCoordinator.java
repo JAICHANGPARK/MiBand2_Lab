@@ -69,5 +69,8 @@ public class AmazfitCorCoordinator extends HuamiCoordinator {
         return true;
     }
 
-
+    @Override
+    public boolean supportsMusicInfo() {
+        return true;
+    }
 }

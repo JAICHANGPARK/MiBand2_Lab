@@ -17,9 +17,10 @@
 package nodomain.knu2018.bandutils.deviceevents;
 
 public class GBDeviceEventNotificationControl extends GBDeviceEvent {
-    public int handle;
+    public long handle;
     public String phoneNumber;
     public String reply;
+    public String title;
     public Event event = Event.UNKNOWN;
 
     public enum Event {

@@ -23,6 +23,7 @@ import java.util.Date;
 
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 
+
 /**
  * The Bluedroid implementation only allows performing one GATT request at a time.
  * As they are asynchronous anyway, we encapsulate every GATT request (read and write)

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * A special action that checks for an abort-condition, and if met, the currently
  * executing transaction will be aborted by returning false.
  */
-public abstract class AbortTransactionAction extends PlainAction {
+public abstract class AbortTransactionAction extends nodomain.knu2018.bandutils.service.btle.actions.PlainAction {
     private static final Logger LOG = LoggerFactory.getLogger(AbortTransactionAction.class);
 
     public AbortTransactionAction() {

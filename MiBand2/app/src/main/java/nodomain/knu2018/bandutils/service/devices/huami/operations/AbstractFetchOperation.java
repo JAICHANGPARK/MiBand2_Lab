@@ -1,4 +1,5 @@
-/*  Copyright (C) 2017-2018 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2017-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -21,6 +22,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.SharedPreferences;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.Logging;
@@ -38,11 +41,13 @@ import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
+import nodomain.knu2018.bandutils.service.btle.actions.AbstractGattListenerWriteAction;
 import nodomain.knu2018.bandutils.service.btle.actions.SetDeviceBusyAction;
 import nodomain.knu2018.bandutils.service.devices.huami.AbstractHuamiOperation;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.util.ArrayUtils;
 import nodomain.knu2018.bandutils.util.GB;
+import nodomain.knu2018.bandutils.util.StringUtils;
 
 
 /**
@@ -87,6 +92,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         }
         fetchCount++;
 
+        // TODO: this probably returns null when device is not connected/initialized yet!
         characteristicActivityData = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA);
         builder.notify(characteristicActivityData, false);
 
@@ -118,7 +124,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
 
     @CallSuper
     protected void handleActivityFetchFinish(boolean success) {
-        GB.updateTransferNotification(null,"",false,100, getContext());
+        GB.updateTransferNotification(null,"",false,100,getContext());
         operationFinished();
         unsetBusy();
     }
@@ -137,6 +143,39 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
 
     protected abstract void bufferActivityData(byte[] value);
 
+    protected void startFetching(TransactionBuilder builder, byte fetchType, GregorianCalendar sinceWhen) {
+        final String taskName = StringUtils.ensureNotNull(builder.getTaskName());
+        byte[] fetchBytes = BLETypeConversions.join(new byte[]{
+                        HuamiService.COMMAND_ACTIVITY_DATA_START_DATE,
+                        fetchType},
+                getSupport().getTimeBytes(sinceWhen, TimeUnit.MINUTES));
+        builder.add(new AbstractGattListenerWriteAction(getQueue(), characteristicFetch, fetchBytes) {
+            @Override
+            protected boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+                UUID characteristicUUID = characteristic.getUuid();
+                if (HuamiService.UUID_UNKNOWN_CHARACTERISTIC4.equals(characteristicUUID)) {
+                    byte[] value = characteristic.getValue();
+
+                    if (ArrayUtils.equals(value, HuamiService.RESPONSE_ACTIVITY_DATA_START_DATE_SUCCESS, 0)) {
+                        handleActivityMetadata(value);
+                        TransactionBuilder newBuilder = createTransactionBuilder(taskName + " Step 2");
+                        newBuilder.notify(characteristicActivityData, true);
+                        newBuilder.write(characteristicFetch, new byte[]{HuamiService.COMMAND_FETCH_DATA});
+                        try {
+                            performImmediately(newBuilder);
+                        } catch (IOException ex) {
+                            GB.toast(getContext(), "Error fetching debug logs: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+                        }
+                        return true;
+                    } else {
+                        handleActivityMetadata(value);
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
     protected void handleActivityMetadata(byte[] value) {
         if (value.length == 15) {
             // first two bytes are whether our request was accepted
@@ -151,7 +190,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
 
                 GB.updateTransferNotification(getContext().getString(R.string.busy_task_fetch_activity_data),
                         getContext().getString(R.string.FetchActivityOperation_about_to_transfer_since,
-                                DateFormat.getDateTimeInstance().format(startTimestamp.getTime())), true, 0, getContext());;
+                        DateFormat.getDateTimeInstance().format(startTimestamp.getTime())), true, 0, getContext());;
             } else {
                 LOG.warn("Unexpected activity metadata: " + Logging.formatBytes(value));
                 handleActivityFetchFinish(false);

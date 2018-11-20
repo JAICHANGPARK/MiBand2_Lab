@@ -23,12 +23,7 @@ package nodomain.knu2018.bandutils.service.devices.hplus;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
-import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -63,7 +58,6 @@ import nodomain.knu2018.bandutils.model.WeatherSpec;
 import nodomain.knu2018.bandutils.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfo;
-import nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.knu2018.bandutils.util.GB;
 import nodomain.knu2018.bandutils.util.StringUtils;
 
@@ -79,35 +73,17 @@ public class HPlusSupport extends AbstractBTLEDeviceSupport {
     private HPlusHandlerThread syncHelper;
     private DeviceType deviceType = DeviceType.UNKNOWN;
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String s = intent.getAction();
-            if (s.equals(DeviceInfoProfile.ACTION_DEVICE_INFO)) {
-                handleDeviceInfo((nodomain.knu2018.bandutils.service.btle.profiles.deviceinfo.DeviceInfo) intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
-            }
-        }
-    };
-
     public HPlusSupport(DeviceType type) {
         super(LOG);
         LOG.info("HPlusSupport Instance Created");
         deviceType = type;
 
         addSupportedService(HPlusConstants.UUID_SERVICE_HP);
-
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
-        IntentFilter intentFilter = new IntentFilter();
-
-        broadcastManager.registerReceiver(mReceiver, intentFilter);
     }
 
     @Override
     public void dispose() {
         LOG.info("Dispose");
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
-        broadcastManager.unregisterReceiver(mReceiver);
-
         close();
 
         super.dispose();
@@ -824,7 +800,7 @@ public class HPlusSupport extends AbstractBTLEDeviceSupport {
     private byte[] encodeStringToDevice(String s) {
 
         List<Byte> outBytes = new ArrayList<Byte>();
-        Boolean unicode = HPlusCoordinator.getUnicodeSupport(this.gbDevice.getAddress());
+        boolean unicode = HPlusCoordinator.getUnicodeSupport(this.gbDevice.getAddress());
         LOG.info("Encode String: Unicode=" + unicode);
 
         for (int i = 0; i < s.length(); i++) {
@@ -851,7 +827,7 @@ public class HPlusSupport extends AbstractBTLEDeviceSupport {
                 outBytes.add(cs[j]);
         }
 
-        return ArrayUtils.toPrimitive(outBytes.toArray(new Byte[outBytes.size()]));
+        return ArrayUtils.toPrimitive(outBytes.toArray(new Byte[0]));
     }
 
     @Override

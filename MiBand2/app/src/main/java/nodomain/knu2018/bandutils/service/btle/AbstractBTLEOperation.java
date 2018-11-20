@@ -27,6 +27,7 @@ import java.util.UUID;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.service.devices.miband.operations.OperationStatus;
 
+
 /**
  * Abstract base class for a BTLEOperation, i.e. an operation that does more than
  * just sending a few bytes to the device. It typically involves exchanging many messages
@@ -40,7 +41,7 @@ import nodomain.knu2018.bandutils.service.devices.miband.operations.OperationSta
  * Note: by default all Gatt events are forwarded to AbstractBTLEDeviceSupport, subclasses may override
  * this behavior.
  */
-public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport> implements GattCallback, BTLEOperation {
+public abstract class AbstractBTLEOperation<T extends nodomain.knu2018.bandutils.service.btle.AbstractBTLEDeviceSupport> implements nodomain.knu2018.bandutils.service.btle.GattCallback, nodomain.knu2018.bandutils.service.btle.BTLEOperation {
     private final T mSupport;
     protected OperationStatus operationStatus = OperationStatus.INITIAL;
     private String name;
@@ -102,10 +103,20 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport>
      * @return
      * @throws IOException
      */
-    public TransactionBuilder performInitialized(String taskName) throws IOException {
-        TransactionBuilder builder = mSupport.performInitialized(taskName);
+    public nodomain.knu2018.bandutils.service.btle.TransactionBuilder performInitialized(String taskName) throws IOException {
+        nodomain.knu2018.bandutils.service.btle.TransactionBuilder builder = mSupport.performInitialized(taskName);
         builder.setGattCallback(this);
         return builder;
+    }
+
+    public nodomain.knu2018.bandutils.service.btle.TransactionBuilder createTransactionBuilder(String taskName) {
+        nodomain.knu2018.bandutils.service.btle.TransactionBuilder builder = getSupport().createTransactionBuilder(taskName);
+        builder.setGattCallback(this);
+        return builder;
+    }
+
+    public void performImmediately(nodomain.knu2018.bandutils.service.btle.TransactionBuilder builder) throws IOException {
+        mSupport.performImmediately(builder);
     }
 
     protected Context getContext() {
@@ -136,7 +147,7 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport>
         return mSupport.getCharacteristic(uuid);
     }
 
-    protected BtLEQueue getQueue() {
+    protected nodomain.knu2018.bandutils.service.btle.BtLEQueue getQueue() {
         return mSupport.getQueue();
     }
 

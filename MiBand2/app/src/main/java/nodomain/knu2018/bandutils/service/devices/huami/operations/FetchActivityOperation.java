@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.database.DBHandler;
@@ -39,12 +38,12 @@ import nodomain.knu2018.bandutils.entities.DaoSession;
 import nodomain.knu2018.bandutils.entities.Device;
 import nodomain.knu2018.bandutils.entities.MiBandActivitySample;
 import nodomain.knu2018.bandutils.entities.User;
-import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.actions.WaitAction;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.util.DateTimeUtils;
 import nodomain.knu2018.bandutils.util.GB;
+import nodomain.knu2018.bandutils.util.StringUtils;
+
 
 /**
  * An operation that fetches activity data. For every fetch, a new operation must
@@ -68,11 +67,9 @@ public class FetchActivityOperation extends AbstractFetchOperation {
 
     @Override
     protected void startFetching(TransactionBuilder builder) {
+        final String taskName = StringUtils.ensureNotNull(builder.getTaskName());
         GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-        builder.write(characteristicFetch, BLETypeConversions.join(new byte[] { HuamiService.COMMAND_ACTIVITY_DATA_START_DATE, HuamiService.COMMAND_ACTIVITY_DATA_TYPE_ACTIVTY }, getSupport().getTimeBytes(sinceWhen, TimeUnit.MINUTES)));
-        builder.add(new WaitAction(1000)); // TODO: actually wait for the success-reply
-        builder.notify(characteristicActivityData, true);
-        builder.write(characteristicFetch, new byte[] { HuamiService.COMMAND_FETCH_DATA});
+        startFetching(builder, HuamiService.COMMAND_ACTIVITY_DATA_TYPE_ACTIVTY, sinceWhen);
     }
 
     protected void handleActivityFetchFinish(boolean success) {
@@ -189,7 +186,7 @@ public class FetchActivityOperation extends AbstractFetchOperation {
         }
 
         for (int i = 1; i < len; i+=4) {
-            MiBandActivitySample sample = createSample(value[i], value[i + 1], value[i + 2], value[i + 3]);
+            MiBandActivitySample sample = createSample(value[i], value[i + 1], value[i + 2], value[i + 3]); // lgtm [java/index-out-of-bounds]
             samples.add(sample);
         }
     }

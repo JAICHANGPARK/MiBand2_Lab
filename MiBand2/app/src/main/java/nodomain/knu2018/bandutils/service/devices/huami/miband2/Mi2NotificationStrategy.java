@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer, Martin Piatka
 
     This file is part of Gadgetbridge.
 
@@ -26,6 +26,7 @@ import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.devices.common.SimpleNotification;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.service.devices.miband.V2NotificationStrategy;
+
 
 public class Mi2NotificationStrategy extends V2NotificationStrategy<HuamiSupport> {
 

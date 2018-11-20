@@ -1,5 +1,5 @@
 /*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, protomors
+    Gobbetti, José Rebelo, protomors
 
     This file is part of Gadgetbridge.
 
@@ -32,6 +32,7 @@ import java.util.Collections;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.knu2018.bandutils.GBException;
+import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.SampleProvider;
@@ -152,14 +153,14 @@ public class No1F1Coordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsFindDevice() {
+        return true;
+    }
+
+    @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
         Long deviceId = device.getId();
         QueryBuilder<?> qb = session.getNo1F1ActivitySampleDao().queryBuilder();
         qb.where(No1F1ActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return true;
     }
 }

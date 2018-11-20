@@ -1,4 +1,5 @@
-/*  Copyright (C) 2017-2018 Andreas Shimokawa, Daniele Gobbetti
+/*  Copyright (C) 2017-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, Pavel Elagin
 
     This file is part of Gadgetbridge.
 
@@ -135,10 +136,10 @@ public class GBWebClient extends WebViewClient {
                 headers.put("Access-Control-Allow-Origin", "*");
                 return new WebResourceResponse("text/html", "utf-8", 200, "OK",
                         headers,
-                        new ByteArrayInputStream("1".toString().getBytes())
+                        new ByteArrayInputStream("1".getBytes())
                 );
             } else {
-                return new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream("1".toString().getBytes()));
+                return new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream("1".getBytes()));
             }
         }
 
@@ -231,9 +232,9 @@ public class GBWebClient extends WebViewClient {
             main.put("temp_min", (int) main.get("temp_min") - 273);
             main.put("temp_max", (int) main.get("temp_max") - 273);
         } else if ("imperial".equals(units)) { //it's 2017... this is so sad
-            main.put("temp", ((int) (main.get("temp")) - 273.15f) * 1.8f + 32);
-            main.put("temp_min", ((int) (main.get("temp_min")) - 273.15f) * 1.8f + 32);
-            main.put("temp_max", ((int) (main.get("temp_max")) - 273.15f) * 1.8f + 32);
+            main.put("temp", ((int) (main.get("temp")) - 273.15f) * 1.8f + 32);         // lgtm [java/integer-multiplication-cast-to-long]
+            main.put("temp_min", ((int) (main.get("temp_min")) - 273.15f) * 1.8f + 32); // lgtm [java/integer-multiplication-cast-to-long]
+            main.put("temp_max", ((int) (main.get("temp_max")) - 273.15f) * 1.8f + 32); // lgtm [java/integer-multiplication-cast-to-long]
         }
     }
 

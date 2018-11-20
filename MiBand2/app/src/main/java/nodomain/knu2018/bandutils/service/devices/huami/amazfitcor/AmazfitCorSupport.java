@@ -25,14 +25,15 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Set;
 
+import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.devices.huami.HuamiFWHelper;
 import nodomain.knu2018.bandutils.devices.huami.HuamiService;
 import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorFWHelper;
 import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorService;
-import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
 import nodomain.knu2018.bandutils.service.devices.huami.amazfitbip.AmazfitBipSupport;
 import nodomain.knu2018.bandutils.util.Prefs;
+
 
 public class AmazfitCorSupport extends AmazfitBipSupport {
 
@@ -45,7 +46,6 @@ public class AmazfitCorSupport extends AmazfitBipSupport {
         Set<String> pages = prefs.getStringSet("cor_display_items", null);
         LOG.info("Setting display items to " + (pages == null ? "none" : pages));
         byte[] command = AmazfitCorService.COMMAND_CHANGE_SCREENS.clone();
-
 
         if (pages != null) {
             if (pages.contains("status")) {

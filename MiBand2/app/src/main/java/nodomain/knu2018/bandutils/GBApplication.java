@@ -61,14 +61,9 @@ import nodomain.knu2018.bandutils.impl.GBDeviceService;
 import nodomain.knu2018.bandutils.model.ActivityUser;
 import nodomain.knu2018.bandutils.model.DeviceService;
 import nodomain.knu2018.bandutils.service.NotificationCollectorMonitorService;
-import nodomain.knu2018.bandutils.util.AndroidUtils;
-import nodomain.knu2018.bandutils.util.FileUtils;
-import nodomain.knu2018.bandutils.util.GB;
-import nodomain.knu2018.bandutils.util.GBPrefs;
-import nodomain.knu2018.bandutils.util.LimitedQueue;
-import nodomain.knu2018.bandutils.util.Prefs;
 
 import static nodomain.knu2018.bandutils.util.GB.NOTIFICATION_CHANNEL_ID;
+
 
 /**
  * Main Application class that initializes and provides access to certain things like
@@ -86,9 +81,9 @@ public class GBApplication extends Application {
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
     private static final int CURRENT_PREFS_VERSION = 2;
-    private static LimitedQueue mIDSenderLookup = new LimitedQueue(16);
-    private static Prefs prefs;
-    private static GBPrefs gbPrefs;
+    private static nodomain.knu2018.bandutils.util.LimitedQueue mIDSenderLookup = new nodomain.knu2018.bandutils.util.LimitedQueue(16);
+    private static nodomain.knu2018.bandutils.util.Prefs prefs;
+    private static nodomain.knu2018.bandutils.util.GBPrefs gbPrefs;
     private static LockHandler lockHandler;
     /**
      * Note: is null on Lollipop and Kitkat
@@ -106,7 +101,7 @@ public class GBApplication extends Application {
             if (GBEnvironment.env().isLocalTest()) {
                 return System.getProperty(Logging.PROP_LOGFILES_DIR);
             } else {
-                File dir = FileUtils.getExternalFilesDir();
+                File dir = nodomain.knu2018.bandutils.util.FileUtils.getExternalFilesDir();
                 return dir.getAbsolutePath();
             }
         }
@@ -116,7 +111,7 @@ public class GBApplication extends Application {
     private DeviceManager deviceManager;
 
     public static void quit() {
-        GB.log("Quitting Gadgetbridge...", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("Quitting Gadgetbridge...", nodomain.knu2018.bandutils.util.GB.INFO, null);
         Intent quitIntent = new Intent(GBApplication.ACTION_QUIT);
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
         GBApplication.deviceService().quit();
@@ -146,8 +141,8 @@ public class GBApplication extends Application {
         }
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs = new Prefs(sharedPrefs);
-        gbPrefs = new GBPrefs(prefs);
+        prefs = new nodomain.knu2018.bandutils.util.Prefs(sharedPrefs);
+        gbPrefs = new nodomain.knu2018.bandutils.util.GBPrefs(prefs);
 
         if (!GBEnvironment.isEnvironmentSetup()) {
             GBEnvironment.setupEnvironment(GBEnvironment.createDeviceEnvironment());
@@ -217,6 +212,10 @@ public class GBApplication extends Application {
 
     public static void setupLogging(boolean enabled) {
         logging.setupLogging(enabled);
+    }
+
+    public static String getLogPath(){
+        return logging.getLogPath();
     }
 
     private void setupExceptionHandler() {
@@ -368,38 +367,38 @@ public class GBApplication extends Application {
 
     public static boolean appIsBlacklisted(String packageName) {
         if (apps_blacklist == null) {
-            GB.log("appIsBlacklisted: apps_blacklist is null!", GB.INFO, null);
+            nodomain.knu2018.bandutils.util.GB.log("appIsBlacklisted: apps_blacklist is null!", nodomain.knu2018.bandutils.util.GB.INFO, null);
         }
         return apps_blacklist != null && apps_blacklist.contains(packageName);
     }
 
     public static void setAppsBlackList(Set<String> packageNames) {
         if (packageNames == null) {
-            GB.log("Set null apps_blacklist", GB.INFO, null);
+            nodomain.knu2018.bandutils.util.GB.log("Set null apps_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
             apps_blacklist = new HashSet<>();
         } else {
             apps_blacklist = new HashSet<>(packageNames);
         }
-        GB.log("New apps_blacklist has " + apps_blacklist.size() + " entries", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("New apps_blacklist has " + apps_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
         saveAppsBlackList();
     }
 
     private static void loadAppsBlackList() {
-        GB.log("Loading apps_blacklist", GB.INFO, null);
-        apps_blacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.PACKAGE_BLACKLIST, null);
+        nodomain.knu2018.bandutils.util.GB.log("Loading apps_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        apps_blacklist = (HashSet<String>) sharedPrefs.getStringSet(nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_BLACKLIST, null);
         if (apps_blacklist == null) {
             apps_blacklist = new HashSet<>();
         }
-        GB.log("Loaded apps_blacklist has " + apps_blacklist.size() + " entries", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("Loaded apps_blacklist has " + apps_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
     }
 
     private static void saveAppsBlackList() {
-        GB.log("Saving apps_blacklist with " + apps_blacklist.size() + " entries", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("Saving apps_blacklist with " + apps_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         if (apps_blacklist.isEmpty()) {
-            editor.putStringSet(GBPrefs.PACKAGE_BLACKLIST, null);
+            editor.putStringSet(nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_BLACKLIST, null);
         } else {
-            Prefs.putStringSet(editor, GBPrefs.PACKAGE_BLACKLIST, apps_blacklist);
+            nodomain.knu2018.bandutils.util.Prefs.putStringSet(editor, nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_BLACKLIST, apps_blacklist);
         }
         editor.apply();
     }
@@ -411,28 +410,143 @@ public class GBApplication extends Application {
     }
 
     public static synchronized void removeFromAppsBlacklist(String packageName) {
-        GB.log("Removing from apps_blacklist: " + packageName, GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("Removing from apps_blacklist: " + packageName, nodomain.knu2018.bandutils.util.GB.INFO, null);
         apps_blacklist.remove(packageName);
         saveAppsBlackList();
+    }
+
+
+
+    private static HashSet<String> apps_notification_blacklist = null;
+
+    public static boolean appIsNotifBlacklisted(String packageName) {
+        if (apps_notification_blacklist == null) {
+            nodomain.knu2018.bandutils.util.GB.log("appIsNotifBlacklisted: apps_notification_blacklist is null!", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        }
+        return apps_notification_blacklist != null && apps_notification_blacklist.contains(packageName);
+    }
+
+    public static void setAppsNotifBlackList(Set<String> packageNames) {
+        if (packageNames == null) {
+            nodomain.knu2018.bandutils.util.GB.log("Set null apps_notification_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
+            apps_notification_blacklist = new HashSet<>();
+        } else {
+            apps_notification_blacklist = new HashSet<>(packageNames);
+        }
+        nodomain.knu2018.bandutils.util.GB.log("New apps_notification_blacklist has " + apps_notification_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        saveAppsNotifBlackList();
+    }
+
+    private static void loadAppsNotifBlackList() {
+        nodomain.knu2018.bandutils.util.GB.log("Loading apps_notification_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        apps_notification_blacklist = (HashSet<String>) sharedPrefs.getStringSet(nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_BLACKLIST, null);
+        if (apps_notification_blacklist == null) {
+            apps_notification_blacklist = new HashSet<>();
+        }
+        nodomain.knu2018.bandutils.util.GB.log("Loaded apps_notification_blacklist has " + apps_notification_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
+    }
+
+    private static void saveAppsNotifBlackList() {
+        nodomain.knu2018.bandutils.util.GB.log("Saving apps_notification_blacklist with " + apps_notification_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        if (apps_notification_blacklist.isEmpty()) {
+            editor.putStringSet(nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_BLACKLIST, null);
+        } else {
+            nodomain.knu2018.bandutils.util.Prefs.putStringSet(editor, nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_BLACKLIST, apps_notification_blacklist);
+        }
+        editor.apply();
+    }
+
+    public static void addAppToNotifBlacklist(String packageName) {
+        if (apps_notification_blacklist.add(packageName)) {
+            saveAppsNotifBlackList();
+        }
+    }
+
+    public static synchronized void removeFromAppsNotifBlacklist(String packageName) {
+        nodomain.knu2018.bandutils.util.GB.log("Removing from apps_notification_blacklist: " + packageName, nodomain.knu2018.bandutils.util.GB.INFO, null);
+        apps_notification_blacklist.remove(packageName);
+        saveAppsNotifBlackList();
+    }
+
+    private static HashSet<String> apps_pebblemsg_blacklist = null;
+
+    public static boolean appIsPebbleBlacklisted(String sender) {
+        if (apps_pebblemsg_blacklist == null) {
+            nodomain.knu2018.bandutils.util.GB.log("appIsPebbleBlacklisted: apps_pebblemsg_blacklist is null!", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        }
+        return apps_pebblemsg_blacklist != null && apps_pebblemsg_blacklist.contains(sender);
+    }
+
+    public static void setAppsPebbleBlackList(Set<String> packageNames) {
+        if (packageNames == null) {
+            nodomain.knu2018.bandutils.util.GB.log("Set null apps_pebblemsg_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
+            apps_pebblemsg_blacklist = new HashSet<>();
+        } else {
+            apps_pebblemsg_blacklist = new HashSet<>(packageNames);
+        }
+        nodomain.knu2018.bandutils.util.GB.log("New apps_pebblemsg_blacklist has " + apps_pebblemsg_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        saveAppsPebbleBlackList();
+    }
+
+    private static void loadAppsPebbleBlackList() {
+        nodomain.knu2018.bandutils.util.GB.log("Loading apps_pebblemsg_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        apps_pebblemsg_blacklist = (HashSet<String>) sharedPrefs.getStringSet(nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_PEBBLEMSG_BLACKLIST, null);
+        if (apps_pebblemsg_blacklist == null) {
+            apps_pebblemsg_blacklist = new HashSet<>();
+        }
+        nodomain.knu2018.bandutils.util.GB.log("Loaded apps_pebblemsg_blacklist has " + apps_pebblemsg_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
+    }
+
+    private static void saveAppsPebbleBlackList() {
+        nodomain.knu2018.bandutils.util.GB.log("Saving apps_pebblemsg_blacklist with " + apps_pebblemsg_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        if (apps_pebblemsg_blacklist.isEmpty()) {
+            editor.putStringSet(nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_PEBBLEMSG_BLACKLIST, null);
+        } else {
+            nodomain.knu2018.bandutils.util.Prefs.putStringSet(editor, nodomain.knu2018.bandutils.util.GBPrefs.PACKAGE_PEBBLEMSG_BLACKLIST, apps_pebblemsg_blacklist);
+        }
+        editor.apply();
+    }
+
+    public static void addAppToPebbleBlacklist(String packageName) {
+        if (apps_pebblemsg_blacklist.add(packageNameToPebbleMsgSender(packageName))) {
+            saveAppsPebbleBlackList();
+        }
+    }
+
+    public static synchronized void removeFromAppsPebbleBlacklist(String packageName) {
+        nodomain.knu2018.bandutils.util.GB.log("Removing from apps_pebblemsg_blacklist: " + packageName, nodomain.knu2018.bandutils.util.GB.INFO, null);
+        apps_pebblemsg_blacklist.remove(packageNameToPebbleMsgSender(packageName));
+        saveAppsPebbleBlackList();
+    }
+
+    public static String packageNameToPebbleMsgSender(String packageName) {
+        if ("eu.siacs.conversations".equals(packageName)){
+            return("Conversations");
+        } else if ("net.osmand.plus".equals(packageName)) {
+            return("OsmAnd");
+        }
+        return packageName;
     }
 
     private static HashSet<String> calendars_blacklist = null;
 
     public static boolean calendarIsBlacklisted(String calendarDisplayName) {
         if (calendars_blacklist == null) {
-            GB.log("calendarIsBlacklisted: calendars_blacklist is null!", GB.INFO, null);
+            nodomain.knu2018.bandutils.util.GB.log("calendarIsBlacklisted: calendars_blacklist is null!", nodomain.knu2018.bandutils.util.GB.INFO, null);
         }
         return calendars_blacklist != null && calendars_blacklist.contains(calendarDisplayName);
     }
 
     public static void setCalendarsBlackList(Set<String> calendarNames) {
         if (calendarNames == null) {
-            GB.log("Set null apps_blacklist", GB.INFO, null);
+            nodomain.knu2018.bandutils.util.GB.log("Set null apps_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
             calendars_blacklist = new HashSet<>();
         } else {
             calendars_blacklist = new HashSet<>(calendarNames);
         }
-        GB.log("New calendars_blacklist has " + calendars_blacklist.size() + " entries", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("New calendars_blacklist has " + calendars_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
         saveCalendarsBlackList();
     }
 
@@ -448,21 +562,21 @@ public class GBApplication extends Application {
     }
 
     private static void loadCalendarsBlackList() {
-        GB.log("Loading calendars_blacklist", GB.INFO, null);
-        calendars_blacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
+        nodomain.knu2018.bandutils.util.GB.log("Loading calendars_blacklist", nodomain.knu2018.bandutils.util.GB.INFO, null);
+        calendars_blacklist = (HashSet<String>) sharedPrefs.getStringSet(nodomain.knu2018.bandutils.util.GBPrefs.CALENDAR_BLACKLIST, null);
         if (calendars_blacklist == null) {
             calendars_blacklist = new HashSet<>();
         }
-        GB.log("Loaded calendars_blacklist has " + calendars_blacklist.size() + " entries", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("Loaded calendars_blacklist has " + calendars_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
     }
 
     private static void saveCalendarsBlackList() {
-        GB.log("Saving calendars_blacklist with " + calendars_blacklist.size() + " entries", GB.INFO, null);
+        nodomain.knu2018.bandutils.util.GB.log("Saving calendars_blacklist with " + calendars_blacklist.size() + " entries", nodomain.knu2018.bandutils.util.GB.INFO, null);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         if (calendars_blacklist.isEmpty()) {
-            editor.putStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
+            editor.putStringSet(nodomain.knu2018.bandutils.util.GBPrefs.CALENDAR_BLACKLIST, null);
         } else {
-            Prefs.putStringSet(editor, GBPrefs.CALENDAR_BLACKLIST, calendars_blacklist);
+            nodomain.knu2018.bandutils.util.Prefs.putStringSet(editor, nodomain.knu2018.bandutils.util.GBPrefs.CALENDAR_BLACKLIST, calendars_blacklist);
         }
         editor.apply();
     }
@@ -558,14 +672,14 @@ public class GBApplication extends Application {
     }
 
     public static void updateLanguage(Locale locale) {
-        AndroidUtils.setLanguage(context, locale);
+        nodomain.knu2018.bandutils.util.AndroidUtils.setLanguage(context, locale);
 
         Intent intent = new Intent();
         intent.setAction(ACTION_LANGUAGE_CHANGE);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
-    public static LimitedQueue getIDSenderLookup() {
+    public static nodomain.knu2018.bandutils.util.LimitedQueue getIDSenderLookup() {
         return mIDSenderLookup;
     }
 
@@ -593,11 +707,11 @@ public class GBApplication extends Application {
         return typedValue.data;
     }
 
-    public static Prefs getPrefs() {
+    public static nodomain.knu2018.bandutils.util.Prefs getPrefs() {
         return prefs;
     }
 
-    public static GBPrefs getGBPrefs() {
+    public static nodomain.knu2018.bandutils.util.GBPrefs getGBPrefs() {
         return gbPrefs;
     }
 
@@ -617,7 +731,7 @@ public class GBApplication extends Application {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            GB.log("Unable to determine Gadgetbridge's version", GB.WARN, e);
+            nodomain.knu2018.bandutils.util.GB.log("Unable to determine Gadgetbridge's version", nodomain.knu2018.bandutils.util.GB.WARN, e);
             return "0.0.0";
         }
     }
@@ -628,7 +742,7 @@ public class GBApplication extends Application {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
             return String.format("%s %s", appInfo.name, packageInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
-            GB.log("Unable to determine Gadgetbridge's name/version", GB.WARN, e);
+            nodomain.knu2018.bandutils.util.GB.log("Unable to determine Gadgetbridge's name/version", nodomain.knu2018.bandutils.util.GB.WARN, e);
             return "Gadgetbridge";
         }
     }

@@ -26,6 +26,7 @@ import nodomain.knu2018.bandutils.service.devices.huami.HuamiFirmwareInfo;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiFirmwareType;
 import nodomain.knu2018.bandutils.util.ArrayUtils;
 
+
 public class Mi2FirmwareInfo extends HuamiFirmwareInfo {
     private static final byte[] FW_HEADER = new byte[]{
             (byte) 0xa3,

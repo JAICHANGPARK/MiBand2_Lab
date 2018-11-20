@@ -38,6 +38,7 @@ import nodomain.knu2018.bandutils.model.MusicStateSpec;
 import nodomain.knu2018.bandutils.model.NotificationSpec;
 import nodomain.knu2018.bandutils.model.WeatherSpec;
 
+
 /**
  * Wraps another device support instance and supports busy-checking and throttling of events.
  */
@@ -373,5 +374,21 @@ public class ServiceDeviceSupport implements DeviceSupport {
             return;
         }
         delegate.onSendWeather(weatherSpec);
+    }
+
+    @Override
+    public void onSetFmFrequency(float frequency) {
+        if (checkBusy("set frequency event")) {
+            return;
+        }
+        delegate.onSetFmFrequency(frequency);
+    }
+
+    @Override
+    public void onSetLedColor(int color) {
+        if (checkBusy("set led color event")) {
+            return;
+        }
+        delegate.onSetLedColor(color);
     }
 }

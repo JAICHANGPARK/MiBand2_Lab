@@ -1,5 +1,6 @@
-/*  Copyright (C) 2015-2018 0nse, Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, João Paulo Barraca, ladbsoft, protomors, Quallenauge, Sami Alaoui
+/*  Copyright (C) 2015-2018 0nse, Andreas Shimokawa, Carsten Pfeiffer,
+    Daniele Gobbetti, João Paulo Barraca, Kranz, ladbsoft, maxirnilian,
+    protomors, Quallenauge, Sami Alaoui, tiparega, Vadim Kaushan
 
     This file is part of Gadgetbridge.
 
@@ -43,11 +44,13 @@ import nodomain.knu2018.bandutils.devices.UnknownDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.hplus.EXRIZUK8Coordinator;
 import nodomain.knu2018.bandutils.devices.hplus.HPlusCoordinator;
 import nodomain.knu2018.bandutils.devices.hplus.MakibesF68Coordinator;
+import nodomain.knu2018.bandutils.devices.hplus.Q8Coordinator;
 import nodomain.knu2018.bandutils.devices.huami.amazfitbip.AmazfitBipCoordinator;
 import nodomain.knu2018.bandutils.devices.huami.amazfitcor.AmazfitCorCoordinator;
 import nodomain.knu2018.bandutils.devices.huami.miband2.MiBand2Coordinator;
 import nodomain.knu2018.bandutils.devices.huami.miband2.MiBand2HRXCoordinator;
 import nodomain.knu2018.bandutils.devices.huami.miband3.MiBand3Coordinator;
+import nodomain.knu2018.bandutils.devices.id115.ID115Coordinator;
 import nodomain.knu2018.bandutils.devices.isens.CareSenseCoordinator;
 import nodomain.knu2018.bandutils.devices.jyou.TeclastH30Coordinator;
 import nodomain.knu2018.bandutils.devices.liveview.LiveviewCoordinator;
@@ -55,13 +58,18 @@ import nodomain.knu2018.bandutils.devices.miband.MiBandConst;
 import nodomain.knu2018.bandutils.devices.miband.MiBandCoordinator;
 import nodomain.knu2018.bandutils.devices.no1f1.No1F1Coordinator;
 import nodomain.knu2018.bandutils.devices.pebble.PebbleCoordinator;
+import nodomain.knu2018.bandutils.devices.roidmi.Roidmi1Coordinator;
+import nodomain.knu2018.bandutils.devices.roidmi.Roidmi3Coordinator;
 import nodomain.knu2018.bandutils.devices.vibratissimo.VibratissimoCoordinator;
+import nodomain.knu2018.bandutils.devices.watch9.Watch9DeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.xwatch.XWatchCoordinator;
+import nodomain.knu2018.bandutils.devices.zetime.ZeTimeCoordinator;
 import nodomain.knu2018.bandutils.entities.Device;
 import nodomain.knu2018.bandutils.entities.DeviceAttributes;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.DeviceType;
+
 
 public class DeviceHelper {
 
@@ -206,12 +214,16 @@ public class DeviceHelper {
         result.add(new HPlusCoordinator());
         result.add(new No1F1Coordinator());
         result.add(new MakibesF68Coordinator());
+        result.add(new Q8Coordinator());
         result.add(new EXRIZUK8Coordinator());
         result.add(new TeclastH30Coordinator());
         result.add(new XWatchCoordinator());
-        // TODO: 2018-08-01 케어센스 추가
+        result.add(new ZeTimeCoordinator());
+        result.add(new ID115Coordinator());
+        result.add(new Watch9DeviceCoordinator());
+        result.add(new Roidmi1Coordinator());
+        result.add(new Roidmi3Coordinator());
         result.add(new CareSenseCoordinator());
-        
 
         return result;
     }
@@ -265,7 +277,7 @@ public class DeviceHelper {
         DeviceHelper deviceHelper = DeviceHelper.getInstance();
         for (BluetoothDevice pairedDevice : pairedDevices) {
             if (pairedDevice == null) {
-                continue; // just to be safe, see https://github.com/knu2018/Gadgetbridge/pull/1052
+                continue; // just to be safe, see https://github.com/Freeyourgadget/Gadgetbridge/pull/1052
             }
             if (pairedDevice.getName() != null && (pairedDevice.getName().startsWith("Pebble-LE ") || pairedDevice.getName().startsWith("Pebble Time LE "))) {
                 continue; // ignore LE Pebble (this is part of the main device now (volatileAddress)

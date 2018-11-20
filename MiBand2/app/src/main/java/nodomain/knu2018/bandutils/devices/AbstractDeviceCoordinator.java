@@ -1,4 +1,5 @@
-/*  Copyright (C) 2015-2018 Carsten Pfeiffer, Daniele Gobbetti
+/*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -105,15 +106,15 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
             return false;
         }
         if (bluetoothClass.getMajorDeviceClass() == BluetoothClass.Device.Major.WEARABLE
-                || bluetoothClass.getMajorDeviceClass() == BluetoothClass.Device.Major.UNCATEGORIZED) {
+            || bluetoothClass.getMajorDeviceClass() == BluetoothClass.Device.Major.UNCATEGORIZED) {
             int deviceClasses =
                     BluetoothClass.Device.HEALTH_BLOOD_PRESSURE
-                            | BluetoothClass.Device.HEALTH_DATA_DISPLAY
-                            | BluetoothClass.Device.HEALTH_PULSE_RATE
-                            | BluetoothClass.Device.HEALTH_WEIGHING
-                            | BluetoothClass.Device.HEALTH_UNCATEGORIZED
-                            | BluetoothClass.Device.HEALTH_PULSE_OXIMETER
-                            | BluetoothClass.Device.HEALTH_GLUCOSE;
+                    | BluetoothClass.Device.HEALTH_DATA_DISPLAY
+                    | BluetoothClass.Device.HEALTH_PULSE_RATE
+                    | BluetoothClass.Device.HEALTH_WEIGHING
+                    | BluetoothClass.Device.HEALTH_UNCATEGORIZED
+                    | BluetoothClass.Device.HEALTH_PULSE_OXIMETER
+                    | BluetoothClass.Device.HEALTH_GLUCOSE;
 
             return (bluetoothClass.getDeviceClass() & deviceClasses) != 0;
         }
@@ -133,5 +134,19 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     public boolean supportsMusicInfo() {
         return false;
+    }
+
+    public boolean supportsLedColor() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsRgbLedColor() {
+        return false;
+    }
+
+    @Override
+    public int[] getColorPresets() {
+        return new int[0];
     }
 }

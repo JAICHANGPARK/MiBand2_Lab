@@ -30,73 +30,73 @@
             android:summary="@string/mi2_prefs_goal_notification_summary"
             android:title="@string/mi2_prefs_goal_notification" />
 
-        <!--<PreferenceScreen-->
-            <!--android:key="mi2_button_actions_key"-->
-            <!--android:summary="@string/mi2_prefs_button_actions_summary"-->
-            <!--android:title="@string/mi2_prefs_button_actions"-->
-            <!--android:persistent="false">-->
+        <PreferenceScreen
+            android:key="mi2_button_actions_key"
+            android:summary="@string/mi2_prefs_button_actions_summary"
+            android:title="@string/mi2_prefs_button_actions"
+            android:persistent="false">
 
-            <!--&lt;!&ndash; workaround for missing toolbar &ndash;&gt;-->
-            <!--<PreferenceCategory-->
-                <!--android:title="@string/mi2_prefs_button_action"-->
-                <!--/>-->
+            <!-- workaround for missing toolbar -->
+            <PreferenceCategory
+                android:title="@string/mi2_prefs_button_action"
+                />
 
-            <!--<CheckBoxPreference-->
-                <!--android:defaultValue="false"-->
-                <!--android:key="mi2_enable_button_action"-->
-                <!--android:summary="@string/mi2_prefs_button_action_summary"-->
-                <!--android:title="@string/mi2_prefs_button_action" />-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="mi2_enable_button_action"
+                android:summary="@string/mi2_prefs_button_action_summary"
+                android:title="@string/mi2_prefs_button_action" />
 
-            <!--<CheckBoxPreference-->
-                <!--android:defaultValue="false"-->
-                <!--android:dependency="mi2_enable_button_action"-->
-                <!--android:key="mi2_button_action_vibrate"-->
-                <!--android:summary="@string/mi2_prefs_button_action_vibrate_summary"-->
-                <!--android:title="@string/mi2_prefs_button_action_vibrate" />-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="mi2_enable_button_action"
+                android:key="mi2_button_action_vibrate"
+                android:summary="@string/mi2_prefs_button_action_vibrate_summary"
+                android:title="@string/mi2_prefs_button_action_vibrate" />
 
-            <!--<EditTextPreference-->
-                <!--android:defaultValue="6"-->
-                <!--android:dependency="mi2_enable_button_action"-->
-                <!--android:inputType="number"-->
-                <!--android:key="mi_button_press_count"-->
-                <!--android:summary="@string/mi2_prefs_button_press_count_summary"-->
-                <!--android:title="@string/mi2_prefs_button_press_count" />-->
+            <EditTextPreference
+                android:defaultValue="6"
+                android:dependency="mi2_enable_button_action"
+                android:inputType="number"
+                android:key="mi_button_press_count"
+                android:summary="@string/mi2_prefs_button_press_count_summary"
+                android:title="@string/mi2_prefs_button_press_count" />
 
-            <!--<EditTextPreference-->
-                <!--android:defaultValue="@string/mi2_prefs_button_press_broadcast_default_value"-->
-                <!--android:dependency="mi2_enable_button_action"-->
-                <!--android:key="mi_button_press_broadcast"-->
-                <!--android:summary="@string/mi2_prefs_button_press_broadcast_summary"-->
-                <!--android:title="@string/mi2_prefs_button_press_broadcast" />-->
+            <EditTextPreference
+                android:defaultValue="@string/mi2_prefs_button_press_broadcast_default_value"
+                android:dependency="mi2_enable_button_action"
+                android:key="mi_button_press_broadcast"
+                android:summary="@string/mi2_prefs_button_press_broadcast_summary"
+                android:title="@string/mi2_prefs_button_press_broadcast" />
 
-            <!--<EditTextPreference-->
-                <!--android:defaultValue="2000"-->
-                <!--android:dependency="mi2_enable_button_action"-->
-                <!--android:inputType="number"-->
-                <!--android:key="mi_button_press_count_max_delay"-->
-                <!--android:summary="@string/mi2_prefs_button_press_count_max_delay_summary"-->
-                <!--android:title="@string/mi2_prefs_button_press_count_max_delay" />-->
+            <EditTextPreference
+                android:defaultValue="2000"
+                android:dependency="mi2_enable_button_action"
+                android:inputType="number"
+                android:key="mi_button_press_count_max_delay"
+                android:summary="@string/mi2_prefs_button_press_count_max_delay_summary"
+                android:title="@string/mi2_prefs_button_press_count_max_delay" />
 
-            <!--<EditTextPreference-->
-                <!--android:defaultValue="0"-->
-                <!--android:dependency="mi2_enable_button_action"-->
-                <!--android:inputType="number"-->
-                <!--android:key="mi_button_press_count_match_delay"-->
-                <!--android:summary="@string/mi2_prefs_button_press_count_match_delay_summary"-->
-                <!--android:title="@string/mi2_prefs_button_press_count_match_delay" />-->
-        <!--</PreferenceScreen>-->
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="mi2_enable_button_action"
+                android:inputType="number"
+                android:key="mi_button_press_count_match_delay"
+                android:summary="@string/mi2_prefs_button_press_count_match_delay_summary"
+                android:title="@string/mi2_prefs_button_press_count_match_delay" />
+        </PreferenceScreen>
 
-        <!--<EditTextPreference-->
-            <!--android:defaultValue="0"-->
-            <!--android:inputType="number"-->
-            <!--android:key="mi_reserve_alarm_calendar"-->
-            <!--android:maxLength="1"-->
-            <!--android:digits="0123"-->
-            <!--android:title="@string/miband_prefs_reserve_alarm_calendar" />-->
-        <!--<CheckBoxPreference-->
-            <!--android:defaultValue="false"-->
-            <!--android:key="mi_hr_sleep_detection"-->
-            <!--android:title="@string/miband_prefs_hr_sleep_detection" />-->
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="mi_reserve_alarm_calendar"
+            android:maxLength="1"
+            android:digits="0123"
+            android:title="@string/miband_prefs_reserve_alarm_calendar" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="mi_hr_sleep_detection"
+            android:title="@string/miband_prefs_hr_sleep_detection" />
 
         <ListPreference
             android:defaultValue="0"
@@ -106,160 +106,133 @@
             android:summary="%s"
             android:title="@string/prefs_title_heartrate_measurement_interval" />
 
-        <!--<EditTextPreference-->
-			<!--android:defaultValue="0"-->
-			<!--android:inputType="numberSigned"-->
-			<!--android:key="mi_device_time_offset_hours"-->
-			<!--android:maxLength="2"-->
-			<!--android:title="@string/miband_prefs_device_time_offset_hours" />-->
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="numberSigned"
+            android:key="mi_device_time_offset_hours"
+            android:maxLength="2"
+            android:title="@string/miband_prefs_device_time_offset_hours" />
 
-        <MultiSelectListPreference
-            android:dialogTitle="@string/mi2_prefs_display_items"
-            android:defaultValue="@array/pref_mi2_display_items_default"
-            android:entries="@array/pref_mi2_display_items"
-            android:entryValues="@array/pref_mi2_display_items_values"
-            android:key="mi2_display_items"
-            android:summary="@string/mi2_prefs_display_items_summary"
-            android:title="@string/mi2_prefs_display_items"/>
+        <PreferenceScreen
+            android:persistent="false"
+            android:title="@string/mi2_prefs_activate_display_on_lift">
 
-        <!--<PreferenceScreen-->
-            <!--android:persistent="false"-->
-            <!--android:title="@string/mi2_prefs_activate_display_on_lift">-->
+            <!-- workaround for missing toolbar -->
+            <PreferenceCategory android:title="@string/mi2_prefs_activate_display_on_lift" />
 
-            <!--&lt;!&ndash; workaround for missing toolbar &ndash;&gt;-->
-            <!--<PreferenceCategory android:title="@string/mi2_prefs_activate_display_on_lift" />-->
+            <ListPreference
+                android:defaultValue="@string/p_off"
+                android:entries="@array/activate_display_on_lift"
+                android:entryValues="@array/activate_display_on_lift_values"
+                android:key="activate_display_on_lift_wrist"
+                android:summary="%s"
+                android:title="@string/mi2_prefs_activate_display_on_lift" />
 
-            <!--<ListPreference-->
-                <!--android:defaultValue="@string/p_off"-->
-                <!--android:entries="@array/activate_display_on_lift"-->
-                <!--android:entryValues="@array/activate_display_on_lift_values"-->
-                <!--android:key="activate_display_on_lift_wrist"-->
-                <!--android:summary="%s"-->
-                <!--android:title="@string/mi2_prefs_activate_display_on_lift" />-->
+            <nodomain.knu2018.bandutils.util.TimePreference
+                android:defaultValue="00:00"
+                android:key="display_on_lift_start"
+                android:title="@string/mi2_prefs_do_not_disturb_start" />
 
-            <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-                <!--android:defaultValue="00:00"-->
-                <!--android:dependency="activate_display_on_lift_wrist"-->
-                <!--android:key="display_on_lift_start"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb_start" />-->
+            <nodomain.knu2018.bandutils.util.TimePreference
+                android:defaultValue="00:00"
+                android:key="display_on_lift_end"
+                android:title="@string/mi2_prefs_do_not_disturb_end" />
 
-            <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-                <!--android:defaultValue="00:00"-->
-                <!--android:dependency="activate_display_on_lift_wrist"-->
-                <!--android:key="display_on_lift_end"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb_end" />-->
+        </PreferenceScreen>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="mi2_rotate_wrist_to_switch_info"
+            android:title="@string/mi2_prefs_rotate_wrist_to_switch_info" />
 
-        <!--</PreferenceScreen>-->
-        <!--<CheckBoxPreference-->
-            <!--android:defaultValue="false"-->
-            <!--android:dependency="activate_display_on_lift_wrist"-->
-            <!--android:key="mi2_rotate_wrist_to_switch_info"-->
-            <!--android:title="@string/mi2_prefs_rotate_wrist_to_switch_info" />-->
+        <PreferenceScreen
+            android:key="mi2_inactivity_warning_key"
+            android:summary="@string/mi2_prefs_inactivity_warnings_summary"
+            android:title="@string/mi2_prefs_inactivity_warnings"
+            android:persistent="false">
 
-        <!--<CheckBoxPreference-->
-            <!--android:defaultValue="true"-->
-            <!--android:key="mi2_enable_text_notifications"-->
-            <!--android:summaryOn="@string/mi2_enable_text_notifications_summary"-->
-            <!--android:summaryOff="@string/off"-->
-            <!--android:title="@string/mi2_enable_text_notifications" />-->
+            <!-- workaround for missing toolbar -->
+            <PreferenceCategory
+                android:title="@string/mi2_prefs_inactivity_warnings"
+                />
 
-        <ListPreference
-            android:defaultValue="@string/p_dateformat_time"
-            android:entries="@array/mi2_dateformats"
-            android:entryValues="@array/mi2_dateformats_values"
-            android:key="mi2_dateformat"
-            android:title="@string/miband2_prefs_dateformat"
-            android:summary="%s" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="mi2_inactivity_warnings"
+                android:summary="@string/mi2_prefs_inactivity_warnings_summary"
+                android:title="@string/mi2_prefs_inactivity_warnings" />
 
-        <!--<PreferenceScreen-->
-            <!--android:key="mi2_inactivity_warning_key"-->
-            <!--android:summary="@string/mi2_prefs_inactivity_warnings_summary"-->
-            <!--android:title="@string/mi2_prefs_inactivity_warnings"-->
-            <!--android:persistent="false">-->
+            <EditTextPreference
+                android:defaultValue="60"
+                android:dependency="mi2_inactivity_warnings"
+                android:inputType="numberSigned"
+                android:key="mi2_inactivity_warnings_threshold"
+                android:maxLength="2"
+                android:title="@string/mi2_prefs_inactivity_warnings_threshold" />
 
-            <!--&lt;!&ndash; workaround for missing toolbar &ndash;&gt;-->
-            <!--<PreferenceCategory-->
-                <!--android:title="@string/mi2_prefs_inactivity_warnings"-->
-                <!--/>-->
+            <nodomain.knu2018.bandutils.util.TimePreference
+                android:defaultValue="06:00"
+                android:dependency="mi2_inactivity_warnings"
+                android:key="mi2_inactivity_warnings_start"
+                android:title="@string/mi2_prefs_do_not_disturb_start" />
 
-            <!--<CheckBoxPreference-->
-                <!--android:defaultValue="false"-->
-                <!--android:key="mi2_inactivity_warnings"-->
-                <!--android:summary="@string/mi2_prefs_inactivity_warnings_summary"-->
-                <!--android:title="@string/mi2_prefs_inactivity_warnings" />-->
+            <nodomain.knu2018.bandutils.util.TimePreference
+                android:defaultValue="22:00"
+                android:dependency="mi2_inactivity_warnings"
+                android:key="mi2_inactivity_warnings_end"
+                android:title="@string/mi2_prefs_do_not_disturb_end" />
 
-            <!--<EditTextPreference-->
-                <!--android:defaultValue="60"-->
-                <!--android:dependency="mi2_inactivity_warnings"-->
-                <!--android:inputType="numberSigned"-->
-                <!--android:key="mi2_inactivity_warnings_threshold"-->
-                <!--android:maxLength="2"-->
-                <!--android:title="@string/mi2_prefs_inactivity_warnings_threshold" />-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="mi2_inactivity_warnings"
+                android:key="mi2_inactivity_warnings_dnd"
+                android:summary="@string/mi2_prefs_inactivity_warnings_dnd_summary"
+                android:title="@string/mi2_prefs_do_not_disturb" />
 
-            <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-                <!--android:defaultValue="06:00"-->
-                <!--android:dependency="mi2_inactivity_warnings"-->
-                <!--android:key="mi2_inactivity_warnings_start"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb_start" />-->
+            <nodomain.knu2018.bandutils.util.TimePreference
+                android:defaultValue="12:00"
+                android:dependency="mi2_inactivity_warnings_dnd"
+                android:key="mi2_inactivity_warnings_dnd_start"
+                android:title="@string/mi2_prefs_do_not_disturb_start" />
 
-            <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-                <!--android:defaultValue="22:00"-->
-                <!--android:dependency="mi2_inactivity_warnings"-->
-                <!--android:key="mi2_inactivity_warnings_end"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb_end" />-->
-
-            <!--<CheckBoxPreference-->
-                <!--android:defaultValue="false"-->
-                <!--android:dependency="mi2_inactivity_warnings"-->
-                <!--android:key="mi2_inactivity_warnings_dnd"-->
-                <!--android:summary="@string/mi2_prefs_inactivity_warnings_dnd_summary"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb" />-->
-
-            <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-                <!--android:defaultValue="12:00"-->
-                <!--android:dependency="mi2_inactivity_warnings_dnd"-->
-                <!--android:key="mi2_inactivity_warnings_dnd_start"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb_start" />-->
-
-            <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-                <!--android:defaultValue="14:00"-->
-                <!--android:dependency="mi2_inactivity_warnings_dnd"-->
-                <!--android:key="mi2_inactivity_warnings_dnd_end"-->
-                <!--android:title="@string/mi2_prefs_do_not_disturb_end" />-->
-        <!--</PreferenceScreen>-->
+            <nodomain.knu2018.bandutils.util.TimePreference
+                android:defaultValue="14:00"
+                android:dependency="mi2_inactivity_warnings_dnd"
+                android:key="mi2_inactivity_warnings_dnd_end"
+                android:title="@string/mi2_prefs_do_not_disturb_end" />
+        </PreferenceScreen>
 
     </PreferenceCategory>
 
-    <!--<PreferenceScreen-->
-        <!--android:key="mi2_do_not_disturb_key"-->
-        <!--android:title="@string/mi2_prefs_do_not_disturb"-->
-        <!--android:persistent="false"-->
-        <!--android:summary="@string/mi2_prefs_do_not_disturb_summary">-->
+    <PreferenceScreen
+        android:key="mi2_do_not_disturb_key"
+        android:title="@string/mi2_prefs_do_not_disturb"
+        android:persistent="false"
+        android:summary="@string/mi2_prefs_do_not_disturb_summary">
 
-        <!--&lt;!&ndash; workaround for missing toolbar &ndash;&gt;-->
-        <!--<PreferenceCategory-->
-            <!--android:title="@string/mi2_prefs_do_not_disturb"-->
-            <!--/>-->
+        <!-- workaround for missing toolbar -->
+        <PreferenceCategory
+            android:title="@string/mi2_prefs_do_not_disturb"
+            />
 
-        <!--<ListPreference-->
-            <!--android:defaultValue="@string/p_off"-->
-            <!--android:entries="@array/mi2_do_not_disturb"-->
-            <!--android:entryValues="@array/mi2_do_not_disturb_values"-->
-            <!--android:key="mi2_do_not_disturb"-->
-            <!--android:title="@string/mi2_prefs_do_not_disturb"-->
-            <!--android:summary="%s" />-->
+        <ListPreference
+            android:defaultValue="@string/p_off"
+            android:entries="@array/mi2_do_not_disturb"
+            android:entryValues="@array/mi2_do_not_disturb_values"
+            android:key="mi2_do_not_disturb"
+            android:title="@string/mi2_prefs_do_not_disturb"
+            android:summary="%s" />
 
-        <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-            <!--android:defaultValue="01:00"-->
-            <!--android:key="mi2_do_not_disturb_start"-->
-            <!--android:title="@string/mi2_prefs_do_not_disturb_start" />-->
+        <nodomain.knu2018.bandutils.util.TimePreference
+            android:defaultValue="01:00"
+            android:key="mi2_do_not_disturb_start"
+            android:title="@string/mi2_prefs_do_not_disturb_start" />
 
-        <!--<nodomain.knu2018.gadgetbridge.util.TimePreference-->
-            <!--android:defaultValue="06:00"-->
-            <!--android:key="mi2_do_not_disturb_end"-->
-            <!--android:title="@string/mi2_prefs_do_not_disturb_end" />-->
+        <nodomain.knu2018.bandutils.util.TimePreference
+            android:defaultValue="06:00"
+            android:key="mi2_do_not_disturb_end"
+            android:title="@string/mi2_prefs_do_not_disturb_end" />
 
-    <!--</PreferenceScreen>-->
+    </PreferenceScreen>
 
     <PreferenceCategory
         android:key="pref_category_miband_notification"
@@ -273,7 +246,7 @@
             <!-- workaround for missing toolbar -->
             <PreferenceCategory
                 android:title="@string/pref_screen_notification_profile_sms"
-            />
+                />
 
             <ListPreference
                 android:defaultValue="@string/p_staccato"
@@ -522,10 +495,10 @@
             android:title="@string/pref_title_keep_data_on_device"
             android:summary="@string/pref_summary_keep_data_on_device"
             android:defaultValue="false" />
-        <!--<CheckBoxPreference-->
-            <!--android:key="mi_low_latency_fw_update"-->
-            <!--android:title="@string/pref_title_low_latency_fw_update"-->
-            <!--android:summary="@string/pref_summary_low_latency_fw_update"-->
-            <!--android:defaultValue="true" />-->
+        <CheckBoxPreference
+            android:key="mi_low_latency_fw_update"
+            android:title="@string/pref_title_low_latency_fw_update"
+            android:summary="@string/pref_summary_low_latency_fw_update"
+            android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>

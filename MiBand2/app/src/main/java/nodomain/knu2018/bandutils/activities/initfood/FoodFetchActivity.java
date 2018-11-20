@@ -259,7 +259,7 @@ public class FoodFetchActivity extends AppCompatActivity {
 
     private void initSetting(){
         Paper.init(this);
-        dialog = new SpotsDialog(this);
+        dialog =  new SpotsDialog.Builder().setContext(this).build();
         dbHelper = new DBHelper(this);
         arrayList = new ArrayList<>();
         resultList = new ArrayList<>();

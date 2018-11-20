@@ -1,5 +1,5 @@
 /*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti
+    Gobbetti, José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -125,12 +125,12 @@ public class LiveviewCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        // nothing to delete, yet
-    }
-    @Override
     public boolean supportsFindDevice() {
         return true;
     }
-}
 
+    @Override
+    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
+        // nothing to delete, yet
+    }
+}

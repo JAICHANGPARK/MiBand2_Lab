@@ -34,7 +34,7 @@ public class WebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
 
-        alertDialog = new SpotsDialog(this);
+        alertDialog = new SpotsDialog.Builder().setContext(this).build();
         alertDialog.show();
 
         webView.getSettings().setJavaScriptEnabled(true);

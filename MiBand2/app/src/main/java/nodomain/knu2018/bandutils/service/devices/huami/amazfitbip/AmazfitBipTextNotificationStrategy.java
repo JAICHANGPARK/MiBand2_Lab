@@ -18,13 +18,9 @@ package nodomain.knu2018.bandutils.service.devices.huami.amazfitbip;
 
 import android.support.annotation.NonNull;
 
-import nodomain.knu2018.bandutils.devices.miband.VibrationProfile;
 import nodomain.knu2018.bandutils.service.btle.BtLEAction;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertNotificationProfile;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.OverflowStrategy;
+import nodomain.knu2018.bandutils.devices.miband.VibrationProfile;
 import nodomain.knu2018.bandutils.service.devices.common.SimpleNotification;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.service.devices.huami.miband2.Mi2TextNotificationStrategy;
@@ -46,10 +42,10 @@ class AmazfitBipTextNotificationStrategy extends Mi2TextNotificationStrategy {
 
     @Override
     protected void sendAlert(@NonNull SimpleNotification simpleNotification, TransactionBuilder builder) {
-        AlertNotificationProfile<?> profile = new AlertNotificationProfile<>(getSupport());
+        nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertNotificationProfile<?> profile = new nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertNotificationProfile<>(getSupport());
         profile.setMaxLength(255); // TODO: find out real limit, certainly it is more than 18 which is default
 
-        AlertCategory category = simpleNotification.getAlertCategory();
+        nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory category = simpleNotification.getAlertCategory();
         switch (simpleNotification.getAlertCategory()) {
             // only these are confirmed working so far on Amazfit Bip
             case Email:
@@ -58,10 +54,9 @@ class AmazfitBipTextNotificationStrategy extends Mi2TextNotificationStrategy {
                 break;
             // default to SMS for non working categories
             default:
-                category = AlertCategory.SMS;
+                category = nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.SMS;
         }
-        NewAlert alert = new NewAlert(category, 1, simpleNotification.getMessage());
-        profile.newAlert(builder, alert, OverflowStrategy.TRUNCATE);
+        nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert alert = new nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert(category, 1, simpleNotification.getMessage());
+        profile.newAlert(builder, alert, nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.OverflowStrategy.TRUNCATE);
     }
 }
-

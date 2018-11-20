@@ -26,6 +26,8 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -38,10 +40,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.Logging;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.impl.GBDevice.State;
 import nodomain.knu2018.bandutils.service.DeviceSupport;
+
 
 /**
  * One queue/thread per connectable device.
@@ -103,6 +107,11 @@ public final class BtLEQueue {
                         mWaitForActionResultLatch = new CountDownLatch(1);
                         if (LOG.isDebugEnabled()) {
                             LOG.debug("About to run action: " + action);
+                        }
+                        if (action instanceof GattListenerAction) {
+                            // this special action overwrites the transaction gatt listener (if any), it must
+                            // always be the last action in the transaction
+                            internalGattCallback.setTransactionGattCallback(((GattListenerAction)action).getGattCallback());
                         }
                         if (action.run(mBluetoothGatt)) {
                             // check again, maybe due to some condition, action did not need to write, so we can't wait
@@ -177,7 +186,11 @@ public final class BtLEQueue {
         BluetoothDevice remoteDevice = mBluetoothAdapter.getRemoteDevice(mGbDevice.getAddress());
         synchronized (mGattMonitor) {
             // connectGatt with true doesn't really work ;( too often connection problems
-            mBluetoothGatt = remoteDevice.connectGatt(mContext, false, internalGattCallback);
+            if (GBApplication.isRunningMarshmallowOrLater()) {
+                mBluetoothGatt = remoteDevice.connectGatt(mContext, false, internalGattCallback, BluetoothDevice.TRANSPORT_LE);
+            } else {
+                mBluetoothGatt = remoteDevice.connectGatt(mContext, false, internalGattCallback);
+            }
         }
         boolean result = mBluetoothGatt != null;
         if (result) {
@@ -186,7 +199,7 @@ public final class BtLEQueue {
         return result;
     }
 
-    private void setDeviceConnectionState(State newState) {
+    private void setDeviceConnectionState(GBDevice.State newState) {
         LOG.debug("new device connection state: " + newState);
         mGbDevice.setState(newState);
         mGbDevice.sendDeviceUpdateIntent(mContext);
@@ -371,8 +384,16 @@ public final class BtLEQueue {
                         LOG.info("Using cached services, skipping discovery");
                         onServicesDiscovered(gatt, BluetoothGatt.GATT_SUCCESS);
                     } else {
-                        LOG.info("Attempting to start service discovery:" +
-                                gatt.discoverServices());
+                        LOG.info("Attempting to start service discovery");
+                        // discover services in the main thread (appears to fix Samsung connection problems)
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mBluetoothGatt != null) {
+                                    mBluetoothGatt.discoverServices();
+                                }
+                            }
+                        });
                     }
                     break;
                 case BluetoothProfile.STATE_DISCONNECTED:
@@ -502,7 +523,9 @@ public final class BtLEQueue {
 
         private void checkWaitingCharacteristic(BluetoothGattCharacteristic characteristic, int status) {
             if (status != BluetoothGatt.GATT_SUCCESS) {
-                LOG.debug("failed btle action, aborting transaction: " + characteristic.getUuid() + getStatusString(status));
+                if (characteristic != null) {
+                    LOG.debug("failed btle action, aborting transaction: " + characteristic.getUuid() + getStatusString(status));
+                }
                 mAbortTransaction = true;
             }
             if (characteristic != null && BtLEQueue.this.mWaitCharacteristic != null && characteristic.getUuid().equals(BtLEQueue.this.mWaitCharacteristic.getUuid())) {

@@ -29,6 +29,7 @@ import java.util.Locale;
 
 import nodomain.knu2018.bandutils.model.ActivityKind;
 
+
 public class HPlusDataRecordSleep extends HPlusDataRecord {
 
     /**

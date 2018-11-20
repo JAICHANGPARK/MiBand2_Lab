@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
+    <release version="1.2.3" versioncode="71">
+        <change>Date : 2018-11-20</change>
+        <change>Mi Band 3: fixed crash and support night mode</change>
+        <change>Huami devices: Fixed Problem </change>
+        <change>App Internal: Improve app stability </change>
+        <change>Coder : 박제창 </change>
+        <change>Contributors : None</change>
+    </release>
+
     <release version="1.2.2" versioncode="70">
         <change>Date : 2018-09-30</change>
         <change>Blood Glucose Meter: Fixed Couldn't scan caresens n ble device</change>
         <change>Support: Today we supported android sdk 28</change>
-
         <change>Coder : 박제창 </change>
         <change>Contributors : None</change>
     </release>

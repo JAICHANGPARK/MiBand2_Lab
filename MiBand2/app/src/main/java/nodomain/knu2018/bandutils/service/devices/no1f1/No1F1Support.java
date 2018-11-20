@@ -1,4 +1,5 @@
-/*  Copyright (C) 2017-2018 Andreas Shimokawa, Daniele Gobbetti, protomors
+/*  Copyright (C) 2017-2018 Andreas Shimokawa, Daniele Gobbetti, Pavel
+    Elagin, protomors
 
     This file is part of Gadgetbridge.
 
@@ -15,7 +16,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.knu2018.bandutils.service.devices.no1f1;
-
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;

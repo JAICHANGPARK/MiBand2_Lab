@@ -27,7 +27,6 @@ import nodomain.knu2018.bandutils.devices.miband.AbstractMiBandFWInstallHandler;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 import nodomain.knu2018.bandutils.model.DeviceType;
 
-
 class MiBand3FWInstallHandler extends AbstractMiBandFWInstallHandler {
     MiBand3FWInstallHandler(Uri uri, Context context) {
         super(uri, context);

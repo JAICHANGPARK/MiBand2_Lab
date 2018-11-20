@@ -1,5 +1,5 @@
-/*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, João
-    Paulo Barraca
+/*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, João Paulo Barraca, José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -31,18 +31,12 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.support.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Locale;
-
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.knu2018.bandutils.GBApplication;
 import nodomain.knu2018.bandutils.GBException;
 import nodomain.knu2018.bandutils.R;
 import nodomain.knu2018.bandutils.activities.SettingsActivity;
+import nodomain.knu2018.bandutils.activities.charts.ChartsActivity;
 import nodomain.knu2018.bandutils.devices.AbstractDeviceCoordinator;
 import nodomain.knu2018.bandutils.devices.InstallHandler;
 import nodomain.knu2018.bandutils.devices.SampleProvider;
@@ -55,6 +49,13 @@ import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.ActivityUser;
 import nodomain.knu2018.bandutils.model.DeviceType;
 import nodomain.knu2018.bandutils.util.Prefs;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Locale;
 
 import static nodomain.knu2018.bandutils.GBApplication.getContext;
 
@@ -254,7 +255,7 @@ public class HPlusCoordinator extends AbstractDeviceCoordinator {
     }
 
     public static byte getAllDayHR(String address) {
-        Boolean value = (prefs.getBoolean(HPlusConstants.PREF_HPLUS_ALLDAYHR, true));
+        boolean value = (prefs.getBoolean(HPlusConstants.PREF_HPLUS_ALLDAYHR, true));
 
         if(value){
             return HPlusConstants.ARG_HEARTRATE_ALLDAY_ON;

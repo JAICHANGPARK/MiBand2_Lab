@@ -24,6 +24,9 @@
     <string name="controlcenter_calibrate_device">Calibrate Device</string>
 
 
+
+
+
     <string name="title_activity_debug">Debug</string>
 
     <!-- Strings related to AppManager -->
@@ -340,6 +343,8 @@
     <string name="notif_battery_low_percent">%1$s battery left: %2$s%%</string>
     <string name="notif_battery_low_bigtext_last_charge_time">Last charge: %s \n</string>
     <string name="notif_battery_low_bigtext_number_of_charges">Number of charges: %s</string>
+    <string name="notif_battery_low">%1$s battery low</string>
+    <string name="notif_battery_low_extended">%1$s battery low: %2$s</string>
     <string name="notif_export_failed_title">Export database failed! Please check your settings.</string>
     <string name="sleepchart_your_sleep">Your sleep</string>
     <string name="weeksleepchart_sleep_a_week">Sleep per week</string>
@@ -382,6 +387,9 @@
     <string name="live_activity_total_steps">Total steps</string>
     <string name="live_activity_steps_per_minute_history">Steps per minute history</string>
     <string name="live_activity_start_your_activity">Start your activity</string>
+
+    <string name="live_activity_max_heart_rate">Current / Max heart rate: %1$d / %2$d</string>
+
     <string name="abstract_chart_fragment_kind_activity">Activity</string>
     <string name="abstract_chart_fragment_kind_light_sleep">Light sleep</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">Deep sleep</string>
@@ -405,7 +413,7 @@
     <string name="mi2_prefs_button_press_count_summary">Number of button presses to trigger message broadcast</string>
     <string name="mi2_prefs_button_press_broadcast">Broadcast message to send</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Broadcast message on defined number of button presses reached</string>
-    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.mibandButtonPressed</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.knu2018.bandutils.mibandButtonPressed</string>
     <string name="mi2_prefs_button_action">Enable button action</string>
     <string name="mi2_prefs_button_action_summary">Enable action on specified number of button presses</string>
     <string name="mi2_prefs_button_action_vibrate">Enable band vibration</string>
@@ -590,6 +598,8 @@
     <string name="devicetype_id115">ID115</string>
     <string name="devicetype_watch9">Watch 9</string>
     <string name="devicetype_caresens">CareSens N</string>
+    <string name="devicetype_roidmi">Roidmi</string>
+    <string name="devicetype_roidmi3">Roidmi 3</string>
 
     <string name="choose_auto_export_location">Choose export location</string>
     <string name="notification_channel_name">BandUtils notifications</string>
@@ -616,6 +626,23 @@
     <string name="watch9_calibration_button">Calibrate</string>
     <string name="title_activity_watch9_pairing">Watch 9 pairing</string>
     <string name="title_activity_watch9_calibration">Watch 9 calibration</string>
+    <string name="pref_title_contextual_arabic">Contextual Arabic</string>
+    <string name="pref_summary_contextual_arabic">Enable this to support contextual Arabic</string>
+    <string name="preferences_rtl_settings">Right To Left Support</string>
+    <string name="share_log">Share log</string>
+    <string name="share_log_warning">Please keep in mind Gadgetbridge logs files that may contain lots of personal info, including but not limited to health data, unique identifiers (such as a device\'s MAC address), music preferences, etc. Consider editing the file and removing this info before sending the file to a public issue report.</string>
+    <string name="warning">Warning!</string>
+    <string name="no_data">No data</string>
+
+
+    <!-- LED Color -->
+    <string name="preferences_led_color">LED Color</string>
+
+    <!-- FM transmitters -->
+    <string name="preferences_fm_frequency">FM Frequency</string>
+    <string name="pref_invalid_frequency_title">Invalid frequency</string>
+    <string name="pref_invalid_frequency_message">Please enter a frequency between 87.5 and 108.0</string>
+    <string name="language_and_region_prefs">Language and region settings</string>
 
 
     <!--FireBase Cloud massege-->

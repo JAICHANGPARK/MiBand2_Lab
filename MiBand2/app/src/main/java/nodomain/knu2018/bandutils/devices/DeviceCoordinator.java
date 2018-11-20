@@ -1,5 +1,5 @@
 /*  Copyright (C) 2015-2018 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, JohnnySun, Uwe Hermann
+    Gobbetti, JohnnySun, José Rebelo, Uwe Hermann
 
     This file is part of Gadgetbridge.
 
@@ -35,7 +35,6 @@ import nodomain.knu2018.bandutils.impl.GBDeviceCandidate;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 import nodomain.knu2018.bandutils.model.DeviceType;
 
-
 /**
  * This interface is implemented at least once for every supported gadget device.
  * It allows Gadgetbridge to generically deal with different kinds of devices
@@ -46,7 +45,7 @@ import nodomain.knu2018.bandutils.model.DeviceType;
  * the given device.
  */
 public interface DeviceCoordinator {
-    String EXTRA_DEVICE_CANDIDATE = "nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate.EXTRA_DEVICE_CANDIDATE";
+    String EXTRA_DEVICE_CANDIDATE = "nodomain.knu2018.bandutils.impl.GBDeviceCandidate.EXTRA_DEVICE_CANDIDATE";
     /**
      * Do not attempt to bond after discovery.
      */
@@ -245,7 +244,7 @@ public interface DeviceCoordinator {
     boolean supportsWeather();
 
     /**
-     * Indicates whether the device supports being found by vibrating,
+     * Indicates whether the device supports being found by vibrating, 
      * making some sound or lighting up
      */
     boolean supportsFindDevice();
@@ -255,4 +254,21 @@ public interface DeviceCoordinator {
      * like artist, title, album, play state etc.
      */
     boolean supportsMusicInfo();
+
+    /**
+     * Indicates whether the device has an led which supports custom colors
+     */
+    boolean supportsLedColor();
+
+    /**
+     * Indicates whether the device's led supports any RGB color,
+     * or only preset colors
+     */
+    boolean supportsRgbLedColor();
+
+    /**
+     * Returns the preset colors supported by the device, if any, in ARGB, with alpha = 255
+     */
+    @NonNull
+    int[] getColorPresets();
 }

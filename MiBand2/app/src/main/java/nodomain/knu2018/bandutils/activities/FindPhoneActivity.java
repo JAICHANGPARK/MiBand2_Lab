@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import nodomain.knu2018.bandutils.R;
-import nodomain.knu2018.bandutils.model.DeviceService;
 
 
 /**
@@ -47,8 +46,8 @@ public class FindPhoneActivity extends AbstractGBActivity {
     /**
      * The constant ACTION_FOUND.
      */
-    public static final String ACTION_FOUND
-            = "nodomain.knu2018.gadgetbridge.findphone.action.reply";
+    public static final String ACTION_FOUND = "nodomain.knu2018.gadgetbridge.findphone.action.reply";
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -64,17 +63,8 @@ public class FindPhoneActivity extends AbstractGBActivity {
         }
     };
 
-    /**
-     * The M audio manager.
-     */
     AudioManager mAudioManager;
-    /**
-     * The UserInfo volume.
-     */
     int userVolume;
-    /**
-     * The Mp.
-     */
     MediaPlayer mp;
 
     @Override
@@ -84,7 +74,6 @@ public class FindPhoneActivity extends AbstractGBActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_FOUND);
-        filter.addAction(DeviceService.ACTION_HEARTRATE_MEASUREMENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
         registerReceiver(mReceiver, filter); // for ACTION_FOUND
 
@@ -98,9 +87,6 @@ public class FindPhoneActivity extends AbstractGBActivity {
         playRingtone();
     }
 
-    /**
-     * Play ringtone.
-     */
     public void playRingtone(){
         mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         if (mAudioManager != null) {
@@ -122,9 +108,6 @@ public class FindPhoneActivity extends AbstractGBActivity {
 
     }
 
-    /**
-     * Stop sound.
-     */
     public void stopSound() {
         mAudioManager.setStreamVolume(AudioManager.STREAM_ALARM, userVolume, AudioManager.FLAG_PLAY_SOUND);
         mp.stop();

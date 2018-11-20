@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
 import nodomain.knu2018.bandutils.deviceevents.GBDeviceEventCallControl;
 
 public class GBCallControlReceiver extends BroadcastReceiver {
-    public static final String ACTION_CALLCONTROL = "nodomain.knu2018.gadgetbridge.callcontrol";
+    public static final String ACTION_CALLCONTROL = "nodomain.knu2018.bandutils.callcontrol";
     private static final Logger LOG = LoggerFactory.getLogger(GBCallControlReceiver.class);
 
     @Override

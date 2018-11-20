@@ -24,14 +24,11 @@ import nodomain.knu2018.bandutils.service.btle.BLETypeConversions;
 import nodomain.knu2018.bandutils.service.btle.BtLEAction;
 import nodomain.knu2018.bandutils.service.btle.GattCharacteristic;
 import nodomain.knu2018.bandutils.service.btle.TransactionBuilder;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertNotificationProfile;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert;
-import nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.OverflowStrategy;
 import nodomain.knu2018.bandutils.service.devices.common.SimpleNotification;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiIcon;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.util.StringUtils;
+
 
 public class Mi2TextNotificationStrategy extends Mi2NotificationStrategy {
     private final BluetoothGattCharacteristic newAlertCharacteristic;
@@ -43,7 +40,7 @@ public class Mi2TextNotificationStrategy extends Mi2NotificationStrategy {
 
     @Override
     protected void sendCustomNotification(VibrationProfile vibrationProfile, SimpleNotification simpleNotification, BtLEAction extraAction, TransactionBuilder builder) {
-        if (simpleNotification != null && simpleNotification.getAlertCategory() == AlertCategory.IncomingCall) {
+        if (simpleNotification != null && simpleNotification.getAlertCategory() == nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.IncomingCall) {
             // incoming calls are notified solely via NewAlert including caller ID
             sendAlert(simpleNotification, builder);
             return;
@@ -64,25 +61,25 @@ public class Mi2TextNotificationStrategy extends Mi2NotificationStrategy {
 
     protected byte[] getNotifyMessage(SimpleNotification simpleNotification) {
         int numAlerts = 1;
-        if (simpleNotification != null && simpleNotification.getNotificationType() != null && simpleNotification.getAlertCategory() != AlertCategory.SMS) {
+        if (simpleNotification != null && simpleNotification.getNotificationType() != null && simpleNotification.getAlertCategory() != nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.SMS) {
             byte customIconId = HuamiIcon.mapToIconId(simpleNotification.getNotificationType());
             if (customIconId == HuamiIcon.EMAIL) {
                 // unfortunately. the email icon breaks the notification, fall back to a standard AlertCategory
-                return new byte[]{BLETypeConversions.fromUint8(AlertCategory.Email.getId()), BLETypeConversions.fromUint8(numAlerts)};
+                return new byte[]{BLETypeConversions.fromUint8(nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.Email.getId()), BLETypeConversions.fromUint8(numAlerts)};
             }
-            return new byte[]{BLETypeConversions.fromUint8(AlertCategory.CustomHuami.getId()), BLETypeConversions.fromUint8(numAlerts), customIconId};
+            return new byte[]{BLETypeConversions.fromUint8(nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.CustomHuami.getId()), BLETypeConversions.fromUint8(numAlerts), customIconId};
         }
-        return new byte[] { BLETypeConversions.fromUint8(AlertCategory.SMS.getId()), BLETypeConversions.fromUint8(numAlerts)};
+        return new byte[] { BLETypeConversions.fromUint8(nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.SMS.getId()), BLETypeConversions.fromUint8(numAlerts)};
     }
 
     protected void sendAlert(@NonNull SimpleNotification simpleNotification, TransactionBuilder builder) {
-        AlertNotificationProfile<?> profile = new AlertNotificationProfile<>(getSupport());
+        nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertNotificationProfile<?> profile = new nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertNotificationProfile<>(getSupport());
         // override the alert category,  since only SMS and incoming call support text notification
-        AlertCategory category = AlertCategory.SMS;
-        if (simpleNotification.getAlertCategory() == AlertCategory.IncomingCall) {
+        nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory category = nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.SMS;
+        if (simpleNotification.getAlertCategory() == nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.AlertCategory.IncomingCall) {
             category = simpleNotification.getAlertCategory();
         }
-        NewAlert alert = new NewAlert(category, 1, simpleNotification.getMessage());
-        profile.newAlert(builder, alert, OverflowStrategy.MAKE_MULTIPLE);
+        nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert alert = new nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.NewAlert(category, 1, simpleNotification.getMessage());
+        profile.newAlert(builder, alert, nodomain.knu2018.bandutils.service.btle.profiles.alertnotification.OverflowStrategy.MAKE_MULTIPLE);
     }
 }

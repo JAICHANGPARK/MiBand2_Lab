@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2018 Carsten Pfeiffer
+/*  Copyright (C) 2016-2018 Andreas Shimokawa, Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -44,6 +44,7 @@ import nodomain.knu2018.bandutils.service.btle.actions.SetDeviceStateAction;
 import nodomain.knu2018.bandutils.service.devices.huami.HuamiSupport;
 import nodomain.knu2018.bandutils.util.GB;
 
+
 public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
     private static final Logger LOG = LoggerFactory.getLogger(InitOperation.class);
 
@@ -63,7 +64,7 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
     protected void doPerform() throws IOException {
         getSupport().enableNotifications(builder, true);
         if (needsAuth) {
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+            builder.add(new nodomain.knu2018.bandutils.service.btle.actions.SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
             // write key to miband2
             byte[] sendKey = org.apache.commons.lang3.ArrayUtils.addAll(new byte[]{HuamiService.AUTH_SEND_KEY, authFlags}, getSecretKey());
             builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUTH), sendKey);
@@ -135,12 +136,6 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
             LOG.info("Unhandled characteristic changed: " + characteristicUUID);
             return super.onCharacteristicChanged(gatt, characteristic);
         }
-    }
-
-    private TransactionBuilder createTransactionBuilder(String task) {
-        TransactionBuilder builder = getSupport().createTransactionBuilder(task);
-        builder.setGattCallback(this);
-        return builder;
     }
 
     private byte[] getMD5(byte[] message) throws NoSuchAlgorithmException {

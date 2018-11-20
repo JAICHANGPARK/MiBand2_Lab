@@ -22,6 +22,7 @@ import android.content.Context;
 import nodomain.knu2018.bandutils.devices.EventHandler;
 import nodomain.knu2018.bandutils.impl.GBDevice;
 
+
 /**
  * Provides the communication support for a specific device. Instances will <b>only</b>
  * be used inside the DeviceCommunicationService. Has hooks to manage the life cycle

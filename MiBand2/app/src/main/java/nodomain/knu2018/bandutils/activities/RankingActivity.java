@@ -65,7 +65,7 @@ public class RankingActivity extends AppCompatActivity {
     private void initSetting(){
         ButterKnife.bind(this);
         Paper.init(this);
-        alertDialog = new SpotsDialog(this);
+        alertDialog =  new SpotsDialog.Builder().setContext(this).build();
         networkInfo = getNetworkInfo();
         totalRanks = new ArrayList<>();
         rankArrayList = new ArrayList<>();

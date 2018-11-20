@@ -24,7 +24,6 @@ package nodomain.knu2018.bandutils.service.devices.hplus;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import nodomain.knu2018.bandutils.model.ActivityAmount;
 import nodomain.knu2018.bandutils.model.ActivityKind;
 import nodomain.knu2018.bandutils.model.ActivitySample;
 

@@ -24,8 +24,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.knu2018.bandutils.Logging;
 import nodomain.knu2018.bandutils.service.btle.BtLEAction;
+import nodomain.knu2018.bandutils.Logging;
 
 /**
  * Invokes a write operation on a given GATT characteristic.
