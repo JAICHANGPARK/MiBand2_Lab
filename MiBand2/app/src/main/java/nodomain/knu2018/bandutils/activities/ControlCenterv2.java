@@ -558,11 +558,10 @@ public class ControlCenterv2 extends AppCompatActivity
         // TODO: 2018-05-20 같은 버전이면 알람이 뜨지 않아 문제가 되지 않을것. 그러나 최신 버전을 업데이트 되었을떄 알람이 되어야함.
         checkAppVersion();
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG).build();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(BuildConfig.DEBUG).build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
         fetchWelcome();
-
         printKeyHash();
 
     }
